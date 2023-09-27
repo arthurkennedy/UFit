@@ -1,0 +1,19 @@
+{
+  "name": "ufit",
+  "version": "1.0.0",
+  "description": "\"A web app for building healthy habits with friends\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "James West",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
