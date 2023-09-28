@@ -7,7 +7,10 @@ const userSchema = new mongoose.Schema({
 	last_name: String,
 	email: String,
 	age: { type: Number, min: 1, max: 122 },
-	gender: ['Male', 'Female', 'Other'],
+	gender: {
+		type: String,
+		enum: ['Male', 'Female', 'Other']
+	},
 	weight: Number,
 	created_at: { type: Date, default: Date.now() },
 	updated_at: { type: Date, default: Date.now() }
