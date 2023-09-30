@@ -14,7 +14,7 @@ describe('when there is initially two users in db', () => {
 		const initialUsers = [
 			{
 				'username': 'test_user',
-				'password': 'test',
+				'passwordHash': 'test',
 				'first_name': 'testerson',
 				'last_name': 'mctest',
 				'email': 'mctest@gmail.com',
@@ -24,7 +24,7 @@ describe('when there is initially two users in db', () => {
 			},
 			{
 				'username': 'test_user2',
-				'password': 'test2',
+				'passwordHash': 'test2',
 				'first_name': 'testerson2',
 				'last_name': 'mctest2',
 				'email': 'mctest2@gmail.com',
