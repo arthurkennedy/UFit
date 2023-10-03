@@ -14,7 +14,16 @@ function App() {
     //username and password states will be used for login and signup
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
+    
     const [user, setUser] = useState(null)
+
+    //states for signup
+    const [firstname, setFirstName] = useState("")
+    const [lastname, setLastName] = useState("")
+    const [age, setAge] = useState(1)
+    const [weight, setWeight] = useState(1)
+
+
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -64,13 +73,21 @@ function App() {
                     <LoginPage 
                     handleDisplay={{username: username, password: password}}
                     handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
+
                 } />
 
                 <Route path="/signup" element={
 
                     <SignupPage 
-                    handleDisplay={{username: username, password: password}}
-                    handleActions={{userSignup: userSignup, username: setUsername, password: setPassword}} />
+                    handleDisplay={{
+                        username: username, password: password, firstname: firstname,
+                        lastname: lastname, age: age, weight: weight
+                    }}
+                    handleActions={{
+                        userSignup: userSignup, username: setUsername, password: setPassword,
+                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight
+                    }} />
+
                 } />
 
                 <Route path="*" element={<NoPage />} />
