@@ -1,4 +1,4 @@
-function SignupPage({ username, password, handleUserLogin, handleSetUsername, handleSetPassword }) {
+function SignupPage({ username, password, handleSetUsername, handleSetPassword, handleUserSignup}) {
 
     return (
       <div className="comp-container">

@@ -10,6 +10,7 @@ import NoPage from './component/NoPage'
 
 function App() {
 
+    //username and password states will be used for login and signup
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
     const [user, setUser] = useState(null)
@@ -55,7 +56,7 @@ function App() {
                     <LoginPage 
                     username={username} 
                     password={password} 
-                    handleUserLogin={userLogin} handleSetUsername={setUsername} handleSetPassword={setPassword} />
+                    handleActions={{username: setUsername, password: setPassword}} />
                 } />
 
                 <Route path="*" element={<NoPage />} />

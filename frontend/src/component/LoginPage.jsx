@@ -1,4 +1,4 @@
-function LoginPage({ username, password, handleUserLogin, handleSetUsername, handleSetPassword }) {
+function LoginPage({ username, password, handleUserLogin, handleActions}) {
 
   return (
     <div className="comp-container">
@@ -10,7 +10,7 @@ function LoginPage({ username, password, handleUserLogin, handleSetUsername, han
               type="text"
               value={username}
               name="Username"
-              onChange={({ target }) => handleSetUsername(target.value)}
+              onChange={({ target }) => handleActions.username(target.value)}
               placeholder="Username"
             />
           </div>
@@ -20,7 +20,7 @@ function LoginPage({ username, password, handleUserLogin, handleSetUsername, han
               type="password"
               value={password}
               name="Password"
-              onChange={({ target }) => handleSetPassword(target.value)}
+              onChange={({ target }) => handleActions.password(target.value)}
               placeholder="Password"
             />
           </div>
