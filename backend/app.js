@@ -11,6 +11,8 @@ const loginRouter = require('./controllers/login')
 const entryRouter = require('./controllers/entry')
 const middleware = require('./utils/middleware')
 
+const path = require('path')
+
 mongoose.set('strictQuery', false)
 logger.info('connecting to MongoDB')
 
@@ -31,6 +33,11 @@ app.use('/api/login', loginRouter)
 app.use('/api/entry', entryRouter)
 
 app.use(middleware.unknownEndpoint)
+
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('*', middleware.unknownEndpoint);
+
 app.use(middleware.errorHandler)
 
 module.exports = app
