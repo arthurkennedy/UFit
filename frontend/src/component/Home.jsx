@@ -1,6 +1,6 @@
 function Home({user}) {
 
-    const userLogout = async (event) => {
+    const userLogout = (event) => {
         event.preventDefault()
         window.localStorage.removeItem('loggedUser')
         window.location.reload()
