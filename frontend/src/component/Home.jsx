@@ -1,8 +1,9 @@
 function Home({ username, password, handleUserLogin, handleSetUsername, handleSetPassword }) {
 
     return (
-      <div className="auth-container">
-        Hello
+      <div className="comp-container">
+        <a href="/login">LOG In</a>
+        <a href="/signup">Sign Up</a>
       </div>
     );
   };

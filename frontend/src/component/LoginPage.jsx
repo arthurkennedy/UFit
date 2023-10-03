@@ -1,7 +1,7 @@
 function LoginPage({ username, password, handleUserLogin, handleSetUsername, handleSetPassword }) {
 
   return (
-    <div className="auth-container">
+    <div className="comp-container">
       <div className="inner-container">
         <h2>User Login</h2>
         <form onSubmit={handleUserLogin}>

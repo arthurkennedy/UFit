@@ -1,24 +1,24 @@
 
 /* Authentication */
 
-.auth-container {
+.comp-container {
     width: 400px;
     height: auto;
     margin: auto;
     padding: 10px;
 }
 
-.auth-container .inner-container {
+.comp-container .inner-container {
     display: flex;
     flex-direction: column;
 }
 
-.auth-container h2 {
+.comp-container h2 {
     text-align: center;
     color: #d9d9d9;
 }
 
-.auth-container input {
+.comp-container input {
     width: 100%;
     padding: 10px 5px;
     margin-top: 10px;
@@ -27,10 +27,12 @@
     border: none;
 }
 
-.auth-container button {
+.comp-container button {
     width: 100%;
     padding: 10px 5px;
     margin-top: 30px;
     cursor: pointer;
     font-size: 20px;
 }
+
+/*home page */
