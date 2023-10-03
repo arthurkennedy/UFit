@@ -4,10 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import loginService from './services/login'
 
 /*import components*/
-import LoginPage from './component/LoginPage'
-import SignupPage from './component/SignupPage'
+import Login from './component/Login.jsx'
+import Signup from './component/Signup.jsx'
 import Home from './component/Home'
-import NoPage from './component/NoPage'
+import UnknownEndpoint from './component/UnknownEndpoint.jsx'
 
 const App = () => {
 
@@ -64,12 +64,12 @@ const App = () => {
                 <Route path="/" element={<Home user={user}/>}/>
                 <Route index element={<Home user={user}/>} />
                 <Route path="/login" element={
-                    <LoginPage 
+                    <Login
                     handleDisplay={{username: username, password: password}}
                     handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
                 } />
                 <Route path="/signup" element={
-                    <SignupPage 
+                    <Signup
                     handleDisplay={{
                         username: username, password: password, firstname: firstname,
                         lastname: lastname, age: age, weight: weight
@@ -79,7 +79,7 @@ const App = () => {
                         firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight
                     }} />
                 } />
-                <Route path="*" element={<NoPage />} />
+                <Route path="*" element={<UnknownEndpoint />} />
             </Routes>
         </BrowserRouter>
     </>

@@ -1,4 +1,4 @@
-const SignupPage = ({ handleDisplay, handleActions}) => {
+const Signup = ({ handleDisplay, handleActions}) => {
 
     return (
       <div className="comp-container">
@@ -93,4 +93,4 @@ const SignupPage = ({ handleDisplay, handleActions}) => {
     );
   };
   
-  export default SignupPage
+  export default Signup

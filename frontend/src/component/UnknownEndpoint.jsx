@@ -1,4 +1,4 @@
-const NoPage = () => {
+const UnknownEndpoint = () => {
 
     return (
         <>
@@ -10,4 +10,4 @@ const NoPage = () => {
     );
   };
   
-  export default NoPage
+  export default UnknownEndpoint

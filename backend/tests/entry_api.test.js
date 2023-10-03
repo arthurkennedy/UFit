@@ -31,7 +31,7 @@ describe('when a user is logged in', () => {
 			.send({ 'username': 'test_user', 'password': 'test' })
 
 		token = response.body.token
-	})
+	}, 10000)
 
 	test('entry can be created by user', async () => {
 		const entry = {

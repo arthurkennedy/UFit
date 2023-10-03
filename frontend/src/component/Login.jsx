@@ -1,4 +1,4 @@
-const LoginPage = ({ handleDisplay, handleActions}) => {
+const Login = ({ handleDisplay, handleActions}) => {
 
   return (
     <div className="comp-container">
@@ -31,4 +31,4 @@ const LoginPage = ({ handleDisplay, handleActions}) => {
   );
 };
 
-export default LoginPage
+export default Login
