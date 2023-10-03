@@ -2,8 +2,13 @@ function Home({ username, password, handleUserLogin, handleSetUsername, handleSe
 
     return (
       <div className="comp-container">
-        <a href="/login">LOG In</a>
-        <a href="/signup">Sign Up</a>
+        <h2>A web app for building healthy habits with friends.</h2>
+        <p>
+            <a className="auth-link-button" href="/login">LOG In</a>
+        </p>
+        <p>
+            <a className="auth-link-button" href="/signup">Sign Up</a>
+        </p>
       </div>
     );
   };

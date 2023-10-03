@@ -37,7 +37,9 @@ function App() {
 
     return (
     <>
-        <h1 className="app-name">U-FIT</h1>
+        <a className="app-name" href="/">
+            <h1>U-FIT</h1>
+        </a>
 
         <BrowserRouter>
             <Routes>

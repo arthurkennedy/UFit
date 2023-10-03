@@ -14,5 +14,7 @@ body {
 .app-name {
     text-align: center;
     margin: 20px;
-    font-size: 90px;
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
 }
