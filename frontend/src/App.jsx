@@ -32,7 +32,8 @@ function App() {
 
     return (
     <>
-        <h1>uFit App</h1>
+        <h1 className="app-name">U-FIT</h1>
+
         {user ? (
             <div>{user.username} is logged in</div>
         ) : (
