@@ -9,6 +9,9 @@ import Login from './component/Login.jsx'
 import Signup from './component/Signup.jsx'
 import Home from './component/Home'
 import UnknownEndpoint from './component/UnknownEndpoint.jsx'
+import Feed from "./component/Feed.jsx";
+import Profile from "./component/Profile.jsx";
+
 
 const App = () => {
 
@@ -96,6 +99,16 @@ const App = () => {
                         firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight, email: setEmail
                     }} />
                 } />
+                <Route path ="/feed" element={
+                    <Feed user={user}>
+                    </Feed>
+                }
+
+                />
+                <Route path ="/profile" element={
+                    <Profile/>
+                }
+                />
                 <Route path="*" element={<UnknownEndpoint />} />
             </Routes>
         </BrowserRouter>

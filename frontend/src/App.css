@@ -11,6 +11,10 @@ body {
     background-color: #2067d3;
 }
 
+form {
+    background: aqua;
+}
+
 .app-name {
     text-align: center;
     margin: 20px;
