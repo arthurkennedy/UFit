@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import loginService from './services/login'
+import LoginPage from './component/LoginPage'
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
             setUser(user)
         }
     }, [])
-    const handleLogin = async (event) => {
+
+    const userLogin = async (event) => {
         event.preventDefault()
         try {
             const user = await loginService.login({username, password})
@@ -35,32 +37,16 @@ function App() {
             <div>{user.username} is logged in</div>
         ) : (
             <>
-                <h2>Login</h2>
-                <form onSubmit={handleLogin}>
-                    <div>
-                        username:
-                        <input
-                            type="text"
-                            value={username}
-                            name="Username"
-                            onChange={({target}) => setUsername(target.value)}
-                        />
-                    </div>
-                    <div>
-                        password:
-                        <input
-                            type="password"
-                            value={password}
-                            name="Password"
-                            onChange={({target}) => setPassword(target.value)}
-                        />
-                    </div>
-                    <button type="submit">login</button>
-                </form>
+                <LoginPage 
+                username={username} 
+                password={password} 
+                handleUserLogin={userLogin} handleSetUsername={setUsername} handleSetPassword={setPassword} />
             </>
         )}
     </>
     )
 }
+
+/* <username={username} password={password}/> */
 
 export default App
