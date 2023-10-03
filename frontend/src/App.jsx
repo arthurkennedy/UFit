@@ -6,6 +6,7 @@ import loginService from './services/login'
 /*import components*/
 import LoginPage from './component/LoginPage'
 import Home from './component/Home'
+import NoPage from './component/NoPage'
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
                     handleUserLogin={userLogin} handleSetUsername={setUsername} handleSetPassword={setPassword} />
                 } />
 
+                <Route path="*" element={<NoPage />} />
             </Routes>
         </BrowserRouter>
     </>
