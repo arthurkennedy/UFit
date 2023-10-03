@@ -1,3 +1,6 @@
+/* This home page will show user info when logged in 
+and act as a welcome page when logged out */
+
 function Home({user}) {
 
     const userLogout = (event) => {
