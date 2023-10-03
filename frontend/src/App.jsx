@@ -1,6 +1,11 @@
 import {useState, useEffect} from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import loginService from './services/login'
+
+/*import components*/
 import LoginPage from './component/LoginPage'
+import Home from './component/Home'
 
 function App() {
 
@@ -34,16 +39,20 @@ function App() {
     <>
         <h1 className="app-name">U-FIT</h1>
 
-        {user ? (
-            <div>{user.username} is logged in</div>
-        ) : (
-            <>
-                <LoginPage 
-                username={username} 
-                password={password} 
-                handleUserLogin={userLogin} handleSetUsername={setUsername} handleSetPassword={setPassword} />
-            </>
-        )}
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />}/>
+                <Route index element={<Home />} />
+
+                <Route path="/login" element={
+                    <LoginPage 
+                    username={username} 
+                    password={password} 
+                    handleUserLogin={userLogin} handleSetUsername={setUsername} handleSetPassword={setPassword} />
+                } />
+
+            </Routes>
+        </BrowserRouter>
     </>
     )
 }
