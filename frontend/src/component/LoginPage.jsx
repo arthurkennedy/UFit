@@ -1,14 +1,14 @@
-function LoginPage({ username, password, handleUserLogin, handleActions}) {
+function LoginPage({ handleDisplay, handleActions}) {
 
   return (
     <div className="comp-container">
       <div className="inner-container">
         <h2>User Login</h2>
-        <form onSubmit={handleUserLogin}>
+        <form onSubmit={handleActions.userLogin}>
           <div>
             <input
               type="text"
-              value={username}
+              value={handleDisplay.username}
               name="Username"
               onChange={({ target }) => handleActions.username(target.value)}
               placeholder="Username"
@@ -18,7 +18,7 @@ function LoginPage({ username, password, handleUserLogin, handleActions}) {
             
             <input
               type="password"
-              value={password}
+              value={handleDisplay.password}
               name="Password"
               onChange={({ target }) => handleActions.password(target.value)}
               placeholder="Password"

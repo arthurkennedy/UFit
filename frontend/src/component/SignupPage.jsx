@@ -1,16 +1,16 @@
-function SignupPage({ username, password, handleSetUsername, handleSetPassword, handleUserSignup}) {
+function SignupPage({ handleDisplay, handleActions}) {
 
     return (
       <div className="comp-container">
         <div className="inner-container">
-          <h2>User Login</h2>
-          <form onSubmit={handleUserLogin}>
+          <h2>User Signup</h2>
+          <form onSubmit={handleActions.userSignup}>
             <div>
               <input
                 type="text"
-                value={username}
+                value={handleDisplay.username}
                 name="Username"
-                onChange={({ target }) => handleSetUsername(target.value)}
+                onChange={({ target }) => handleActions.username(target.value)}
                 placeholder="Username"
               />
             </div>
@@ -18,13 +18,13 @@ function SignupPage({ username, password, handleSetUsername, handleSetPassword, 
               
               <input
                 type="password"
-                value={password}
+                value={handleDisplay.password}
                 name="Password"
-                onChange={({ target }) => handleSetPassword(target.value)}
+                onChange={({ target }) => handleActions.password(target.value)}
                 placeholder="Password"
               />
             </div>
-            <button type="submit">LOGIN</button>
+            <button type="submit">SignUp</button>
           </form>
         </div>
       </div>

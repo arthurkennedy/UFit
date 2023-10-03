@@ -5,6 +5,7 @@ import loginService from './services/login'
 
 /*import components*/
 import LoginPage from './component/LoginPage'
+import SignupPage from './component/SignupPage'
 import Home from './component/Home'
 import NoPage from './component/NoPage'
 
@@ -41,6 +42,12 @@ function App() {
         }
     }
 
+    const userSignup = async (event) => {
+        event.preventDefault()
+
+        /* User Signup code here.... */
+    }
+
     return (
     <>
         <a className="app-name" href="/">
@@ -53,10 +60,17 @@ function App() {
                 <Route index element={<Home user={user}/>} />
 
                 <Route path="/login" element={
+
                     <LoginPage 
-                    username={username} 
-                    password={password} 
-                    handleActions={{username: setUsername, password: setPassword}} />
+                    handleDisplay={{username: username, password: password}}
+                    handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
+                } />
+
+                <Route path="/signup" element={
+
+                    <SignupPage 
+                    handleDisplay={{username: username, password: password}}
+                    handleActions={{userSignup: userSignup, username: setUsername, password: setPassword}} />
                 } />
 
                 <Route path="*" element={<NoPage />} />
