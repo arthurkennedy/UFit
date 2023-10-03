@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import loginService from './services/login'
+import userService from './services/user'
 
 /*import components*/
 import Login from './component/Login.jsx'
@@ -18,6 +19,7 @@ const App = () => {
     const [user, setUser] = useState(null)
 
     //states for signup
+    const [email, setEmail] = useState("")
     const [firstname, setFirstName] = useState("")
     const [lastname, setLastName] = useState("")
     const [age, setAge] = useState(1)
@@ -50,7 +52,22 @@ const App = () => {
     const userSignup = async (event) => {
         event.preventDefault()
 
-        /* code here.... */
+        try {
+            const newUser = {
+                'email': email,
+                'firstname': firstname,
+                'lastname': lastname,
+                'age': age,
+                'weight': weight,
+                'username': username,
+                'password': password
+            }
+            const registeredUser = await userService.signup(newUser)
+            console.log(registeredUser)
+            
+        } catch (exception) {
+            console.log("error registering user: ", exception.message)
+        }
     }
 
     return (
@@ -76,7 +93,7 @@ const App = () => {
                     }}
                     handleActions={{
                         userSignup: userSignup, username: setUsername, password: setPassword,
-                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight
+                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight, email: setEmail
                     }} />
                 } />
                 <Route path="*" element={<UnknownEndpoint />} />

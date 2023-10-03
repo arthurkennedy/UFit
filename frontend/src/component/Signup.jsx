@@ -29,7 +29,18 @@ const Signup = ({ handleDisplay, handleActions}) => {
                     />
                 </label>
             </div>
-
+          <div>
+              <label>
+                  <b>Email: </b>
+                  <input
+                      type="test"
+                      value={handleDisplay.email}
+                      name="Email"
+                      onChange={({ target }) => handleActions.email(target.value)}
+                      placeholder="email..."
+                  />
+              </label>
+          </div>
             <div>
                 <label>
                     <b>First name: </b>
@@ -77,7 +88,7 @@ const Signup = ({ handleDisplay, handleActions}) => {
                     <input
                         type="number"
                         min="1"
-                        max="120"
+                        max="400"
                         value={handleDisplay.weight}
                         name="age"
                         onChange={({ target }) => handleActions.weight(target.value)}
@@ -85,7 +96,6 @@ const Signup = ({ handleDisplay, handleActions}) => {
                     />
                 </label>
             </div>
-
             <button type="submit">SignUp</button>
           </form>
         </div>
