@@ -64,7 +64,7 @@ const App = () => {
             }
             const registeredUser = await userService.signup(newUser)
             console.log(registeredUser)
-            
+            window.location.href = "/login"
         } catch (exception) {
             console.log("error registering user: ", exception.message)
         }
