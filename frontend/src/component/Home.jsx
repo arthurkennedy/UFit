@@ -2,19 +2,19 @@
 and act as a welcome page when logged out */
 
 function Home({user}) {
-
-    const userLogout = (event) => {
-        event.preventDefault()
+    console.log("wowking:")
+    const userLogout = () => {
         window.localStorage.removeItem('loggedUser')
         window.location.reload()
+        console.log("should reload")
     }
 
     return (
         <>
             {user ? (
-                <div>
+                <div className="comp-container">
                     <div>{user.username} is logged in</div>
-                    <a onClick={()=> userLogout()}  href="auth-link-button">Logout</a>
+                    <button onClick={()=> userLogout()} >Logout</button>
                 </div>
             ) : (
                 <>
