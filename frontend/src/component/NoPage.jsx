@@ -1,4 +1,4 @@
-function NoPage() {
+const NoPage = () => {
 
     return (
         <>

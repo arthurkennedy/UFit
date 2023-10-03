@@ -1,8 +1,7 @@
 /* This home page will show user info when logged in 
 and act as a welcome page when logged out */
 
-function Home({user}) {
-    console.log("wowking:")
+const Home = ({user}) => {
     const userLogout = () => {
         window.localStorage.removeItem('loggedUser')
         window.location.reload()

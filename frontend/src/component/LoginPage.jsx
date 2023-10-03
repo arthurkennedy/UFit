@@ -1,4 +1,4 @@
-function LoginPage({ handleDisplay, handleActions}) {
+const LoginPage = ({ handleDisplay, handleActions}) => {
 
   return (
     <div className="comp-container">

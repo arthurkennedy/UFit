@@ -1,4 +1,4 @@
-function SignupPage({ handleDisplay, handleActions}) {
+const SignupPage = ({ handleDisplay, handleActions}) => {
 
     return (
       <div className="comp-container">

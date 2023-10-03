@@ -4,7 +4,6 @@ const app = require('../app')
 
 const api = supertest(app)
 
-const Entry = require('../models/entry')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
