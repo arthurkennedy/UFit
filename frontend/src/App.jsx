@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import loginService from './services/login'
 
@@ -36,8 +36,6 @@ function App() {
     const userLogin = async (event) => {
         event.preventDefault()
 
-        const navigate = useNavigate();
-
         try {
             const user = await loginService.login({username, password})
             setUser(user)
@@ -45,7 +43,7 @@ function App() {
             setPassword('')
 
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
-            navigate.push('/');
+            window.location.href = "/"
         } catch (exception) {
             console.log("error with user login. invalid credentials.")
         }
