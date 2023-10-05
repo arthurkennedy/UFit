@@ -65,8 +65,7 @@ const App = () => {
                 'username': username,
                 'password': password
             }
-            const registeredUser = await userService.signup(newUser)
-            console.log(registeredUser)
+            await userService.signup(newUser)
             window.location.href = "/login"
         } catch (exception) {
             console.log("error registering user: ", exception.message)
@@ -103,7 +102,6 @@ const App = () => {
                     <Feed user={user}>
                     </Feed>
                 }
-
                 />
                 <Route path ="/profile" element={
                     <Profile/>
@@ -115,7 +113,5 @@ const App = () => {
     </>
     )
 }
-
-/* <username={username} password={password}/> */
 
 export default App

@@ -28,7 +28,6 @@ const CreatePost = () => {
                         <label htmlFor="">Body</label>
                         <br/>
                         <textarea>
-
                         </textarea>
                         <br/>
                         <input type="submit" name="" id=""/>
