@@ -1,19 +1,12 @@
+const helper = require('./controller_helper')
 const jwt = require('jsonwebtoken')
 const entryRouter = require('express').Router()
 const User = require('../models/user')
 const Entry = require('../models/entry')
 
-const parseToken = request => {
-	const authorization = request.get('authorization')
-	if(authorization && authorization.startsWith('Bearer ')) {
-		return authorization.replace('Bearer ', '')
-	}
-	return null
-}
-
 entryRouter.post('/', async (request, response) => {
 	const body = request.body
-	const decodedToken = jwt.verify(parseToken(request), process.env.SECRET)
+	const decodedToken = jwt.verify(helper.parseToken(request), process.env.SECRET)
 
 	if(!decodedToken.id) {
 		return response.status(401).json({ error: 'invalid authorization token' })
