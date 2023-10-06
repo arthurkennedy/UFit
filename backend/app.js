@@ -9,6 +9,7 @@ require('express-async-errors')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const entryRouter = require('./controllers/entry')
+const teamRouter = require('./controllers/team')
 const middleware = require('./utils/middleware')
 
 mongoose.set('strictQuery', false)
@@ -29,7 +30,7 @@ app.use(middleware.requestLogger)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/entry', entryRouter)
-
+app.use('/api/team', teamRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

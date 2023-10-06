@@ -1,11 +1,32 @@
 import {useState, useEffect} from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import loginService from './services/login'
+import userService from './services/user'
 
-function App() {
+/*import components*/
+import Login from './component/Login.jsx'
+import Signup from './component/Signup.jsx'
+import Home from './component/Home'
+import UnknownEndpoint from './component/UnknownEndpoint.jsx'
+import Feed from "./component/Feed.jsx";
+import Profile from "./component/Profile.jsx";
 
+
+const App = () => {
+
+    //username and password states will be used for login and signup
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
+    
     const [user, setUser] = useState(null)
+
+    //states for signup
+    const [email, setEmail] = useState("")
+    const [firstname, setFirstName] = useState("")
+    const [lastname, setLastName] = useState("")
+    const [age, setAge] = useState(1)
+    const [weight, setWeight] = useState(1)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -14,8 +35,10 @@ function App() {
             setUser(user)
         }
     }, [])
-    const handleLogin = async (event) => {
+
+    const userLogin = async (event) => {
         event.preventDefault()
+
         try {
             const user = await loginService.login({username, password})
             setUser(user)
@@ -23,42 +46,70 @@ function App() {
             setPassword('')
 
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
+            window.location.href = "/"
         } catch (exception) {
             console.log("error with user login. invalid credentials.")
         }
     }
 
+    const userSignup = async (event) => {
+        event.preventDefault()
+
+        try {
+            const newUser = {
+                'email': email,
+                'firstname': firstname,
+                'lastname': lastname,
+                'age': age,
+                'weight': weight,
+                'username': username,
+                'password': password
+            }
+            await userService.signup(newUser)
+            window.location.href = "/login"
+        } catch (exception) {
+            console.log("error registering user: ", exception.message)
+        }
+    }
+
     return (
     <>
-        <h1>uFit App</h1>
-        {user ? (
-            <div>{user.username} is logged in</div>
-        ) : (
-            <>
-                <h2>Login</h2>
-                <form onSubmit={handleLogin}>
-                    <div>
-                        username:
-                        <input
-                            type="text"
-                            value={username}
-                            name="Username"
-                            onChange={({target}) => setUsername(target.value)}
-                        />
-                    </div>
-                    <div>
-                        password:
-                        <input
-                            type="password"
-                            value={password}
-                            name="Password"
-                            onChange={({target}) => setPassword(target.value)}
-                        />
-                    </div>
-                    <button type="submit">login</button>
-                </form>
-            </>
-        )}
+        <a className="app-name" href="/">
+            <h1>U-FIT</h1>
+        </a>
+
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home user={user}/>}/>
+                <Route index element={<Home user={user}/>} />
+                <Route path="/login" element={
+                    <Login
+                    handleDisplay={{username: username, password: password}}
+                    handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
+                } />
+                <Route path="/signup" element={
+                    <Signup
+                    handleDisplay={{
+                        username: username, password: password, firstname: firstname,
+                        lastname: lastname, age: age, weight: weight
+                    }}
+                    handleActions={{
+                        userSignup: userSignup, username: setUsername, password: setPassword,
+                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight, email: setEmail
+                    }} />
+                } />
+                <Route path ="/feed" element={
+                    <Feed user={user}>
+                    </Feed>
+                }
+                />
+                <Route path ="/profile" element={
+                    <Profile/>
+                }
+                />
+                <Route path="*" element={<UnknownEndpoint />} />
+            </Routes>
+        </BrowserRouter>
     </>
     )
 }

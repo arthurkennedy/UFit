@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
+const bcrypt = require('bcrypt')
 
 const api = supertest(app)
 
-const bcrypt = require('bcrypt')
+const Team = require('../models/team')
 const User = require('../models/user')
 
 let token
@@ -23,6 +24,7 @@ describe('when a user is logged in', () => {
 			'weight': 175.3
 		}
 
+		await Team.deleteMany({})
 		await User.deleteMany({})
 		const user = new User(initialUserData)
 		await user.save()
@@ -33,17 +35,17 @@ describe('when a user is logged in', () => {
 		token = response.body.token
 	}, 10000)
 
-	test('entry can be created by user', async () => {
-		const entry = {
-			content: 'Test post!'
+	test('team can be created by user', async () => {
+		const team = {
+			'name': 'Team A'
 		}
 		const response = await api
-			.post('/api/entry')
+			.post('/api/team')
 			.set('Authorization', 'Bearer ' + token)
-			.send(entry)
+			.send(team)
 			.expect(200)
 
-		expect(response.body.content).toEqual('Test post!')
+		expect(response.body.name).toEqual('Team A')
 	})
 })
 
