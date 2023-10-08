@@ -16,7 +16,7 @@ const CreatePost = () => {
      */
 
     return(
-        <>
+
             <>
                 <h3>Hello!</h3>
                 <div className="comp-container">
@@ -37,7 +37,7 @@ const CreatePost = () => {
                     </form>
                 </div>
             </>
-        </>
+
     );
 };
 
