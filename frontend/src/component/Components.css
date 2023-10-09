@@ -44,3 +44,12 @@
     background-color: #d9d9d9;
     color: black;
 }
+
+.error-text {
+    color: #950000cf;
+    font-style: italic;
+}
+
+.hide {
+    display: none;
+}
