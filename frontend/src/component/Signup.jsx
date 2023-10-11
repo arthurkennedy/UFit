@@ -1,77 +1,77 @@
+import { useNavigate } from 'react-router-dom'
+import userService from "../services/user.jsx";
+import { useState } from "react";
 
-
-
-const Signup = ({ handleDisplay, handleActions}) => {
-
-    const showErrorMessage = (id) => {
-        document.getElementById(id).classList.remove("hide");
+const Signup = () => {
+    const initialFormState = {
+        username: '',
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        age: 1,
+        weight: 1
     }
 
-    const hideErrorMessage = (id) => {
-        document.getElementById(id).classList.add("hide");
+    const [newUserState, setNewUserState] = useState(initialFormState)
+    const [errors, setErrors] = useState({})
+    const navigate = useNavigate()
+
+    const validationRules = {
+        username: {
+            rule: username => username.length >= 3,
+            message: "Username must be 3 characters or more."
+        },
+        firstname: {
+            rule:  firstname => /^[a-zA-Z ]+$/.test(firstname),
+            message: "First name should only contain letters and spaces."
+        },
+        lastname: {
+            rule: lastname => /^[a-zA-Z ]+/.test(lastname),
+            message: "Last name should only contain letters and spaces."
+        },
+        email: {
+            rule: email => /\S+@\S+\.\S+/.test(email),
+            message: "Please enter your email address in format: yourname@example.com"
+        },
+        password: {
+            rule: (value) => value.length >= 3,
+            message: "Password must be 3 characters or more."
+        }
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault() // stops submission
-
-        let nameFormat = /^[a-zA-Z ]+$/ //only contain letters, numbers and spaces
-        let mailformat = /\S+@\S+\.\S+/
-        
-        let isSubmit = true;
-
-        if(handleDisplay.username.length < 3){
-            console.log("invalid username");
-            isSubmit = false;
-
-            showErrorMessage("username-error");
-        }else {
-            hideErrorMessage("username-error");
+    const handleChange = (e, field) => {
+        const val = e.target.value
+        setNewUserState({ ...newUserState, [field]: val })
+        if(validationRules[field].rule(val)) {
+            setErrors({ ...errors, [field]: null })
         }
+    }
 
-        //firstname validate
-        let firstName = handleDisplay.firstname
-        if(!nameFormat.test(firstName)){
-            console.log("invalid firstname");
-            isSubmit = false;
+    const handleSubmit = async (event) => {
+        event.preventDefault()
 
-            showErrorMessage("firstname-error");
-        }else {
-            hideErrorMessage("firstname-error");
+        let isValid = true;
+        let newErrors= {};
+
+        for (const [field, {rule, message}] of Object.entries(validationRules)) {
+            const val = newUserState[field]
+            if(!rule(val)) {
+                isValid = false
+                newErrors[field] = message
+            }
         }
+        setErrors(newErrors)
 
-        //lastname validate
-        let lastName = handleDisplay.lastname
-        if(!nameFormat.test(lastName)){
-            console.log("invalid lastname");
-            isSubmit = false;
+        if (isValid) {
+            try {
+                await userService.signup(newUserState)
+                navigate('/login')
+            } catch (exception) {
+                setErrors({'username': 'That username is already taken. Please try another.'})
+                console.log("error registering user: ", exception.message)
+            }
 
-            showErrorMessage("lastname-error");
-        }else {
-            hideErrorMessage("lastname-error");
-        }
-
-        //email validate
-        if(!mailformat.test(handleDisplay.email)){
-            console.log("invalid email");
-            isSubmit = false;
-
-            showErrorMessage("email-error");
-        }else {
-            hideErrorMessage("email-error");
-        }
-        
-        //pasword validate
-        if(handleDisplay.password.length < 3){
-            console.log("invalid password");
-            isSubmit = false;
-
-            showErrorMessage("password-error");
-        }else {
-            hideErrorMessage("password-error");
-        }
-        
-        if(isSubmit){
-            handleActions.userSignup(event)
         }
     }
 
@@ -83,20 +83,12 @@ const Signup = ({ handleDisplay, handleActions}) => {
             <div>
                 <label>
                     <b>Username: </b>
-
-                    <div className="error-text hide" id="username-error">
-                        Please enter a valid username. 
-                        A valid username must be 3 characters or more.
-                    </div>
-
+                    {errors.username ? <div className="error-text" id="username-error">{errors.username}</div> : null }
                     <input
                         type="text"
-                        value={handleDisplay.username}
+                        value={newUserState.username}
                         name="Username"
-                        onChange={({ target }) => {
-                            handleActions.username(target.value)
-                            hideErrorMessage("username-error")
-                        }}
+                        onChange={e => handleChange(e, 'username')}
                         placeholder="Username"
                     />
                 </label>
@@ -105,20 +97,12 @@ const Signup = ({ handleDisplay, handleActions}) => {
             <div>
                 <label>
                     <b>First name: </b>
-
-                    <div className="error-text hide" id="firstname-error">
-                        Please enter a valid first name. 
-                        A valid first name should only contain letters and spaces.
-                    </div>
-
+                    {errors.firstname ? <div className="error-text" id="firstname-error">{errors.firstname}</div> : null }
                     <input
                         type="text"
-                        value={handleDisplay.firstname}
+                        value={newUserState.firstname}
                         name="first-name"
-                        onChange={({ target }) => {
-                            handleActions.firstname(target.value)
-                            hideErrorMessage("firstname-error")
-                        }}
+                        onChange={e => handleChange(e, 'firstname')}
                         placeholder="First Name..."
                     />
                 </label>
@@ -127,20 +111,12 @@ const Signup = ({ handleDisplay, handleActions}) => {
             <div>
                 <label>
                     <b>Last name: </b>
-
-                    <div className="error-text hide" id="lastname-error">
-                        Please enter a valid last name. 
-                        A valid last name should only contain letters and spaces.
-                    </div>
-
+                    {errors.lastname ? <div className="error-text" id="lastname-error">{errors.lastname}</div> : null }
                     <input
                         type="text"
-                        value={handleDisplay.lastname}
+                        value={newUserState.lastname}
                         name="last-name"
-                        onChange={({ target }) => {
-                            handleActions.lastname(target.value)
-                            hideErrorMessage("lastname-error")
-                        }}
+                        onChange={e => handleChange(e, 'lastname')}
                         placeholder="Last Name..."
                     />
                 </label>
@@ -148,42 +124,27 @@ const Signup = ({ handleDisplay, handleActions}) => {
 
             <div>
               <label>
-                    <b>Email: </b>
-
-                    <div className="error-text hide" id="email-error">
-                        Please enter your email address in format: yourname@example.com
-                    </div>
-                  
-                    <input
-                        type="test"
-                        value={handleDisplay.email}
-                        name="Email"
-                        onChange={({ target }) => {
-                            handleActions.email(target.value)
-                            hideErrorMessage("email-error")
-                        }}
-                        placeholder="email..."
-                    />
+                  <b>Email: </b>
+                  {errors.email ? <div className="error-text" id="email-error">{errors.email}</div> : null }
+                  <input
+                    type="email"
+                    value={newUserState.email}
+                    name="Email"
+                    onChange={e => handleChange(e, 'email')}
+                    placeholder="email..."
+                  />
               </label>
             </div>
 
             <div>
                 <label>
                     <b>Password: </b>
-
-                    <div className="error-text hide" id="password-error">
-                        Please enter a valid password. 
-                        A valid password must be 3 characters or more.
-                    </div>
-
+                    {errors.password ? <div className="error-text" id="password-error">{errors.password}</div> : null }
                     <input
                         type="password"
-                        value={handleDisplay.password}
+                        value={newUserState.password}
                         name="Password"
-                        onChange={({ target }) => {
-                            handleActions.password(target.value)
-                            hideErrorMessage("password-error")
-                        }}
+                        onChange={e => handleChange(e, 'password')}
                         placeholder="Password"
                     />
                 </label>
@@ -196,9 +157,9 @@ const Signup = ({ handleDisplay, handleActions}) => {
                         type="number"
                         min="1"
                         max="120"
-                        value={handleDisplay.age}
+                        value={newUserState.age}
                         name="age"
-                        onChange={({ target }) => handleActions.age(target.value)}
+                        onChange={e => handleChange(e, 'age')}
                         placeholder="Age..."
                     />
                 </label>
@@ -211,9 +172,9 @@ const Signup = ({ handleDisplay, handleActions}) => {
                         type="number"
                         min="1"
                         max="400"
-                        value={handleDisplay.weight}
+                        value={newUserState.weight}
                         name="age"
-                        onChange={({ target }) => handleActions.weight(target.value)}
+                        onChange={e => {handleChange(e, 'weight')}}
                         placeholder="Weight..."
                     />
                 </label>
@@ -222,7 +183,7 @@ const Signup = ({ handleDisplay, handleActions}) => {
           </form>
         </div>
       </div>
-    );
-  };
+    )
+  }
   
   export default Signup
