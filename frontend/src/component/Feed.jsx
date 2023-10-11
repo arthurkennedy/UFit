@@ -1,3 +1,6 @@
+import "../style/feed.css"
+import profile from "../assets/profile.jpg"
+
 /* This user feed page will only be visible if you logged in.*/
 
 // CreatePost will access the database and contribute to a user's post
@@ -13,7 +16,7 @@ const CreatePost = () => {
      */
 
     return(
-        <>
+
             <>
                 <h3>Hello!</h3>
                 <div className="comp-container">
@@ -34,35 +37,97 @@ const CreatePost = () => {
                     </form>
                 </div>
             </>
-        </>
+
     );
 };
 
 const FetchPost = () => {
+
+    const data = [
+        {
+            username: 'John Doe',
+            likes: 5,
+            comment:"I did 3 sets today",
+            replies: [
+                {
+                    username: 'Jane Doe',
+                    comment: 'Test comment'
+                },
+                {
+                    username: 'Jane Doe',
+                    comment: 'Test comment'
+                },
+            ]
+        },
+        {
+            username: 'Chris Doe',
+            likes: 2,
+            replies: []
+        }
+    ]
+
+
     return(
-        <>
-            <h3>Users you followed will post here..</h3>
-        </>
+        <div className="feedContainer">
+            {
+                data.map((item)=>{
+
+                    return <div className="feedBox">
+                        <div className="author">
+                            <div className="profileImage" style={{
+                                backgroundImage:`url(${profile})`
+                            }}>
+                                </div>
+
+                            {item.username}
+                        </div>
+                        <div className="post">
+                            <div>
+                            {
+                                item.comment
+
+                            }
+                            </div>
+                           <div>
+                            likes: {
+                                item.likes
+                            }
+                            </div>
+                        </div>
+                    </div>
+                })
+            }
+
+        </div>
     );
 };
 
 // Feed uses widgets above.
 const Feed = () => {
+
+
+
     return(
-        <>
+      
         <>
             <h1> Feed</h1>
+
             <h3>Create New Post</h3>
             <br/>
-            <>
-                <CreatePost></CreatePost>
-            </>
+           
+                <CreatePost/>
+        
             <br/>
-            <>
-                <FetchPost></FetchPost>
-            </>
+
+            <div className="container">
+            <h3>Users you followed will post here..</h3>
+                <FetchPost/>
+                </div>
+                <br/><br/><br/>
+           
         </>
-    </>
+
+ 
     );
 };
 
