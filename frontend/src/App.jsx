@@ -91,7 +91,7 @@ const App = () => {
                     <Signup
                     handleDisplay={{
                         username: username, password: password, firstname: firstname,
-                        lastname: lastname, age: age, weight: weight
+                        lastname: lastname, age: age, weight: weight, email: email
                     }}
                     handleActions={{
                         userSignup: userSignup, username: setUsername, password: setPassword,
