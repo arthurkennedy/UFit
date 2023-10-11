@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import loginService from './services/login'
-import userService from './services/user'
 
 /*import components*/
 import Login from './component/Login.jsx'
@@ -20,13 +19,6 @@ const App = () => {
     const [password, setPassword] = useState([])
     
     const [user, setUser] = useState(null)
-
-    //states for signup
-    const [email, setEmail] = useState("")
-    const [firstname, setFirstName] = useState("")
-    const [lastname, setLastName] = useState("")
-    const [age, setAge] = useState(1)
-    const [weight, setWeight] = useState(1)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -52,25 +44,6 @@ const App = () => {
         }
     }
 
-    const userSignup = async (event) => {
-        event.preventDefault()
-
-        try {
-            const newUser = {
-                'email': email,
-                'firstname': firstname,
-                'lastname': lastname,
-                'age': age,
-                'weight': weight,
-                'username': username,
-                'password': password
-            }
-            await userService.signup(newUser)
-            window.location.href = "/login"
-        } catch (exception) {
-            console.log("error registering user: ", exception.message)
-        }
-    }
 
     return (
     <>
@@ -88,19 +61,10 @@ const App = () => {
                     handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
                 } />
                 <Route path="/signup" element={
-                    <Signup
-                    handleDisplay={{
-                        username: username, password: password, firstname: firstname,
-                        lastname: lastname, age: age, weight: weight, email: email
-                    }}
-                    handleActions={{
-                        userSignup: userSignup, username: setUsername, password: setPassword,
-                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight, email: setEmail
-                    }} />
+                    <Signup/>
                 } />
                 <Route path ="/feed" element={
-                    <Feed user={user}>
-                    </Feed>
+                    <Feed user={user}> </Feed>
                 }
                 />
                 <Route path ="/profile" element={
