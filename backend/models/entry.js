@@ -22,6 +22,11 @@ const entrySchema = new Schema({
 	updatedAt: {
 		type: Date,
 		default: Date.now()
+	},
+	replies: [this],
+	isTopLevel: {
+		type: Boolean,
+		default: true
 	}
 })
 
