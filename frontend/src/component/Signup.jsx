@@ -3,7 +3,7 @@ import userService from "../services/user.jsx";
 import { useState } from "react";
 
 const Signup = () => {
-    const initialFormState = {
+    const initialUserState = {
         username: '',
         firstname: '',
         lastname: '',
@@ -13,7 +13,7 @@ const Signup = () => {
         weight: 1
     }
 
-    const [newUserState, setNewUserState] = useState(initialFormState)
+    const [newUserState, setNewUserState] = useState(initialUserState)
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
 
@@ -71,7 +71,6 @@ const Signup = () => {
                 setErrors({'username': 'That username is already taken. Please try another.'})
                 console.log("error registering user: ", exception.message)
             }
-
         }
     }
 

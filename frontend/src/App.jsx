@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom"
 
 import loginService from './services/login'
 
@@ -13,7 +13,6 @@ import Profile from "./component/Profile.jsx";
 
 
 const App = () => {
-
     //username and password states will be used for login and signup
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
@@ -28,6 +27,7 @@ const App = () => {
         }
     }, [])
 
+    const navigation = useNavigate()
     const userLogin = async (event) => {
         event.preventDefault()
 
@@ -38,7 +38,7 @@ const App = () => {
             setPassword('')
 
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
-            window.location.href = "/"
+            navigation('/')
         } catch (exception) {
             console.log("error with user login. invalid credentials.")
         }
@@ -64,7 +64,7 @@ const App = () => {
                     <Signup/>
                 } />
                 <Route path ="/feed" element={
-                    <Feed user={user}> </Feed>
+                    <Feed user={user} />
                 }
                 />
                 <Route path ="/profile" element={
