@@ -13,8 +13,7 @@ const Login = () => {
   // Function to handle form submit
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(userLogin({ username, password })).then(() => dispatch(initializeUser()))
-    navigation("/")
+    dispatch(userLogin({ username, password })).then(() => dispatch(initializeUser())).then(() => navigation("/"))
   }
 
   return (

@@ -8,7 +8,6 @@ const Home = () => {
     const user = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
 
-    console.log(user)
     const userLogout = () => {
         dispatch(logOutUser()); // This will update the Redux state
         window.localStorage.removeItem('loggedUser') // Remove the user from local storage

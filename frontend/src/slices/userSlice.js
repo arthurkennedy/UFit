@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import userService from '../services/user'
 import loginService from '../services/login'
-import {useDispatch} from "react-redux";
 
 
 export const initializeUser = createAsyncThunk('user/initialize', async () => {
@@ -13,7 +12,7 @@ export const initializeUser = createAsyncThunk('user/initialize', async () => {
                 return await userService.getUserDetails(user.token);
             }
         } catch (error) {
-            console.error('Failed to initialize user:', error);
+            console.error('Failed to initialize user:', error)
             return null;
         }
     }
@@ -36,7 +35,6 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(userLogin.fulfilled, (state, action) => {
-                console.log("Action payload: ", action.payload)
                 window.localStorage.setItem('loggedUser', JSON.stringify(action.payload))
             })
             .addCase(initializeUser.fulfilled, (state, action) => {
