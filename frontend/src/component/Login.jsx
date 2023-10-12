@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch} from 'react-redux'
-import { userLogin } from '../slices/userSlice.js'
+import {initializeUser, userLogin} from '../slices/userSlice.js'
 import {useNavigate} from "react-router-dom";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
   // Function to handle form submit
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(userLogin({ username, password }))
+    dispatch(userLogin({ username, password })).then(() => dispatch(initializeUser()))
     navigation("/")
   }
 

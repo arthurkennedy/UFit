@@ -38,10 +38,9 @@ const userSlice = createSlice({
             .addCase(userLogin.fulfilled, (state, action) => {
                 console.log("Action payload: ", action.payload)
                 window.localStorage.setItem('loggedUser', JSON.stringify(action.payload))
-                const dispatch = useDispatch()
-                dispatch(initializeUser())
             })
             .addCase(initializeUser.fulfilled, (state, action) => {
+                console.log("Initializing user.")
                 state.user = action.payload;
             })
     }
