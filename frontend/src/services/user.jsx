@@ -6,6 +6,15 @@ const signup = async newUserDetails => {
     return response.data
 }
 
+const getUserDetails = async (token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    }
+    const response = await axios.get(`${baseUrl}`, config);
+    return response.data;
+}
+
 export default {
-    signup
+    signup,
+    getUserDetails
 }

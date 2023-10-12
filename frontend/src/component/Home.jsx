@@ -1,11 +1,17 @@
 /* This home page will show user info when logged in 
 and act as a welcome page when logged out */
 
-const Home = ({user}) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { logOutUser } from '../slices/userSlice'; // Adjust this import to your folder structure
+
+const Home = () => {
+    const user = useSelector((state) => state.user.user);
+    const dispatch = useDispatch();
+
+    console.log(user)
     const userLogout = () => {
-        window.localStorage.removeItem('loggedUser')
-        window.location.reload()
-        console.log("should reload")
+        dispatch(logOutUser()); // This will update the Redux state
+        window.localStorage.removeItem('loggedUser') // Remove the user from local storage
     }
 
     return (
@@ -13,7 +19,7 @@ const Home = ({user}) => {
             {user ? (
                 <div className="comp-container">
                     <div>{user.username} is logged in</div>
-                    <button onClick={()=> userLogout()} >Logout</button>
+                    <button onClick={userLogout}>Logout</button>
                 </div>
             ) : (
                 <>
@@ -29,7 +35,7 @@ const Home = ({user}) => {
                 </>
             )}
         </>
-    );
-  };
-  
-  export default Home
+    )
+}
+
+export default Home
