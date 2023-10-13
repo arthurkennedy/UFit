@@ -36,6 +36,21 @@ describe('when there is initially two users in db', () => {
 		expect(response.body.username).toEqual('test_user')
 		expect(response.body.token).toBeDefined()
 	})
+
+	test('login fails with an invalid username or password', async () => {
+		const response = await api
+		  .post('/api/login')
+		  .send({ 'username': 'invalid_user', 'password': 'invalid_password' }) //invalid username or password
+		  .expect(401)
+	})
+
+	test('login fails with missing username or password', async () => {
+		const response = await api
+		  .post('/api/login')
+		  .send({}) // No username or password
+		  .expect(401)
+	})
+	
 })
 
 afterAll(async () => {
