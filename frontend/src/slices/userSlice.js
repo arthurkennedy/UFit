@@ -4,12 +4,12 @@ import loginService from '../services/login'
 
 
 export const initializeUser = createAsyncThunk('user/initialize', async () => {
-    const loggedUserJSON = window.localStorage.getItem('loggedUser');
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
         try {
-            const user = JSON.parse(loggedUserJSON);
+            const user = JSON.parse(loggedUserJSON)
             if (user.token) {
-                return await userService.getUserDetails(user.token);
+                return await userService.getUserDetails(user.token)
             }
         } catch (error) {
             console.error('Failed to initialize user:', error)

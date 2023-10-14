@@ -1,5 +1,7 @@
 import "../style/feed.css"
 import profile from "../assets/profile.jpg"
+import entryService from "../services/entry"
+import {useState} from "react";
 
 /* This user feed page will only be visible if you logged in.*/
 
@@ -10,28 +12,32 @@ const CreatePost = () => {
     /**
      * Form info data can transfer as CSV or JSON
      * It would include posting user, generated message ID, subject line, and body
-     * WHen user hits submit, this widget would package up message and metadata into a form
+     * Wen user hits submit, this widget would package up message and metadata into a form
      * that is able to be sent between the database and people's computers all in one place
      * so no info is lost
      */
 
+    const [entryText, setEntryText] = useState('')
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        const loggedUserJSON = window.localStorage.getItem('loggedUser')
+        const user = JSON.parse(loggedUserJSON)
+        await entryService.post({"content": entryText}, user.token)
+
+    }
     return (
             <>
                 <h3>Hello!</h3>
                 <div className="comp-container">
-                    <form action="">
+                    <form onSubmit={handleSubmit}>
                         <br/>
-                        <label htmlFor="">Title</label>
+                        <label htmlFor="">New Post</label>
                         <br/>
-                        <input
-                            type="text" name="" id=""/> {/*TODO logic here*/}
-                        <br/>
-                        <label htmlFor="">Body</label>
-                        <br/>
-                        <textarea>
+                        <textarea value={entryText} onChange={e => setEntryText(e.target.value)}>
                         </textarea>
                         <br/>
-                        <input type="submit" name="" id=""/>
+                        <input type="submit" name="Submit Post" id=""/>
                     </form>
                 </div>
             </>

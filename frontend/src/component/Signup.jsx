@@ -51,8 +51,8 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-        let isValid = true;
-        let newErrors= {};
+        let isValid = true
+        let newErrors= {}
 
         for (const [field, {rule, message}] of Object.entries(validationRules)) {
             const val = newUserState[field]
