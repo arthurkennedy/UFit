@@ -5,6 +5,7 @@ import loginService from '../services/login'
 
 export const initializeUser = createAsyncThunk('user/initialize', async () => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    
     if (loggedUserJSON) {
         try {
             const user = JSON.parse(loggedUserJSON)

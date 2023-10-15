@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch} from 'react-redux'
 import {initializeUser, userLogin} from '../slices/userSlice.js'
+import userService from "../services/login.jsx";
 import {useNavigate} from "react-router-dom";
 
 const Login = () => {
@@ -8,12 +9,25 @@ const Login = () => {
   const [username, setUsername] = useState('') // Local state to hold form values
   const [password, setPassword] = useState('') // Local state to hold form values
 
-  const navigation = useNavigate()
+  const [isError, setIsError] = useState(false);
+
+  const navigate = useNavigate()
 
   // Function to handle form submit
-  const handleLogin = async (e) => {
+  async function handleLogin(e) {
     e.preventDefault();
-    dispatch(userLogin({ username, password })).then(() => dispatch(initializeUser())).then(() => navigation("/"))
+
+    try {
+      const response = await userService.login({ username, password })
+      if(response){
+        window.localStorage.setItem('loggedUser', JSON.stringify(response))
+        dispatch(initializeUser()).then(() => navigate("/"))
+      }
+    } catch (exception) {
+      setIsError(true);
+      console.log("login error: ", exception.message)
+    }
+  
   }
 
   return (
@@ -21,12 +35,16 @@ const Login = () => {
         <div className="inner-container">
           <h2>User Login</h2>
           <form onSubmit={handleLogin}>
+            {isError ? <div className="error-text">Incorrect username or password</div> : null }
             <div>
               <input
                   type="text"
                   value={username}
                   name="Username"
-                  onChange={({ target }) => setUsername(target.value)}
+                  onChange={({ target }) => {
+                    setUsername(target.value)
+                    setIsError(false)
+                  }}
                   placeholder="Username"
               />
             </div>
@@ -35,7 +53,10 @@ const Login = () => {
                   type="password"
                   value={password}
                   name="Password"
-                  onChange={({ target }) => setPassword(target.value)}
+                  onChange={({ target }) => {
+                    setPassword(target.value)
+                    setIsError(false)
+                  }}
                   placeholder="Password"
               />
             </div>

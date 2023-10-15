@@ -12,9 +12,9 @@ body {
 }
 
 form {
-    /*
+    padding: 10px;
     background: aqua;
-    */
+    margin-top: 5px;
 }
 
 .app-name {
