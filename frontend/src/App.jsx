@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {Routes, Route} from "react-router-dom"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 /*import components*/
 import Login from './component/Login.jsx'
@@ -14,6 +14,7 @@ import {initializeUser} from "./slices/userSlice.js"
 const App = () => {
 
     const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.user);
 
     // Initialize the user when the App mounts
     useEffect(() => {
@@ -24,10 +25,16 @@ const App = () => {
     <>
         <a className="app-name" href="/">
             <h1>U-FIT</h1>
+            {console.log(user)}
         </a>
         <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route index element={<Home/>} />
+
+            {user? (
+                <Route path="/" element={<Profile />}/>
+            ) : (
+                <Route path="/" element={<Home/>}/>
+            )}
+
             <Route path="/login" element={
                 <Login/>
             } />
@@ -38,11 +45,10 @@ const App = () => {
                 <Feed/>
             }
             />
-            <Route path ="/profile" element={
-                <Profile/>
-            }
-            />
+
             <Route path="*" element={<UnknownEndpoint />} />
+
+            
         </Routes>
     </>
     )

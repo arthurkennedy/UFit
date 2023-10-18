@@ -8,31 +8,18 @@ const Home = () => {
     const user = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
 
-    const userLogout = () => {
-        dispatch(logOutUser()); // This will update the Redux state
-        window.localStorage.removeItem('loggedUser') // Remove the user from local storage
-    }
-
     return (
         <>
-            {user ? (
-                <div className="comp-container">
-                    <div>{user.username} is logged in</div>
-                    <button onClick={userLogout}>Logout</button>
-                </div>
-            ) : (
-                <>
-                    <div className="comp-container">
-                        <h2>A web app for building healthy habits with friends.</h2>
-                        <p>
-                            <a className="auth-link-button" href="/login">LOG In</a>
-                        </p>
-                        <p>
-                            <a className="auth-link-button" href="/signup">Sign Up</a>
-                        </p>
-                    </div>
-                </>
-            )}
+            <div className="comp-container">
+                <h2>A web app for building healthy habits with friends.</h2>
+                <p>
+                    <a className="auth-link-button" href="/login">LOG In</a>
+                </p>
+                <p>
+                    <a className="auth-link-button" href="/signup">Sign Up</a>
+                </p>
+            </div>
+        
         </>
     )
 }

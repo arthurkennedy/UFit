@@ -24,7 +24,7 @@ const Login = () => {
         dispatch(initializeUser()).then(() => navigate("/"))
       }
     } catch (exception) {
-      setIsError(true);
+      setIsError(true)
       console.log("login error: ", exception.message)
     }
   

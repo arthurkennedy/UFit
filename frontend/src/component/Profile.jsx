@@ -1,16 +1,28 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { logOutUser } from '../slices/userSlice' // Adjust this import to your folder structure
+
+
 import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
 
 export default function Profile () {
 
-const myProfile = {
-    username: "GregSmith",
-    name: "Greg Smith",
-    bio: "I am new to bodubuilding",
-    height: "6'-1\"",
-    weight: "215lbs",
-    bmi: "16%"
-}
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
+
+    const myProfile = {
+        username: user? user.username: "",
+        name: user? user.first_name + " " + user.last_name: "",
+        bio: "I am new to bodubuilding",
+        height: user? user.height: "",
+        weight: user? user.weight: "",
+        bmi: "16%"
+    }
+
+    const userLogout = () => {
+        dispatch(logOutUser()); // This will update the Redux state
+        window.localStorage.removeItem('loggedUser') // Remove the user from local storage
+    }
 
     return <div className="profile row">
         <div className="left">
@@ -19,6 +31,7 @@ const myProfile = {
         <div className="box">
             { myProfile.username }
         </div>
+
         </div>
         <div className="right">
             <div className="box">
@@ -43,6 +56,10 @@ const myProfile = {
                     <div>{myProfile.bmi}</div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <button onClick={userLogout}>Log Out</button>
         </div>
 
     </div>
