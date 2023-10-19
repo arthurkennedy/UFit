@@ -15,12 +15,10 @@ const CreatePost = () => {
      * so no info is lost
      */
 
-    return(
-
+    return (
             <>
                 <h3>Hello!</h3>
                 <div className="comp-container">
-                    {/*This will shoot the form to the database under the user's posts*/}
                     <form action="">
                         <br/>
                         <label htmlFor="">Title</label>
@@ -37,12 +35,10 @@ const CreatePost = () => {
                     </form>
                 </div>
             </>
-
-    );
-};
+    )
+}
 
 const FetchPost = () => {
-
     const data = [
         {
             username: 'John Doe',
@@ -66,13 +62,11 @@ const FetchPost = () => {
         }
     ]
 
-
     return(
         <div className="feedContainer">
             {
-                data.map((item)=>{
-
-                    return <div className="feedBox">
+                data.map((item)=>
+                    <div className="feedBox">
                         <div className="author">
                             <div className="profileImage" style={{
                                 backgroundImage:`url(${profile})`
@@ -95,7 +89,7 @@ const FetchPost = () => {
                             </div>
                         </div>
                     </div>
-                })
+                )
             }
 
         </div>
@@ -104,30 +98,18 @@ const FetchPost = () => {
 
 // Feed uses widgets above.
 const Feed = () => {
-
-
-
-    return(
-      
+    return (
         <>
             <h1> Feed</h1>
-
             <h3>Create New Post</h3>
             <br/>
-           
                 <CreatePost/>
-        
             <br/>
-
             <div className="container">
             <h3>Users you followed will post here..</h3>
                 <FetchPost/>
-                </div>
-                <br/><br/><br/>
-           
+            </div>
         </>
-
- 
     );
 };
 

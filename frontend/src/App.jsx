@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom"
 
 import loginService from './services/login'
-import userService from './services/user'
 
 /*import components*/
 import Login from './component/Login.jsx'
@@ -14,19 +13,11 @@ import Profile from "./component/Profile.jsx";
 
 
 const App = () => {
-
     //username and password states will be used for login and signup
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
     
     const [user, setUser] = useState(null)
-
-    //states for signup
-    const [email, setEmail] = useState("")
-    const [firstname, setFirstName] = useState("")
-    const [lastname, setLastName] = useState("")
-    const [age, setAge] = useState(1)
-    const [weight, setWeight] = useState(1)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -36,6 +27,7 @@ const App = () => {
         }
     }, [])
 
+    const navigation = useNavigate()
     const userLogin = async (event) => {
         event.preventDefault()
 
@@ -46,31 +38,12 @@ const App = () => {
             setPassword('')
 
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
-            window.location.href = "/"
+            navigation('/')
         } catch (exception) {
             console.log("error with user login. invalid credentials.")
         }
     }
 
-    const userSignup = async (event) => {
-        event.preventDefault()
-
-        try {
-            const newUser = {
-                'email': email,
-                'firstname': firstname,
-                'lastname': lastname,
-                'age': age,
-                'weight': weight,
-                'username': username,
-                'password': password
-            }
-            await userService.signup(newUser)
-            window.location.href = "/login"
-        } catch (exception) {
-            console.log("error registering user: ", exception.message)
-        }
-    }
 
     return (
     <>
@@ -88,19 +61,10 @@ const App = () => {
                     handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
                 } />
                 <Route path="/signup" element={
-                    <Signup
-                    handleDisplay={{
-                        username: username, password: password, firstname: firstname,
-                        lastname: lastname, age: age, weight: weight
-                    }}
-                    handleActions={{
-                        userSignup: userSignup, username: setUsername, password: setPassword,
-                        firstname: setFirstName, lastname: setLastName, age: setAge, weight: setWeight, email: setEmail
-                    }} />
+                    <Signup/>
                 } />
                 <Route path ="/feed" element={
-                    <Feed user={user}>
-                    </Feed>
+                    <Feed user={user} />
                 }
                 />
                 <Route path ="/profile" element={
