@@ -23,7 +23,7 @@ export default function Profile () {
     const calculateBMI = (weightInPounds, heightInInches) => (weightInPounds / (heightInInches * heightInInches)) * 703
 
     const {feet, inches} = convertMetersToFeetAndInches(user.height)
-    
+
     const myProfile = {
         username: user ? user.username : "",
         name: user ? user.firstname + " " + user.lastname: "",

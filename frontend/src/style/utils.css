@@ -1,0 +1,23 @@
+:root{
+    --accent: #63c5da;
+}
+h2{
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: var(--accent) !important;
+}
+form{
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button[type="submit"]{
+    background-color:var(--accent);
+    border:none;
+    border-radius: 10px;
+    color:white;
+}
