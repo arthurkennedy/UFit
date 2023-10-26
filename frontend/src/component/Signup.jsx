@@ -121,7 +121,7 @@ const Signup = () => {
 								value={newUserState.firstname}
 								name="first-name"
 								onChange={e => handleChange(e, 'firstname')}
-								placeholder="First Name..."
+								placeholder="First Name"
 							/>
 						</label>
 					</div>
@@ -135,7 +135,7 @@ const Signup = () => {
 								value={newUserState.lastname}
 								name="last-name"
 								onChange={e => handleChange(e, 'lastname')}
-								placeholder="Last Name..."
+								placeholder="Last Name"
 							/>
 						</label>
 					</div>
@@ -149,67 +149,61 @@ const Signup = () => {
 								value={newUserState.email}
 								name="Email"
 								onChange={e => handleChange(e, 'email')}
-								placeholder="email..."
+								placeholder="Email"
 							/>
 						</label>
 					</div>
 					<div className="row">
-					<div>
-						<label>
-							<b>Age: </b>
-							<input
-								type="number"
-								min="1"
-								max="120"
-								value={newUserState.age}
-								name="age"
-								onChange={e => handleChange(e, 'age')}
-								placeholder="Age..."
-							/>
-						</label>
-					</div>
-					<div>
-						<label>
-							<b>Weight: </b>
-							<input
-								type="number"
-								min="1"
-								max="400"
-								value={newUserState.weight}
-								name="age"
-								onChange={e => {
-									handleChange(e, 'weight')
-								}}
-								placeholder="Weight..."
-							/>
-						</label>
-					</div>
-					<div>
-						<b>Height: </b> {newUserState.heightFt}{"'"} {newUserState.heightIn}{'"'}
-						<div className="row">
-						<label>
-							<input
-								type="number"
-								value={newUserState.heightFt}
-								name="heightFt"
-								onChange={e => handleChange(e, 'heightFt')}
-							/>
-						</label>
-						<label>
-							<input
-								type="number"
-								value={newUserState.heightIn}
-								name="height"
-								onChange={e => handleChange(e, 'heightIn')}
-							/>
-						</label>
+						<div>
+							<label>
+								<b>Age: </b>
+								<input
+									type="number"
+									min="1"
+									max="120"
+									value={newUserState.age}
+									name="age"
+									onChange={e => handleChange(e, 'age')}
+								/>
+							</label>
 						</div>
-						
+						<div>
+							<label>
+								<b>Weight (lbs): </b>
+								<input
+									type="number"
+									min="1"
+									max="400"
+									value={newUserState.weight}
+									name="age"
+									onChange={e => {
+										handleChange(e, 'weight')
+									}}
+								/>
+							</label>
+						</div>
+						<div>
+							<b>Height: </b> {newUserState.heightFt}{"'"} {newUserState.heightIn}{'"'}
+							<div className="row">
+								<label>
+									<input
+										type="number"
+										value={newUserState.heightFt}
+										name="heightFt"
+										onChange={e => handleChange(e, 'heightFt')}
+									/>
+								</label>
+								<label>
+									<input
+										type="number"
+										value={newUserState.heightIn}
+										name="heightIn"
+										onChange={e => handleChange(e, 'heightIn')}
+									/>
+								</label>
+							</div>
+						</div>
 					</div>
-					</div>
-					
-					
-					
 					<button type="submit">SignUp</button>
 				</form>
 			</div>

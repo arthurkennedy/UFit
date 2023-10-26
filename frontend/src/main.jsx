@@ -3,7 +3,7 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './store'
 
-import './App.jsx'  //import styles for global elements
+import './App.jsx'
 import './style/Component.css' //import styles for components eg.(LoginPage, SignupPage)
 import './style/App.css'
 import './style/utils.css'
