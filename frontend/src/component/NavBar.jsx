@@ -1,7 +1,9 @@
 import {Link} from "react-router-dom"
+import {useSelector} from "react-redux";
 
-const NavBar = ({user}) => {
 
+const NavBar = () => {
+    const user = useSelector((state) => state.user.user)
     if(user){
         return(
             <div className={"Navi"}>
@@ -20,7 +22,7 @@ const NavBar = ({user}) => {
                 </div>
             </div>
         )
-    }else {
+    } else {
         return null;
     }
 }

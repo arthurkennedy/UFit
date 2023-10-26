@@ -1,9 +1,9 @@
 import {useEffect} from 'react'
-import {Routes, Navigate, useNavigate, Route} from "react-router-dom"
+import {Routes, Navigate, Route} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
 /*import components*/
-import NavBar from './component/navbar.jsx'
+import NavBar from './component/NavBar.jsx'
 import Login from './component/Login.jsx'
 import Signup from './component/Signup.jsx'
 import Home from './component/Home'
@@ -14,7 +14,7 @@ import {initializeUser} from "./slices/userSlice.js"
 
 const App = () => {
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.user);
+    const user = useSelector((state) => state.user.user)
 
     // Initialize the user when the App mounts
     useEffect(() => {
@@ -25,21 +25,16 @@ const App = () => {
     <>
         <a className="app-name" href="/">
             <h1>U-FIT</h1>
-            {console.log(user)}
         </a>
-
         <>
-            <NavBar user={user} />
+            <NavBar />
         </>
-        
         <Routes>
-
             {user? (
                 <Route path="/" element={<Profile />}/>
             ) : (
-                <Route path="/" element={<Home/>}/>
+                <Route path="/" element={<Home />}/>
             )}
-
             <Route path="/login" element={
                 <Login/>
             } />
@@ -50,11 +45,7 @@ const App = () => {
             <Route path="/feed" element={
                 user ?  <Feed/> : <Navigate to="/login" />
             } />
-
-
             <Route path="*" element={<UnknownEndpoint />} />
-
-            
         </Routes>
     </>
     )
