@@ -6,14 +6,28 @@ import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
 
 export default function Profile () {
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.user);
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.user)
 
+    const convertMetersToFeetAndInches = (meters) => {
+        const totalInches = meters * 39.3701
+        const feet = Math.floor(totalInches / 12)
+        const inches = Math.round(totalInches % 12)
+
+        return {
+            feet,
+            inches
+        }
+    }
+
+    const {feet, inches} = convertMetersToFeetAndInches(user.height)
+
+    console.log(user)
     const myProfile = {
         username: user ? user.username : "",
-        name: user ? user.first_name + " " + user.last_name: "",
+        name: user ? user.firstname + " " + user.lastname: "",
         bio: "I am new to bodybuilding",
-        height: user ? user.height : "",
+        height: user ? `${feet}' ${inches}"` : "",
         weight: user ? user.weight : "",
         bmi: "16%"
     }

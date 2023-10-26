@@ -71,6 +71,7 @@ const Signup = () => {
 				newUser.height = (newUser.heightFt * .3048) + (newUser.heightIn * 0.0252) // convert to meters
 				delete newUser.heightFt
 				delete newUser.heightIn
+				console.log(newUser)
 				await userService.signup(newUser)
 				navigate('/login')
 			} catch (exception) {
