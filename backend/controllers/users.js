@@ -19,6 +19,7 @@ usersRouter.post('/', async (request, response) => {
 		age: body.age,
 		gender: body.gender,
 		weight: body.weight,
+		height: body.height
 	})
 
 	const savedUser = await user.save()
@@ -27,7 +28,7 @@ usersRouter.post('/', async (request, response) => {
 
 usersRouter.get('/', async (req, res) => {
 	const decodedToken = jwt.verify(helper.parseToken(req), process.env.SECRET)
-	if(!decodedToken.id) {
+	if (!decodedToken.id) {
 		return res.status(401).json({ error: 'invalid authorization token' })
 	}
 	const user = await User.findById(decodedToken.id)

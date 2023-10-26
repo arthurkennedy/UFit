@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
 		enum: ['Male', 'Female', 'Other']
 	},
 	weight: Number,
+	height: Number,
 	created_at: { type: Date, default: Date.now() },
 	updated_at: { type: Date, default: Date.now() }
 })

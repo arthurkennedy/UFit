@@ -8,7 +8,7 @@ entryRouter.post('/', async (request, response) => {
 	const body = request.body
 	const decodedToken = jwt.verify(helper.parseToken(request), process.env.SECRET)
 
-	if(!decodedToken.id) {
+	if (!decodedToken.id) {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 

@@ -13,42 +13,42 @@ import Profile from "./component/Profile.jsx"
 import {initializeUser} from "./slices/userSlice.js"
 
 const App = () => {
-    const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.user)
+	const dispatch = useDispatch()
+	const user = useSelector((state) => state.user.user)
 
-    // Initialize the user when the App mounts
-    useEffect(() => {
-        dispatch(initializeUser())
-    }, [dispatch])
+	// Initialize the user when the App mounts
+	useEffect(() => {
+		dispatch(initializeUser())
+	}, [dispatch])
 
-    return (
-    <>
-        <a className="app-name" href="/">
-            <h1>U-FIT</h1>
-        </a>
-        <>
-            <NavBar />
-        </>
-        <Routes>
-            {user? (
-                <Route path="/" element={<Profile />}/>
-            ) : (
-                <Route path="/" element={<Home />}/>
-            )}
-            <Route path="/login" element={
-                <Login/>
-            } />
-            <Route path="/signup" element={
-                <Signup/>
-            } />
+	return (
+		<>
+			<a className="app-name" href="/">
+				<h1>U-FIT</h1>
+			</a>
+			<>
+				<NavBar/>
+			</>
+			<Routes>
+				{user ? (
+					<Route path="/" element={<Profile/>}/>
+				) : (
+					<Route path="/" element={<Home/>}/>
+				)}
+				<Route path="/login" element={
+					<Login/>
+				}/>
+				<Route path="/signup" element={
+					<Signup/>
+				}/>
 
-            <Route path="/feed" element={
-                user ?  <Feed/> : <Navigate to="/login" />
-            } />
-            <Route path="*" element={<UnknownEndpoint />} />
-        </Routes>
-    </>
-    )
+				<Route path="/feed" element={
+					user ? <Feed/> : <Navigate to="/login"/>
+				}/>
+				<Route path="*" element={<UnknownEndpoint/>}/>
+			</Routes>
+		</>
+	)
 }
 
 export default App
