@@ -21,8 +21,7 @@ export const initializeUser = createAsyncThunk('user/initialize', async () => {
 })
 
 export const userLogin = createAsyncThunk('user/login', async (credentials) => {
-    const response = await loginService.login(credentials)
-    return response
+    return await loginService.login(credentials)
 })
 
 const userSlice = createSlice({
@@ -37,11 +36,15 @@ const userSlice = createSlice({
         builder
             .addCase(userLogin.fulfilled, (state, action) => {
                 window.localStorage.setItem('loggedUser', JSON.stringify(action.payload))
+                state.user = action.payload.user
             })
             .addCase(initializeUser.fulfilled, (state, action) => {
                 console.log("Initializing user.")
-                state.user = action.payload;
+                state.user = action.payload
             })
+          .addCase(userLogin.rejected, (state, action) => {
+
+          })
     }
 })
 

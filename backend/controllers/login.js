@@ -22,9 +22,11 @@ loginRouter.post('/', async (request, response) => {
 		id: user._id,
 	}, process.env.SECRET)
 
+	const userJson = user.toJSON()
+	delete userJson.passwordHash
 	response
 		.status(200)
-		.send({ token, username: user.username, name: user.name })
+		.send({ token, user: userJson })
 })
 
 module.exports = loginRouter

@@ -18,16 +18,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await userService.login({ username, password })
-      if(response){
-        window.localStorage.setItem('loggedUser', JSON.stringify(response))
-        dispatch(initializeUser()).then(() => navigate("/"))
+      const action = await dispatch(userLogin({ username, password }))
+      if (action.payload) {
+        navigate("/")
+      } else {
+        throw new Error("Invalid Credentials")
       }
     } catch (exception) {
       setIsError(true)
       console.log("login error: ", exception.message)
     }
-  
   }
 
   return (
