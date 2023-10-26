@@ -9,8 +9,9 @@ export default function Profile () {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.user)
 
+    const convertMetersToInches = (meters) => meters * 39.3701
     const convertMetersToFeetAndInches = (meters) => {
-        const totalInches = meters * 39.3701
+        const totalInches = convertMetersToInches(meters)
         const feet = Math.floor(totalInches / 12)
         const inches = Math.round(totalInches % 12)
 
@@ -19,17 +20,17 @@ export default function Profile () {
             inches
         }
     }
+    const calculateBMI = (weightInPounds, heightInInches) => (weightInPounds / (heightInInches * heightInInches)) * 703
 
     const {feet, inches} = convertMetersToFeetAndInches(user.height)
-
-    console.log(user)
+    
     const myProfile = {
         username: user ? user.username : "",
         name: user ? user.firstname + " " + user.lastname: "",
         bio: "I am new to bodybuilding",
         height: user ? `${feet}' ${inches}"` : "",
         weight: user ? user.weight : "",
-        bmi: "16%"
+        bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
     }
 
     const userLogout = () => {
