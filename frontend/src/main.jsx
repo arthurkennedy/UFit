@@ -6,6 +6,7 @@ import store from './store'
 import './App.jsx'  //import styles for global elements
 import './style/Component.css' //import styles for components eg.(LoginPage, SignupPage)
 import './style/App.css'
+import './style/utils.css'
 import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById('root')).render(

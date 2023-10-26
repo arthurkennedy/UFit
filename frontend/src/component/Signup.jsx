@@ -153,6 +153,7 @@ const Signup = () => {
 							/>
 						</label>
 					</div>
+					<div className="row">
 					<div>
 						<label>
 							<b>Age: </b>
@@ -185,6 +186,7 @@ const Signup = () => {
 					</div>
 					<div>
 						<b>Height: </b> {newUserState.heightFt}{"'"} {newUserState.heightIn}{'"'}
+						<div className="row">
 						<label>
 							<input
 								type="number"
@@ -201,7 +203,13 @@ const Signup = () => {
 								onChange={e => handleChange(e, 'heightIn')}
 							/>
 						</label>
+						</div>
+						
 					</div>
+					</div>
+					
+					
+					
 					<button type="submit">SignUp</button>
 				</form>
 			</div>
