@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {Routes, Navigate, Route} from "react-router-dom"
+import {Routes, Route} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
 /*import components*/
@@ -14,8 +14,8 @@ import {initializeUser} from "./slices/userSlice.js"
 
 const App = () => {
 	const dispatch = useDispatch()
-	const user = useSelector((state) => state.user.user)
 
+	const user = useSelector((state) => state.user.user)
 	// Initialize the user when the App mounts
 	useEffect(() => {
 		dispatch(initializeUser())

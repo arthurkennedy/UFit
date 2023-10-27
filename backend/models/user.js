@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const { Schema } = require('mongoose')
 
 const userSchema = new mongoose.Schema({
 	username: {
@@ -20,12 +21,16 @@ const userSchema = new mongoose.Schema({
 		unique: true
 	},
 	age: { type: Number, min: 1, max: 122 },
-	gender: {
-		type: String,
-		enum: ['Male', 'Female', 'Other']
-	},
 	weight: Number,
 	height: Number,
+	teams: [{
+		type: Schema.Types.ObjectId,
+		ref:'Team'
+	}],
+	invitations: [{
+		type: Schema.Types.ObjectId,
+		ref: 'TeamInvitation'
+	}],
 	created_at: { type: Date, default: Date.now() },
 	updated_at: { type: Date, default: Date.now() }
 })

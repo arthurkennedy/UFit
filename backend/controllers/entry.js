@@ -14,6 +14,7 @@ entryRouter.post('/', async (request, response) => {
 
 	const user = await User.findById(decodedToken.id)
 
+
 	const entry = new Entry({
 		content: body.content,
 		user: user._id

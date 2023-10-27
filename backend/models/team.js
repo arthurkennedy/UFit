@@ -12,6 +12,10 @@ const teamSchema = new mongoose.Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	}],
+	invitations: [{
+		type: Schema.Types.ObjectId,
+		ref: 'TeamInvitation'
+	}],
 	admin: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',

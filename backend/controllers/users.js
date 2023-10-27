@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
-const jwt = require('jsonwebtoken')
 const helper = require('./controller_helper')
 
 usersRouter.post('/', async (request, response) => {
@@ -27,7 +26,7 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/', async (req, res) => {
-	const decodedToken = jwt.verify(helper.parseToken(req), process.env.SECRET)
+	const decodedToken = helper.parseToken(req)
 	if (!decodedToken.id) {
 		return res.status(401).json({ error: 'invalid authorization token' })
 	}

@@ -1,12 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import userService from '../services/user'
 import loginService from '../services/login'
-
-
-export const initializeUser = createAsyncThunk('user/initialize', async () => {
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    return loggedUserJSON && loggedUserJSON.user ? loggedUserJSON.user : null
-})
 
 export const userLogin = createAsyncThunk('user/login', async (credentials) => {
     return await loginService.login(credentials)
@@ -18,6 +11,10 @@ const userSlice = createSlice({
     reducers: {
         logOutUser: (state) => {
             state.user = null;
+        },
+        initializeUser: (state) => {
+            const loggedUserJSON = window.localStorage.getItem('loggedUser')
+            state.user = loggedUserJSON && loggedUserJSON.user ? loggedUserJSON.user : null
         }
     },
     extraReducers: (builder) => {
@@ -26,12 +23,8 @@ const userSlice = createSlice({
                 window.localStorage.setItem('loggedUser', JSON.stringify(action.payload))
                 state.user = action.payload.user
             })
-            .addCase(initializeUser.fulfilled, (state, action) => {
-                console.log("Initializing user.")
-                state.user = action.payload
-            })
     }
 })
 
-export const {logOutUser} = userSlice.actions
+export const {logOutUser, initializeUser} = userSlice.actions
 export default userSlice.reducer
