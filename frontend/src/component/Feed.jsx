@@ -1,7 +1,9 @@
 import "../style/feed.css"
 import profile from "../assets/profile.jpg"
 import entryService from "../services/entry"
-import {useState} from "react";
+import {useState} from "react"
+import {EditorState, convertToRaw} from "draft-js"
+import {Editor} from "react-draft-wysiwyg"
 
 /* This user feed page will only be visible if you logged in.*/
 
@@ -17,7 +19,7 @@ const CreatePost = () => {
      * so no info is lost
      */
 
-    const [entryText, setEntryText] = useState('')
+    const [editor, setEditor] = useState(() => EditorState.createEmpty())
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -27,20 +29,26 @@ const CreatePost = () => {
 
     }
     return (
-            <>
-                <h3>Hello!</h3>
-                <div className="comp-container">
-                    <form onSubmit={handleSubmit}>
-                        <br/>
-                        <label htmlFor="">New Post</label>
-                        <br/>
-                        <textarea value={entryText} onChange={e => setEntryText(e.target.value)}>
-                        </textarea>
-                        <br/>
-                        <input type="submit" name="Submit Post" id=""/>
-                    </form>
-                </div>
-            </>
+        <>
+            <div className="comp-container">
+                <form onSubmit={handleSubmit}>
+                    <Editor
+                        toolbar={{
+                            options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'emoji'],
+                            inline: {inDropdown: true},
+                            list: {inDropdown: true},
+                            textAlign: {inDropdown: true},
+                            link: {inDropdown: true},
+                            history: {inDropdown: true},
+                        }}
+                        editorState={editor}
+                        onEditorStateChange={setEditor}
+                    />
+                    <br/>
+                    <button type="submit">Post!</button>
+                </form>
+            </div>
+        </>
     )
 }
 
@@ -49,7 +57,7 @@ const FetchPost = () => {
         {
             username: 'John Doe',
             likes: 5,
-            comment:"I did 3 sets today",
+            comment: "I did 3 sets today",
             replies: [
                 {
                     username: 'Jane Doe',
@@ -68,28 +76,28 @@ const FetchPost = () => {
         }
     ]
 
-    return(
+    return (
         <div className="feedContainer">
             {
-                data.map((item)=>
+                data.map((item) =>
                     <div className="feedBox">
                         <div className="author">
                             <div className="profileImage" style={{
-                                backgroundImage:`url(${profile})`
+                                backgroundImage: `url(${profile})`
                             }}>
-                                </div>
+                            </div>
 
                             {item.username}
                         </div>
                         <div className="post">
                             <div>
-                            {
-                                item.comment
+                                {
+                                    item.comment
 
-                            }
+                                }
                             </div>
-                           <div>
-                            likes: {
+                            <div>
+                                likes: {
                                 item.likes
                             }
                             </div>
@@ -109,10 +117,10 @@ const Feed = () => {
             <h1> Feed</h1>
             <h3>Create New Post</h3>
             <br/>
-                <CreatePost/>
+            <CreatePost/>
             <br/>
             <div className="container">
-            <h3>Users you followed will post here..</h3>
+                <h3>Users you followed will post here..</h3>
                 <FetchPost/>
             </div>
         </>

@@ -25,11 +25,11 @@ export default function Profile () {
     const {feet, inches} = convertMetersToFeetAndInches(user.height)
 
     const myProfile = {
-        username: user ? user.username : "",
-        name: user ? user.firstname + " " + user.lastname: "",
+        username: user.username,
+        name: user.firstname + " " + user.lastname,
         bio: "I am new to bodybuilding",
-        height: user ? `${feet}' ${inches}"` : "",
-        weight: user ? user.weight : "",
+        height: `${feet}' ${inches}"`,
+        weight: `${user.weight} lbs.`,
         bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
     }
 

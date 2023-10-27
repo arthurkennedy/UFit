@@ -1,13 +1,7 @@
 /* This home page will show user info when logged in 
 and act as a welcome page when logged out */
 
-import { useSelector, useDispatch } from 'react-redux';
-import { logOutUser } from '../slices/userSlice'; // Adjust this import to your folder structure
-
 const Home = () => {
-    const user = useSelector((state) => state.user.user);
-    const dispatch = useDispatch();
-
     return (
         <>
             <div className="comp-container">
@@ -19,7 +13,7 @@ const Home = () => {
                     <a className="auth-link-button" href="/signup">Sign Up</a>
                 </p>
             </div>
-        
+
         </>
     )
 }

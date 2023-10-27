@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { useDispatch} from 'react-redux'
-import {initializeUser, userLogin} from '../slices/userSlice.js'
-import userService from "../services/login.jsx";
-import {useNavigate} from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../slices/userSlice.js'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
