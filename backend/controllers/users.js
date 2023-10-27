@@ -16,7 +16,8 @@ usersRouter.post('/', async (request, response) => {
 		lastname: body.lastname,
 		email: body.email,
 		age: body.age,
-		gender: body.gender,
+		invitations: [],
+		teams: [],
 		weight: body.weight,
 		height: body.height
 	})
