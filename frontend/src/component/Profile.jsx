@@ -4,6 +4,7 @@ import { logOutUser } from '../slices/userSlice' // Adjust this import to your f
 
 import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
+import TeamInvitations from "./TeamInvitations.jsx";
 
 export default function Profile () {
     const dispatch = useDispatch()
@@ -73,6 +74,7 @@ export default function Profile () {
             <div>
                 <button onClick={userLogout}>Log Out</button>
             </div>`
+            <TeamInvitations />
         </div>
     )
 }

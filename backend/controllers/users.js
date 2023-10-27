@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const Team = require('../models/team')
 const helper = require('./controller_helper')
 
 usersRouter.post('/', async (request, response) => {
@@ -37,6 +38,25 @@ usersRouter.get('/', async (req, res) => {
 	} else {
 		return res.status(404).end()
 	}
+})
+
+usersRouter.get('/search', async (request, response) => {
+	const teamId = request.query.teamId
+	const searchTerm = request.query.q || ''
+
+	if (teamId) {
+		const team = await Team.findById(teamId)
+		if(!team) {
+			return response.status(404).json({ error: 'team not found' })
+		}
+	}
+
+	const users = await User.find({
+		username: new RegExp(searchTerm, 'i'),
+		teams: { $ne: teamId }
+	}, 'username _id')
+
+	response.status(200).json(users)
 })
 
 module.exports = usersRouter

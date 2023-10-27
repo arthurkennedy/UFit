@@ -13,7 +13,7 @@ const userSlice = createSlice({
             state.user = null;
         },
         initializeUser: (state) => {
-            const loggedUserJSON = window.localStorage.getItem('loggedUser')
+            const loggedUserJSON = JSON.parse(window.localStorage.getItem('loggedUser'))
             state.user = loggedUserJSON && loggedUserJSON.user ? loggedUserJSON.user : null
         }
     },

@@ -14,7 +14,22 @@ const getUserDetails = async (token) => {
     return response.data;
 }
 
+const searchUsers = async (teamId, searchTerm, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        params: {
+            teamId,
+            searchTerm
+        }
+    }
+    const response = await axios.get('/api/users/search', config)
+    return response.data
+}
+
 export default {
     signup,
-    getUserDetails
+    getUserDetails,
+    searchUsers
 }
