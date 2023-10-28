@@ -7,6 +7,15 @@ loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
 
 	const user = await User.findOne({ username })
+		.populate({
+			path: 'teams',
+			populate: [
+				{ path: 'admin', select: '_id' }, // only populates '_id' for admin
+				{ path: 'members', select: 'username _id' }, // populates 'username' and '_id' for members
+				{ path: 'invitations' }
+			]
+		}).lean()
+
 	const validPassword = user === null
 		? false
 		: await bcrypt.compare(password, user.passwordHash)
@@ -22,11 +31,13 @@ loginRouter.post('/', async (request, response) => {
 		id: user._id,
 	}, process.env.SECRET)
 
-	const userJson = user.toJSON()
-	delete userJson.passwordHash
+	user.teams.forEach(team => {
+		team.admin = team.admin._id
+	})
+
 	response
 		.status(200)
-		.send({ token, user: userJson })
+		.send({ token, user: user })
 })
 
 module.exports = loginRouter

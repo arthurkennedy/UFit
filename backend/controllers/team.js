@@ -20,7 +20,9 @@ teamRouter.post('/', async (request, response) => {
 	})
 
 	const savedTeam = await team.save()
-	response.json(savedTeam)
+	admin.teams = admin.teams.concat(savedTeam._id)
+	await admin.save()
+	response.status(200).json(savedTeam)
 })
 
 module.exports = teamRouter

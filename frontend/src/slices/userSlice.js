@@ -5,6 +5,7 @@ export const userLogin = createAsyncThunk('user/login', async (credentials) => {
     return await loginService.login(credentials)
 })
 
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {user: null},
@@ -15,6 +16,9 @@ const userSlice = createSlice({
         initializeUser: (state) => {
             const loggedUserJSON = JSON.parse(window.localStorage.getItem('loggedUser'))
             state.user = loggedUserJSON && loggedUserJSON.user ? loggedUserJSON.user : null
+        },
+        addNewTeam: (state, action) => {
+            state.user.teams = [...state.user.teams, action.payload]
         }
     },
     extraReducers: (builder) => {
@@ -26,5 +30,5 @@ const userSlice = createSlice({
     }
 })
 
-export const {logOutUser, initializeUser} = userSlice.actions
+export const {logOutUser, initializeUser, addNewTeam} = userSlice.actions
 export default userSlice.reducer

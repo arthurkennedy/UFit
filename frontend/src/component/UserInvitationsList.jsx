@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import teamInvitationService from '../services/teamInvitation'
 
-const TeamInvitations = () => {
+const UserInvitationsList = () => {
 	const [invitations, setInvitations] = useState([])
 
 	useEffect(() => {
@@ -21,10 +21,10 @@ const TeamInvitations = () => {
 
 	return (
 		<div>
-			<h1>Team Invitations</h1>
+			<h3>Team Invitations</h3>
 			<ul>
 				{invitations.map((invitation) => (
-					<li key={invitation._id}>
+					<li key={invitation.id}>
 						{invitation.team.name}
 						<button onClick={() => handleInvitation(invitation._id, 'ACCEPT')}>Accept</button>
 						<button onClick={() => handleInvitation(invitation._id, 'REJECT')}>Reject</button>
@@ -35,4 +35,4 @@ const TeamInvitations = () => {
 	)
 }
 
-export default TeamInvitations;
+export default UserInvitationsList;
