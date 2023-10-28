@@ -55,6 +55,8 @@ usersRouter.get('/search', async (request, response) => {
 		username: new RegExp(searchTerm, 'i'),
 		teams: { $ne: teamId }
 	}, 'username _id')
+		.sort({ username: 1 })
+		.limit(20)
 
 	response.status(200).json(users)
 })
