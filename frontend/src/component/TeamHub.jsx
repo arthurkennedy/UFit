@@ -1,4 +1,4 @@
-const adminPage =()=>{
+const TeamHub =()=>{
     return(
         <>
             <>
@@ -19,4 +19,4 @@ const adminPage =()=>{
         </>
     )
 };
-export default adminPage;
+export default TeamHub

@@ -1,4 +1,4 @@
-const teamHub =()=>{
+const Admin =()=>{
     return(
         <>
             <>
@@ -19,4 +19,4 @@ const teamHub =()=>{
         </>
     )
 };
-export default teamHub;
+export default Admin;

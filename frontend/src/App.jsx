@@ -4,6 +4,8 @@ import {useEffect} from 'react'
 import {Routes, Navigate, Route} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
+import {initializeUser} from "./slices/userSlice.js"
+
 /*import components*/
 import NavBar from './component/NavBar.jsx'
 import Login from './component/Login.jsx'
@@ -12,10 +14,10 @@ import Home from './component/Home'
 import UnknownEndpoint from './component/UnknownEndpoint.jsx'
 import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
-import {initializeUser} from "./slices/userSlice.js"
-// New pages
-import teamHub from "./component/teamHub.jsx";
-import adminPage from "./component/adminPage.jsx";
+import Admin from "./component/Admin.jsx"
+import TeamHub from "./component/TeamHub.jsx"
+import EditTeam from "./component/EditTeam.jsx";
+
 const App = () => {
 	const dispatch = useDispatch()
 
@@ -49,11 +51,12 @@ const App = () => {
 					<Feed />
 				}/>
 				<Route path="/teams" element={
-					teamHub()
+					<TeamHub />
 				}/>
 				<Route path="/admin" element={
-					adminPage()
+					<Admin />
 				}/>
+				<Route path="/admin/teams/:teamId" element={<EditTeam/>} />
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>
 		</>
