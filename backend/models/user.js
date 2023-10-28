@@ -37,12 +37,11 @@ const userSchema = new mongoose.Schema({
 
 userSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
-		if(!returnedObject.id) {
-			returnedObject.id = returnedObject._id.toString()
-			delete returnedObject._id
-			delete returnedObject.__v
-			delete returnedObject.passwordHash
-		}
+
+		returnedObject.id = returnedObject._id.toString()
+		delete returnedObject._id
+		delete returnedObject.__v
+		delete returnedObject.passwordHash
 	}
 })
 

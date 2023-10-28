@@ -4,8 +4,13 @@ import {useSelector} from "react-redux";
 const TeamsList = () => {
 	const user = useSelector(state => state.user.user)
 	const teams = user.teams
+	console.log(user)
 	const adminTeams = teams.filter((team) => user.id === team.admin.toString())
 	const nonAdminTeams = teams.filter((team) => user.id !== team.admin.toString())
+
+	console.log(adminTeams)
+	console.log(nonAdminTeams)
+
 	return (
 		<div>
 			<h3>Teams</h3>

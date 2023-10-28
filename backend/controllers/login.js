@@ -14,7 +14,7 @@ loginRouter.post('/', async (request, response) => {
 				{ path: 'members', select: 'username _id' }, // populates 'username' and '_id' for members
 				{ path: 'invitations' }
 			]
-		}).lean()
+		})
 
 	const validPassword = user === null
 		? false
@@ -35,9 +35,10 @@ loginRouter.post('/', async (request, response) => {
 		team.admin = team.admin._id
 	})
 
+	const userJSON = user.toJSON()
 	response
 		.status(200)
-		.send({ token, user: user })
+		.send({ token, user: userJSON })
 })
 
 module.exports = loginRouter
