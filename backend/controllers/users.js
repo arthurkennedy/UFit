@@ -42,7 +42,7 @@ usersRouter.get('/', async (req, res) => {
 
 usersRouter.get('/search', async (request, response) => {
 	const teamId = request.query.teamId
-	const searchTerm = request.query.q || ''
+	const searchTerm = request.query.searchTerm || ''
 
 	if (teamId) {
 		const team = await Team.findById(teamId)

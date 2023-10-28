@@ -6,7 +6,6 @@ const SearchUsers = ({teamId}) => {
 
 	const [users, setUsers] = useState([])
 
-	console.log(users)
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
 			const performSearch = async () => {
@@ -19,13 +18,8 @@ const SearchUsers = ({teamId}) => {
 					console.error('An error occurred: ', error)
 				}
 			}
-
-			if(searchTerm.trim().length > 2) {
-				performSearch()
-			} else {
-				setUsers([])
-			}
-		}, 500)
+			performSearch()
+		}, 100)
 		return () => clearTimeout(delayDebounceFn)
 	}, [searchTerm])
 
