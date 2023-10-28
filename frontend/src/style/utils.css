@@ -1,5 +1,5 @@
 :root{
-    --accent: #63c5da;
+    --accent: #033e4b;
 }
 h2{
     margin-bottom: 20px;
@@ -20,4 +20,5 @@ button[type="submit"]{
     border:none;
     border-radius: 10px;
     color:white;
+    padding: 10px;
 }

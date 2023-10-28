@@ -24,3 +24,11 @@ form {
     text-decoration: none;
     color: black;
 }
+
+.uButton {
+    background-color:var(--accent);
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
