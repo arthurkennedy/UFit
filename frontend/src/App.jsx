@@ -1,5 +1,7 @@
 import {useEffect} from 'react'
-import {Routes, Route} from "react-router-dom"
+
+// eslint-disable-next-line no-unused-vars
+import {Routes, Navigate, Route} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
 /*import components*/
@@ -11,7 +13,9 @@ import UnknownEndpoint from './component/UnknownEndpoint.jsx'
 import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
 import {initializeUser} from "./slices/userSlice.js"
-
+// New pages
+import teamHub from "./component/teamHub.jsx";
+import adminPage from "./component/adminPage.jsx";
 const App = () => {
 	const dispatch = useDispatch()
 
@@ -43,6 +47,12 @@ const App = () => {
 				}/>
 				<Route path="/feed" element={
 					<Feed />
+				}/>
+				<Route path="/teams" element={
+					teamHub()
+				}/>
+				<Route path="/admin" element={
+					adminPage()
 				}/>
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>
