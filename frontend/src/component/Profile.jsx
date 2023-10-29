@@ -6,7 +6,7 @@ import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
 import UserInvitationsList from "./UserInvitationsList.jsx";
 import CreateTeam from "./CreateTeam.jsx";
-import TeamsList from "./TeamsList.jsx";
+//import TeamsList from "./TeamsList.jsx"; moved to EditTeam.JSX
 
 export default function Profile() {
 	const dispatch = useDispatch()
@@ -73,9 +73,10 @@ export default function Profile() {
 					<button onClick={userLogout}>Log Out</button>
 				</div>
 			</div>
+			<h1>Team Quick Actions</h1>
 			<UserInvitationsList/>
 			<CreateTeam/>
-			<TeamsList/>
+			{/*/<TeamsList/>*/}
 		</div>
 	)
 }

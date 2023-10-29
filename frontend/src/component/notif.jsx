@@ -1,8 +1,8 @@
-const TeamHub =()=>{
+const notifCenter =()=>{
     return(
         <>
             <>
-                <h1>Section One</h1>
+                <h1>Notification Center</h1>
                 <>
                 </>
             </>
@@ -19,4 +19,4 @@ const TeamHub =()=>{
         </>
     )
 };
-export default TeamHub
+export default notifCenter;

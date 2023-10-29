@@ -12,7 +12,8 @@ const NavBar = () => {
                 </div>
                 <div className={"Home"}>
                     <Link to={"/"} class="uButton" >Homepage</Link><Link class="uButton" to={"/Feed"}>Feed</Link>
-                    <Link class="uButton" to={"/teams"}>My Teams</Link><Link class="uButton" to={"/teams"}>Teams I Manage</Link>
+                    <Link class="uButton" to={"/teams"}>My Teams</Link><Link class="uButton" to={"/store"}>u-fit rewards</Link>
+                    <Link class="uButton" to={"/notif"}>My Notifications</Link>
 
                 </div>
                 <div className={"Feed" }>

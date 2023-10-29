@@ -8,13 +8,14 @@ const TeamsList = () => {
 	const nonAdminTeams = teams.filter((team) => user.id !== team.admin.toString())
 
 	return (
-		<div>
+		<div >
 			<h3>Teams</h3>
-			<ul>
+			<ul >
 				{adminTeams.map((team) => (
-					<li key={team.id} className="admin-team">{team.name}
+					<li  key={team.id} className="admin-team">{team.name}
+						<br/>
 						<Link to={`/admin/teams/${team.id}`}>
-							<button>Edit</button>
+							<button className={"uButton2"} >Edit This</button>
 						</Link>
 					</li>
 				))}
