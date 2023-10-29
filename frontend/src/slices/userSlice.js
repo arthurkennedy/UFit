@@ -21,9 +21,9 @@ const userSlice = createSlice({
             state.user.teams = [...state.user.teams, action.payload]
         },
         addNewInvite: (state, action) => {
-            const {invite, teamId} = action.payload
-            const team = state.user.teams.find(team => team.id === teamId)
-            team.invites = [...team.invites, invite]
+            const invite = action.payload
+            const team = state.user.teams.find(team => team.id === invite.team)
+            team.invitations = [...team.invitations, invite]
         }
     },
     extraReducers: (builder) => {
@@ -35,5 +35,5 @@ const userSlice = createSlice({
     }
 })
 
-export const {logOutUser, initializeUser, addNewTeam} = userSlice.actions
+export const {logOutUser, initializeUser, addNewInvite, addNewTeam} = userSlice.actions
 export default userSlice.reducer

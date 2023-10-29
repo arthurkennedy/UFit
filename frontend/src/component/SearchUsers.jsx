@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react'
 import userService from '../services/user'
 import inviteService from '../services/teamInvitation'
-import {useSelector} from "react-redux";
+import { addNewInvite } from '../slices/userSlice.js'
+import {useDispatch, useSelector} from "react-redux"
 
 const SearchUsers = ({teamId}) => {
 	const [searchTerm, setSearchTerm] = useState('')
@@ -9,6 +10,8 @@ const SearchUsers = ({teamId}) => {
 	const [users, setUsers] = useState([])
 
 	const user = useSelector(state => state.user.user)
+	const team = user.teams.find(team => team.id === teamId)
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
@@ -31,14 +34,15 @@ const SearchUsers = ({teamId}) => {
 		const loggedUserJSON = window.localStorage.getItem('loggedUser')
 		const token = JSON.parse(loggedUserJSON).token
 		const response = await inviteService.inviteUser(token, {invitee: invitee, admin: user.id, team: teamId})
-		if(response.invite) {
-
-		}
+		dispatch(addNewInvite(response))
 	}
 
-	const invite = (prevInvited, invitedStatus, invitee) => {
-		if (prevInvited) {
-			return ({invitedStatus})
+	const invite = (invitee) => {
+		console.log("users", users)
+		const previousInvite = team.invitations.find(invitation => invitation.invitee === invitee)
+		if (previousInvite) {
+			const state = previousInvite.state
+			return (<>{state}</>)
 		} else {
 			return <button onClick={() => handleInvite(invitee)}>invite</button>
 		}
@@ -55,7 +59,7 @@ const SearchUsers = ({teamId}) => {
 			/>
 			<ul>
 				{users.map(user => (
-					<li key={user.id}>{user.username}<button>invite</button></li>
+					<li key={user.id}>{user.username} {invite(user.id)}</li>
 				))}
 			</ul>
 		</div>

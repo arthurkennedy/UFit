@@ -11,9 +11,9 @@ teamInvitationRouter.post('/', async (request, response) => {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 
-	const admin = await User.findById(request.body.invite.admin)
-	const invitee = await User.findById(request.body.invite.invitee)
-	const team = await Team.findById(request.body.invite.team)
+	const admin = await User.findById(request.body.admin)
+	const invitee = await User.findById(request.body.invitee)
+	const team = await Team.findById(request.body.team)
 
 	if (admin._id.toString() !== team.admin.toString()) {
 		return response.status(401).json({ error: 'user must be admin' })
@@ -28,10 +28,8 @@ teamInvitationRouter.post('/', async (request, response) => {
 
 	team.invitations = team.invitations.concat(savedTeamInvitation._id)
 	invitee.invitations = invitee.invitations.concat(savedTeamInvitation._id)
-
 	await invitee.save()
-
-	const savedTeam = await team.save()
+	await team.save()
 	response.json(savedTeamInvitation)
 })
 
