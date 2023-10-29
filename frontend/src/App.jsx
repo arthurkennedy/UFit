@@ -1,10 +1,6 @@
-import {useEffect} from 'react'
-
 // eslint-disable-next-line no-unused-vars
 import {Routes, Navigate, Route} from "react-router-dom"
-import {useDispatch, useSelector} from "react-redux"
-
-import {initializeUser} from "./slices/userSlice.js"
+import {useSelector} from "react-redux"
 
 /*import components*/
 import NavBar from './component/NavBar.jsx'
@@ -19,13 +15,8 @@ import TeamHub from "./component/TeamHub.jsx"
 import EditTeam from "./component/EditTeam.jsx";
 
 const App = () => {
-	const dispatch = useDispatch()
 
 	const user = useSelector((state) => state.user.user)
-	// Initialize the user when the App mounts
-	useEffect(() => {
-		dispatch(initializeUser())
-	}, [dispatch])
 
 	return (
 		<>
