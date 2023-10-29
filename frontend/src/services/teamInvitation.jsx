@@ -9,6 +9,14 @@ const getTeamInvitations = async (token) => {
 	return response.data
 }
 
+const inviteUser = async (token, invite)  => {
+	const config = {
+		headers: { Authorization: `Bearer ${token}` }
+	}
+	const response = await axios.post(baseUrl, invite, config)
+	return response.data
+}
+
 const respondToInvitation = async (invitationId, action, token) => {
 	const config = {
 		headers: { Authorization: `Bearer ${token}` },
@@ -19,5 +27,6 @@ const respondToInvitation = async (invitationId, action, token) => {
 
 export default {
 	getTeamInvitations,
-	respondToInvitation
+	respondToInvitation,
+	inviteUser
 }

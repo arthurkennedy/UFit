@@ -11,9 +11,9 @@ teamInvitationRouter.post('/', async (request, response) => {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 
-	const admin = await User.findById(request.body.admin_id)
-	const invitee = await User.findById(request.body.invitee_id)
-	const team = await Team.findById(request.body.team_id)
+	const admin = await User.findById(request.body.invite.admin)
+	const invitee = await User.findById(request.body.invite.invitee)
+	const team = await Team.findById(request.body.invite.team)
 
 	if (admin._id.toString() !== team.admin.toString()) {
 		return response.status(401).json({ error: 'user must be admin' })
@@ -32,7 +32,7 @@ teamInvitationRouter.post('/', async (request, response) => {
 	await invitee.save()
 
 	const savedTeam = await team.save()
-	response.json({ savedTeam, savedTeamInvitation })
+	response.json(savedTeamInvitation)
 })
 
 teamInvitationRouter.get('/', async (request, response) => {
@@ -75,17 +75,14 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 		team.members = team.members.concat(user._id)
 		await team.save()
 
-		user.teams = user.teams.concat(user._id)
+		user.teams = user.teams.concat(team._id)
 		await user.save()
-
 		responseMessage = 'Invitation accepted.'
 	} else if (action ==='REJECTED') {
 		responseMessage = 'Invitation rejected.'
 	} else {
 		return response.status(400).json({ error: 'invalid action' })
 	}
-
-	await TeamInvitation.findByAndRemove(invitationId)
 
 	response.status(200).json({ message: responseMessage })
 })

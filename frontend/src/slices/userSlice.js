@@ -19,6 +19,11 @@ const userSlice = createSlice({
         },
         addNewTeam: (state, action) => {
             state.user.teams = [...state.user.teams, action.payload]
+        },
+        addNewInvite: (state, action) => {
+            const {invite, teamId} = action.payload
+            const team = state.user.teams.find(team => team.id === teamId)
+            team.invites = [...team.invites, invite]
         }
     },
     extraReducers: (builder) => {
