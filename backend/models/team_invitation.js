@@ -17,6 +17,8 @@ const teamInvitationSchema = new mongoose.Schema({
 	}
 })
 
+teamInvitationSchema.index({ invitee: 1, team: 1 }, { unique: true })
+
 teamInvitationSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString()
