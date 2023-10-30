@@ -1,5 +1,6 @@
 import TeamsList from "./TeamsList.jsx";
 import UserInvitationsList from "./UserInvitationsList.jsx";
+import CreateTeam from "./CreateTeam.jsx";
 
 const MyTeams =()=>{
     return(
@@ -12,6 +13,9 @@ const MyTeams =()=>{
             <div className="page-contents">
                 <TeamsList></TeamsList>
             </div>
+          <div>
+            <CreateTeam />
+          </div>
         </div>
     )
 };

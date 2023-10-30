@@ -35,7 +35,7 @@ const UserInvitationsList = () => {
 				{invitations.map((invitation) => (<li key={invitation.id}>
 						{invitation.team.name} {' '}
 						{invitation.state === 'PENDING' ? <div>
-							<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
+							<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>{' '}
 							<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
 						</div> : invitation.state}
 					</li>))}

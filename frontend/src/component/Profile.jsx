@@ -62,7 +62,7 @@ export default function Profile() {
 					</div>
 				</div>
 			</div>
-			<CreateTeam/>
+			{/*<CreateTeam/>*/}
 			{/*/<TeamsList/>*/}
 		</div>
 	)

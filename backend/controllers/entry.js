@@ -38,7 +38,8 @@ entryRouter.get('/', async (request, response) => {
 	const user = await User.findById(decodedToken.id).populate('teams')
 
 	const teamMemberIds = user.teams.reduce((acc, team) => {
-		return acc.concat(team.members)
+		const allMembers = [...team.members, team.admin]
+		return acc.concat(allMembers)
 	}, [])
 
 	const entries = await Entry
