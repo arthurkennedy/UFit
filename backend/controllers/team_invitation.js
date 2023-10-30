@@ -81,6 +81,8 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 		await invitation.save()
 		responseMessage = 'Invitation accepted.'
 	} else if (action === 'REJECTED') {
+		invitation.state = 'REJECTED'
+		await invitation.save()
 		responseMessage = 'Invitation rejected.'
 	} else {
 		return response.status(400).json({ error: 'invalid action' })
