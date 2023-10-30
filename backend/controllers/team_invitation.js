@@ -63,7 +63,6 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 	const invitation = await TeamInvitation.findById(invitationId)
 
 	let responseMessage = ''
-	console.log(invitation)
 	if(invitation.state === 'ACCEPTED') {
 		return response.status(404).json({ error: 'invitation already accepted' })
 	}

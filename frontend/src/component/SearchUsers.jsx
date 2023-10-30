@@ -38,7 +38,6 @@ const SearchUsers = ({teamId}) => {
 	}
 
 	const invite = (invitee) => {
-		console.log("users", users)
 		const previousInvite = team.invitations.find(invitation => invitation.invitee === invitee)
 		if (previousInvite) {
 			const state = previousInvite.state
