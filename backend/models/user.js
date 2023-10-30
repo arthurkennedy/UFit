@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const { Schema } = require('mongoose')
 
 const userSchema = new mongoose.Schema({
 	username: {
@@ -12,26 +13,34 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
-	first_name: String,
-	last_name: String,
+	firstname: String,
+	lastname: String,
 	email: {
 		type: String,
 		required: true,
 		unique: true
 	},
 	age: { type: Number, min: 1, max: 122 },
-	gender: {
-		type: String,
-		enum: ['Male', 'Female', 'Other']
-	},
 	weight: Number,
+	height: Number,
+	teams: [{
+		type: Schema.Types.ObjectId,
+		ref:'Team'
+	}],
+	invitations: [{
+		type: Schema.Types.ObjectId,
+		ref: 'TeamInvitation'
+	}],
 	created_at: { type: Date, default: Date.now() },
 	updated_at: { type: Date, default: Date.now() }
 })
 
 userSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
-		returnedObject.id = returnedObject._id.toString()
+		//Convert object id to string.
+		if(!returnedObject.id) {
+			returnedObject.id = returnedObject._id.toString()
+		}
 		delete returnedObject._id
 		delete returnedObject.__v
 		delete returnedObject.passwordHash

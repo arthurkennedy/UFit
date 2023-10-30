@@ -1,7 +1,7 @@
 .comp-container {
-    width: 400px;
+    width: 450px;
     height: auto;
-    margin: auto;
+    margin: auto auto 10px;
     padding: 10px;
 }
 
@@ -42,7 +42,74 @@
     color: black;
 }
 
+.auth-link-button:hover{
+    background: #00ffff;
+}
+
 .error-text {
     color: #950000cf;
     font-style: italic;
+}
+
+/*page contents */
+.page-contents-container {
+    padding: 25px 0px;
+}
+
+.page-contents {
+    padding: 10px;
+}
+
+/* navbar */
+
+.navi {
+    display: flex;
+    justify-content: space-between;
+    background-color: #00209b;
+    align-items: center;
+}
+
+.navi ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.navi li {
+    float: left;
+}
+
+.navi ul a {
+    display: block;
+    color: rgb(219, 219, 219);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navi ul a:hover {
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    font-size: large;
+}
+
+.navi .right {
+    padding: 0 10px;
+}
+
+.navi .logout-button {
+    background-color: #3498db; /* Blue background color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Button padding */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.navi .logout-button:hover {
+    background-color: #104b72; /* Darker blue on hover */
 }

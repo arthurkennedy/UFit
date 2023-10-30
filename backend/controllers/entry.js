@@ -1,14 +1,13 @@
 const helper = require('./controller_helper')
-const jwt = require('jsonwebtoken')
 const entryRouter = require('express').Router()
 const User = require('../models/user')
 const Entry = require('../models/entry')
 
 entryRouter.post('/', async (request, response) => {
 	const body = request.body
-	const decodedToken = jwt.verify(helper.parseToken(request), process.env.SECRET)
+	const decodedToken = helper.parseToken(request)
 
-	if(!decodedToken.id) {
+	if (!decodedToken.id) {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 
@@ -20,7 +19,37 @@ entryRouter.post('/', async (request, response) => {
 	})
 
 	const savedEntry = await entry.save()
-	response.json(savedEntry)
+	const responseObject = {
+		...savedEntry._doc,
+		user: { username: user.username, id: user.id }
+	}
+
+	response.status(200).json(responseObject)
+})
+
+entryRouter.get('/', async (request, response) => {
+	const body = request.body
+	const decodedToken = helper.parseToken(request)
+
+	if (!decodedToken.id) {
+		return response.status(401).json({ error: 'invalid authorization token' })
+	}
+
+	const user = await User.findById(decodedToken.id).populate('teams')
+
+	const teamMemberIds = user.teams.reduce((acc, team) => {
+		const allMembers = [...team.members, team.admin]
+		return acc.concat(allMembers)
+	}, [])
+
+	const entries = await Entry
+		.find({
+			$or: [{ 'user': { $in: teamMemberIds } }]
+		})
+		.sort({ createdAt: -1 })
+		.populate('user', 'username')
+
+	return response.status(200).json(entries)
 })
 
 module.exports = entryRouter

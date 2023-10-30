@@ -7,11 +7,20 @@ loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
 
 	const user = await User.findOne({ username })
+		.populate({
+			path: 'teams',
+			populate: [
+				{ path: 'admin', select: '_id' }, // only populates '_id' for admin
+				{ path: 'members', select: 'username _id' }, // populates 'username' and '_id' for members
+				{ path: 'invitations' }
+			]
+		})
+
 	const validPassword = user === null
 		? false
 		: await bcrypt.compare(password, user.passwordHash)
 
-	if(!(user && validPassword)) {
+	if (!(user && validPassword)) {
 		return response.status(401).json({
 			error: 'invalid username or password'
 		})
@@ -22,9 +31,14 @@ loginRouter.post('/', async (request, response) => {
 		id: user._id,
 	}, process.env.SECRET)
 
+	user.teams.forEach(team => {
+		team.admin = team.admin._id
+	})
+
+	const userJSON = user.toJSON()
 	response
 		.status(200)
-		.send({ token, username: user.username, name: user.name })
+		.send({ token, user: userJSON })
 })
 
 module.exports = loginRouter
