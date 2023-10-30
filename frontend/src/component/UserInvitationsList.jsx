@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import teamInvitationService from '../services/teamInvitation'
+import {useDispatch} from "react-redux";
+import {addNewTeam} from "../slices/userSlice.js";
 
 const UserInvitationsList = () => {
+	const dispatch = useDispatch()
 	const [invitations, setInvitations] = useState([])
 
 	useEffect(() => {
@@ -13,29 +16,31 @@ const UserInvitationsList = () => {
 		}
 		getInvitations()
 	}, [])
-
 	const handleInvitation = async (invitationId, action) => {
 		const loggedUserJSON = window.localStorage.getItem('loggedUser')
 		const token = JSON.parse(loggedUserJSON).token
 		const result = await teamInvitationService.respondToInvitation(invitationId, action, token)
-		console.log(result)
+		const team = result.team
+		const updatedInvitation = result.invitation
+		dispatch(addNewTeam(team))
+		const updatedInvitations = invitations.map(invitation =>
+			invitation.id === updatedInvitation.id ? updatedInvitation : invitation
+		)
+		setInvitations(updatedInvitations)
 	}
 
-	return (
-		<div>
+	return (<div>
 			<h3>Team Invitations</h3>
 			<ul>
-				{invitations.map((invitation) => (
-					<li key={invitation.id}>
-						{console.log(invitations, invitation.id)}
-						{invitation.team.name}
-						<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
-						<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
-					</li>
-				))}
+				{invitations.map((invitation) => (<li key={invitation.id}>
+						{invitation.team.name} {' '}
+						{invitation.state === 'PENDING' ? <div>
+							<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
+							<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
+						</div> : invitation.state}
+					</li>))}
 			</ul>
-		</div>
-	)
+		</div>)
 }
 
 export default UserInvitationsList;
