@@ -12,7 +12,7 @@ const teamInvitationSchema = new mongoose.Schema({
 	},
 	state: {
 		type: String,
-		enum: ['PENDING', 'REJECTED'],
+		enum: ['PENDING', 'REJECTED', 'ACCEPTED'],
 		default: 'PENDING'
 	}
 })

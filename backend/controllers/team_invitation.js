@@ -63,11 +63,13 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 	const invitation = await TeamInvitation.findById(invitationId)
 
 	let responseMessage = ''
-
+	console.log(invitation)
+	if(invitation.state === 'ACCEPTED') {
+		return response.status(404).json({ error: 'invitation already accepted' })
+	}
 	if(!invitation || invitation.invitee.toString() !== user._id.toString()) {
 		return response.status(404).json({ error: 'invitation not found or unauthorized user' })
 	}
-
 	if(action === 'ACCEPT') {
 		const team = await Team.findById(invitation.team)
 		team.members = team.members.concat(user._id)
@@ -75,8 +77,10 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 
 		user.teams = user.teams.concat(team._id)
 		await user.save()
+		invitation.state = 'ACCEPTED'
+		await invitation.save()
 		responseMessage = 'Invitation accepted.'
-	} else if (action ==='REJECTED') {
+	} else if (action === 'REJECTED') {
 		responseMessage = 'Invitation rejected.'
 	} else {
 		return response.status(400).json({ error: 'invalid action' })
