@@ -15,7 +15,9 @@ const UserInvitationsList = () => {
 	}, [])
 
 	const handleInvitation = async (invitationId, action) => {
-		const result = await teamInvitationService.respondToInvitation(invitationId, action, window.localStorage.getItem('loggedUser'))
+		const loggedUserJSON = window.localStorage.getItem('loggedUser')
+		const token = JSON.parse(loggedUserJSON).token
+		const result = await teamInvitationService.respondToInvitation(invitationId, action, token)
 		console.log(result)
 	}
 
@@ -26,8 +28,8 @@ const UserInvitationsList = () => {
 				{invitations.map((invitation) => (
 					<li key={invitation.id}>
 						{invitation.team.name}
-						<button onClick={() => handleInvitation(invitation._id, 'ACCEPT')}>Accept</button>
-						<button onClick={() => handleInvitation(invitation._id, 'REJECT')}>Reject</button>
+						<button onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
+						<button onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
 					</li>
 				))}
 			</ul>

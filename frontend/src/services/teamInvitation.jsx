@@ -21,7 +21,8 @@ const respondToInvitation = async (invitationId, action, token) => {
 	const config = {
 		headers: { Authorization: `Bearer ${token}` },
 	}
-	const response = await axios.put(`${baseUrl}/${invitationId}`, config)
+	console.log(action)
+	const response = await axios.put(`${baseUrl}/${invitationId}`, {action}, config)
 	return response.data
 }
 

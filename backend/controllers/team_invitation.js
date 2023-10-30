@@ -52,8 +52,8 @@ teamInvitationRouter.get('/', async (request, response) => {
 
 teamInvitationRouter.put('/:invitationId', async (request, response) => {
 	const decodedToken = helper.parseToken(request)
-
-	if(!decodedToken.id) {
+	console.log(decodedToken)
+	if(!decodedToken || !decodedToken.id) {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 
