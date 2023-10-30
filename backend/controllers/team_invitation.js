@@ -72,13 +72,17 @@ teamInvitationRouter.put('/:invitationId', async (request, response) => {
 	if(action === 'ACCEPT') {
 		const team = await Team.findById(invitation.team)
 		team.members = team.members.concat(user._id)
-		await team.save()
-
 		user.teams = user.teams.concat(team._id)
-		await user.save()
-		invitation.state = 'ACCEPTED'
-		await invitation.save()
-		responseMessage = 'Invitation accepted.'
+
+		if(!team.members.includes(user._id.toString()) && !user.teams.includes(team._id)) {
+			await team.save()
+			await user.save()
+			invitation.state = 'ACCEPTED'
+			await invitation.save()
+			responseMessage = 'Invitation accepted.'
+		} else {
+			return response.status(404).json({ error: 'Error, user already a member of team' })
+		}
 	} else if (action === 'REJECTED') {
 		invitation.state = 'REJECTED'
 		await invitation.save()

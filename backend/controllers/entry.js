@@ -6,14 +6,13 @@ const Entry = require('../models/entry')
 
 entryRouter.post('/', async (request, response) => {
 	const body = request.body
-	const decodedToken = jwt.verify(helper.parseToken(request), process.env.SECRET)
+	const decodedToken = helper.parseToken(request)
 
 	if (!decodedToken.id) {
 		return response.status(401).json({ error: 'invalid authorization token' })
 	}
 
 	const user = await User.findById(decodedToken.id)
-
 
 	const entry = new Entry({
 		content: body.content,
@@ -22,6 +21,30 @@ entryRouter.post('/', async (request, response) => {
 
 	const savedEntry = await entry.save()
 	response.json(savedEntry)
+})
+
+entryRouter.get('/', async (request, response) => {
+	const body = request.body
+	const decodedToken = helper.parseToken(request)
+
+	if (!decodedToken.id) {
+		return response.status(401).json({ error: 'invalid authorization token' })
+	}
+
+	const user = await User.findById(decodedToken.id).populate('teams')
+
+	const teamMemberIds = user.teams.reduce((acc, team) => {
+		return acc.concat(team.members)
+	}, [])
+
+	const entries = await Entry
+		.find({
+			$or: [{ 'user': { $in: teamMemberIds } }]
+		})
+		.sort({ createdAt: -1 })
+		.populate('user', 'username')
+
+	return response.status(200).json(entries)
 })
 
 module.exports = entryRouter

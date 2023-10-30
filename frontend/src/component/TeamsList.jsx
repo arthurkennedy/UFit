@@ -9,19 +9,21 @@ const TeamsList = () => {
 
 	return (
 		<div >
-			<h3>Teams</h3>
 			<ul >
-				{adminTeams.map((team) => (
+				<h3>Teams I admin</h3>
+				{adminTeams.length > 0 ?
+					adminTeams.map((team) => (
 					<li  key={team.id} className="admin-team">{team.name}
 						<br/>
 						<Link to={`/admin/teams/${team.id}`}>
 							<button className={"uButton2"} >Edit This</button>
 						</Link>
 					</li>
-				))}
-				{nonAdminTeams.map((team) => (
+				)) : "None"}
+				<h3>Teams I am in</h3>
+				{nonAdminTeams.length > 0 ? nonAdminTeams.map((team) => (
 					<li key={team.id}>{team.name}</li>
-				))}
+				)) : "None"}
 			</ul>
 		</div>
 	)

@@ -10,7 +10,6 @@ const MyTeams =()=>{
             </div>
 
             <div className="page-contents">
-                <h1>Teams I'm In</h1>
                 <TeamsList></TeamsList>
             </div>
         </div>

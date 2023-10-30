@@ -10,6 +10,16 @@ const post = async (entry, token) => {
     return response.data
 }
 
+const getFeed = async (token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}`}
+    }
+
+    const response = await axios.get(baseUrl, config)
+    return response.data
+}
+
 export default {
-    post
+    post,
+    getFeed
 }

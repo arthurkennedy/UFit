@@ -36,7 +36,6 @@ loginRouter.post('/', async (request, response) => {
 	})
 
 	const userJSON = user.toJSON()
-	console.log(userJSON)
 	response
 		.status(200)
 		.send({ token, user: userJSON })
