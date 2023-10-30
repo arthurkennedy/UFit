@@ -30,12 +30,20 @@ ul {
     color: black;
 }
 
+.app-name:hover {
+    color:blue;
+}
+
 .uButton {
     background-color:var(--accent);
     border:none;
     border-radius: 10px;
     color:white;
     padding: 10px;
+}
+
+.uButton:hover,.uButton2:hover {
+    background-color: aqua;
 }
 .uButton2 {
     background-color:darkslateblue;
@@ -51,6 +59,15 @@ ul {
     color:white;
     padding: 10px;
 }
+
+.yes:hover{
+    background-color:#00ff00;
+}
+.no:hover{
+    background-color: #ff9898;
+}
+
+
 .no {
     background-color:red;
     border:none;
