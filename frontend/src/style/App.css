@@ -9,6 +9,7 @@
 
 body {
     background-color: #2067d3;
+    margin: 1in
 }
 
 form {
@@ -30,5 +31,30 @@ form {
     border:none;
     border-radius: 10px;
     color:white;
+    padding: 10px;
+}
+.uButton2 {
+    background-color:darkslateblue;
+    border:none;
+    border-radius: 5px;
+    color:white;
+    padding: 5px;
+}
+.yes {
+    background-color:green;
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
+.no {
+    background-color:red;
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
+
+.admin-team{
     padding: 10px;
 }

@@ -10,9 +10,10 @@ import Home from './component/Home'
 import UnknownEndpoint from './component/UnknownEndpoint.jsx'
 import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
-import Admin from "./component/Admin.jsx"
-import TeamHub from "./component/TeamHub.jsx"
+import MyTeams from "./component/MyTeams.jsx"
+import RewardStore from "./component/rewardStore.jsx"
 import EditTeam from "./component/EditTeam.jsx";
+import notifCenter from "./component/notif.jsx";
 
 const App = () => {
 
@@ -41,11 +42,15 @@ const App = () => {
 				<Route path="/feed" element={
 					<Feed />
 				}/>
-				<Route path="/teams" element={
-					<TeamHub />
+				<Route path="/store" element={
+					<RewardStore />
 				}/>
-				<Route path="/admin" element={
-					<Admin />
+				<Route path="/teams" element={
+					<MyTeams />
+				}/>
+				<Route path="/notif" element={
+					notifCenter()
+
 				}/>
 				<Route path="/admin/teams/:teamId" element={<EditTeam/>} />
 				<Route path="*" element={<UnknownEndpoint/>}/>

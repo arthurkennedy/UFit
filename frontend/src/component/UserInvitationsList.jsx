@@ -28,8 +28,8 @@ const UserInvitationsList = () => {
 				{invitations.map((invitation) => (
 					<li key={invitation.id}>
 						{invitation.team.name}
-						<button onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
-						<button onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
+						<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
+						<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
 					</li>
 				))}
 			</ul>

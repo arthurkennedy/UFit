@@ -32,7 +32,7 @@ const CreateTeam = () => {
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 				/>
-				<button type="submit">Create Team</button>
+				<button class="uButton2" type="submit">Create Team</button>
 			</form>
 		</div>
 	)

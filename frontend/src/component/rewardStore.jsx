@@ -1,8 +1,8 @@
-const Admin =()=>{
+const RewardStore =()=>{
     return(
         <>
             <>
-                <h1>Section One</h1>
+                <h1>Coming Soon: U-Fit Rewards</h1>
                 <>
                 </>
             </>
@@ -19,4 +19,4 @@ const Admin =()=>{
         </>
     )
 };
-export default Admin;
+export default RewardStore
