@@ -113,7 +113,7 @@ const FetchPost = () => {
 // Feed uses widgets above.
 const Feed = () => {
     return (
-        <>
+        <div className="page-contents-container">
             <h1> Feed</h1>
             <h3>Create New Post</h3>
             <br/>
@@ -123,7 +123,7 @@ const Feed = () => {
                 <h3>Users you followed will post here..</h3>
                 <FetchPost/>
             </div>
-        </>
+        </div>
     );
 };
 

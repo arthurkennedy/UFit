@@ -1,15 +1,12 @@
 import {useSelector, useDispatch} from 'react-redux'
-import {logOutUser} from '../slices/userSlice' // Adjust this import to your folder structure
 
 
 import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
-import UserInvitationsList from "./UserInvitationsList.jsx";
 import CreateTeam from "./CreateTeam.jsx";
 //import TeamsList from "./TeamsList.jsx"; moved to EditTeam.JSX
 
 export default function Profile() {
-	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user.user)
 
 	const convertMetersToInches = (meters) => meters * 39.3701
@@ -35,13 +32,8 @@ export default function Profile() {
 		bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
 	}
 
-	const userLogout = () => {
-		dispatch(logOutUser()); // This will update the Redux state
-		window.localStorage.removeItem('loggedUser') // Remove the user from local storage
-	}
-
 	return (
-		<div>
+		<div className='page-contents-container'>
 			<div className="profile row">
 				<div className="left">
 					<img src={myImage} width="100"/>
@@ -69,12 +61,7 @@ export default function Profile() {
 						</div>
 					</div>
 				</div>
-				<div>
-					<button onClick={userLogout}>Log Out</button>
-				</div>
 			</div>
-			<h1>Team Quick Actions</h1>
-			<UserInvitationsList/>
 			<CreateTeam/>
 			{/*/<TeamsList/>*/}
 		</div>

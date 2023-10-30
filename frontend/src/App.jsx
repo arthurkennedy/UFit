@@ -24,35 +24,28 @@ const App = () => {
 			<a className="app-name" href="/">
 				<h1>U-FIT</h1>
 			</a>
+            
 			<>
 				<NavBar/>
 			</>
-			<Routes>
-				{user ? (
-					<Route path="/" element={<Profile/>}/>
-				) : (
-					<Route path="/" element={<Home/>}/>
-				)}
-				<Route path="/login" element={
-					<Login />
-				}/>
-				<Route path="/signup" element={
-					<Signup/>
-				}/>
-				<Route path="/feed" element={
-					<Feed />
-				}/>
-				<Route path="/store" element={
-					<RewardStore />
-				}/>
-				<Route path="/teams" element={
-					<MyTeams />
-				}/>
-				<Route path="/notif" element={
-					notifCenter()
 
-				}/>
-				<Route path="/admin/teams/:teamId" element={<EditTeam/>} />
+			<Routes>
+                <Route path="/" element={user ? <Profile /> : <Home />} />
+
+                <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} /> 
+
+                <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
+
+				<Route path="/feed" element={ !user ? <Navigate to="/" /> : <Feed /> }/>
+
+				<Route path="/store" element={ !user ? <Navigate to="/" /> : <RewardStore /> }/>
+				
+                <Route path="/teams" element={ !user ? <Navigate to="/" /> : <MyTeams /> }/>
+
+				<Route path="/notif" element={ !user ? <Navigate to="/" /> : notifCenter() }/>
+
+				<Route path="/admin/teams/:teamId" element={ !user ? <Navigate to="/" /> : <EditTeam/> } />
+
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>
 		</>

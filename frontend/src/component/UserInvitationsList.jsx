@@ -27,6 +27,7 @@ const UserInvitationsList = () => {
 			<ul>
 				{invitations.map((invitation) => (
 					<li key={invitation.id}>
+						{console.log(invitations, invitation.id)}
 						{invitation.team.name}
 						<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>
 						<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>

@@ -21,9 +21,10 @@ teamInvitationSchema.index({ invitee: 1, team: 1 }, { unique: true })
 
 teamInvitationSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
-		if(returnedObject._id){
-			returnedObject.id = returnedObject._id.toString()
-		}
+		
+		//Convert object id to string.
+		returnedObject._id? returnedObject._id = returnedObject._id.toString(): null
+
 		delete returnedObject._id
 		delete returnedObject.__v
 	}

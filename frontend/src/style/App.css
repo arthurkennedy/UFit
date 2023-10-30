@@ -9,13 +9,17 @@
 
 body {
     background-color: #2067d3;
-    margin: 1in
+    margin: 0.2in 1in;
 }
 
 form {
     padding: 10px;
     background: aqua;
     margin-top: 5px;
+}
+
+ul {
+    list-style-type: none;
 }
 
 .app-name {
