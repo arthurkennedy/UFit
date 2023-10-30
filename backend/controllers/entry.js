@@ -28,7 +28,6 @@ entryRouter.post('/', async (request, response) => {
 })
 
 entryRouter.get('/', async (request, response) => {
-	const body = request.body
 	const decodedToken = helper.parseToken(request)
 
 	if (!decodedToken.id) {
