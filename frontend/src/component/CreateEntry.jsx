@@ -2,8 +2,10 @@ import {useState} from "react"
 import {EditorState, convertToRaw} from "draft-js"
 import entryService from "../services/entry.jsx"
 import {Editor} from "react-draft-wysiwyg"
+import {useDispatch} from "react-redux";
+import {addEntry} from '../slices/entrySlice.js'
 
-const CreatePost = () => {
+const CreateEntry = () => {
 	/**
 	 * Form info data can transfer as CSV or JSON
 	 * It would include posting user, generated message ID, subject line, and body
@@ -14,6 +16,7 @@ const CreatePost = () => {
 
 	const [editor, setEditor] = useState(() => EditorState.createEmpty())
 
+	const dispatch = useDispatch()
 	const handleSubmit = async (event) => {
 		event.preventDefault()
     const contentState = editor.getCurrentContent()
@@ -21,6 +24,7 @@ const CreatePost = () => {
 		const loggedUserJSON = window.localStorage.getItem('loggedUser')
 		const token = JSON.parse(loggedUserJSON).token
 		const entry = await entryService.post({"content": rawContent}, token)
+		dispatch(addEntry(entry))
     setEditor(() => EditorState.createEmpty())
 	}
 	return (
@@ -47,4 +51,4 @@ const CreatePost = () => {
 	)
 }
 
-export default CreatePost
+export default CreateEntry

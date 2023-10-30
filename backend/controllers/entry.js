@@ -20,7 +20,12 @@ entryRouter.post('/', async (request, response) => {
 	})
 
 	const savedEntry = await entry.save()
-	response.json(savedEntry)
+	const responseObject = {
+		...savedEntry._doc,
+		user: { username: user.username, id: user.id }
+	}
+
+	response.status(200).json(responseObject)
 })
 
 entryRouter.get('/', async (request, response) => {

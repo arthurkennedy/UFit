@@ -1,6 +1,6 @@
 import "../style/feed.css"
-import CreatePost from "./CreatePost.jsx";
-import PostList from "./PostList.jsx";
+import CreateEntry from "./CreateEntry.jsx";
+import EntryList from "./EntryList.jsx";
 
 /* This user feed page will only be visible if you logged in.*/
 
@@ -11,11 +11,11 @@ const Feed = () => {
             <h1> Feed</h1>
             <h3>Create New Post</h3>
             <br/>
-            <CreatePost/>
+            <CreateEntry/>
             <br/>
             <div className="container">
                 <h3>Users you followed will post here..</h3>
-                <PostList/>
+                <EntryList/>
             </div>
         </div>
     );
