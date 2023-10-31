@@ -2,7 +2,7 @@ import {useState} from "react"
 import {EditorState, convertToRaw} from "draft-js"
 import entryService from "../services/entry.jsx"
 import {Editor} from "react-draft-wysiwyg"
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addEntry} from '../slices/entrySlice.js'
 
 const CreateEntry = () => {
@@ -15,14 +15,12 @@ const CreateEntry = () => {
 	 */
 
 	const [editor, setEditor] = useState(() => EditorState.createEmpty())
-
+	const token = useSelector(state => state.user.token)
 	const dispatch = useDispatch()
 	const handleSubmit = async (event) => {
 		event.preventDefault()
     const contentState = editor.getCurrentContent()
     const rawContent = JSON.stringify(convertToRaw(contentState))
-		const loggedUserJSON = window.localStorage.getItem('loggedUser')
-		const token = JSON.parse(loggedUserJSON).token
 		const entry = await entryService.post({"content": rawContent}, token)
 		dispatch(addEntry(entry))
     setEditor(() => EditorState.createEmpty())

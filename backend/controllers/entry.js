@@ -1,20 +1,14 @@
-const helper = require('./controller_helper')
 const entryRouter = require('express').Router()
-const User = require('../models/user')
 const Entry = require('../models/entry')
+const User = require('../models/user')
+const Team = require('../models/team')
+const { authenticate } = require('../utils/middleware')
 
-entryRouter.post('/', async (request, response) => {
-	const body = request.body
-	const decodedToken = helper.parseToken(request)
-
-	if (!decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
-	const user = await User.findById(decodedToken.id)
+entryRouter.post('/', authenticate, async (request, response) => {
+	const user = await User.findById(request.user.id)
 
 	const entry = new Entry({
-		content: body.content,
+		content: request.body.content,
 		user: user._id
 	})
 
@@ -27,15 +21,9 @@ entryRouter.post('/', async (request, response) => {
 	response.status(200).json(responseObject)
 })
 
-entryRouter.get('/', async (request, response) => {
-	const body = request.body
-	const decodedToken = helper.parseToken(request)
-
-	if (!decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
-	const user = await User.findById(decodedToken.id).populate('teams')
+entryRouter.get('/', authenticate, async (request, response) => {
+	console.log(request.user)
+	const user = await User.findById(request.user.id).populate('teams')
 
 	const teamMemberIds = user.teams.reduce((acc, team) => {
 		const allMembers = [...team.members, team.admin]
@@ -50,6 +38,34 @@ entryRouter.get('/', async (request, response) => {
 		.populate('user', 'username')
 
 	return response.status(200).json(entries)
+})
+
+entryRouter.get('/team', authenticate, async (request, response) => {
+	const { teamId } = request.query
+
+	const user = await User.findById(request.user.id)
+
+	const team = await Team.findById(teamId).populate('members').populate('admin')
+
+	if(!team) {
+		return response.status(404).json({ error: 'team not found' })
+	}
+
+	const teamMemberIds = [...team.members, team.admin]
+
+	if(!teamMemberIds.includes(user._id)) {
+		return response.status(405).json({ error: 'user not authorized' })
+	}
+
+	const entries = await Entry
+		.find({
+			$or: [{ 'user': { $in: teamMemberIds } }]
+		})
+		.sort({ createdAt: -1 })
+		.populate('user', 'username')
+
+	return response.status(200).json(entries)
+
 })
 
 module.exports = entryRouter

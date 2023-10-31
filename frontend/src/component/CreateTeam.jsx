@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import teamService from '../services/team'
 import { addNewTeam } from '../slices/userSlice.js'
 
 const CreateTeam = () => {
 	const [name, setName] = useState('')
-
+	const token = useSelector(state => state.user.token)
 	const dispatch = useDispatch()
 
 	const handleSubmit = async (event) => {
@@ -14,8 +14,6 @@ const CreateTeam = () => {
 		const newTeam = {
 			name: name
 		}
-		const loggedUserJSON = window.localStorage.getItem('loggedUser')
-		const token = JSON.parse(loggedUserJSON).token
 		const createdTeam = await teamService.createTeam(newTeam, token)
 		dispatch(addNewTeam(createdTeam))
 		setName('')

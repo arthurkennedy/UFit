@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react'
 import teamInvitationService from '../services/teamInvitation'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addNewTeam} from "../slices/userSlice.js";
 
 const UserInvitationsList = () => {
+	const token = useSelector(state => state.user.token)
 	const dispatch = useDispatch()
 	const [invitations, setInvitations] = useState([])
 
@@ -17,8 +18,6 @@ const UserInvitationsList = () => {
 		getInvitations()
 	}, [])
 	const handleInvitation = async (invitationId, action) => {
-		const loggedUserJSON = window.localStorage.getItem('loggedUser')
-		const token = JSON.parse(loggedUserJSON).token
 		const result = await teamInvitationService.respondToInvitation(invitationId, action, token)
 		const team = result.team
 		const updatedInvitation = result.invitation

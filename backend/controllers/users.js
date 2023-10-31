@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const Team = require('../models/team')
-const helper = require('./controller_helper')
+const { authenticate } = require('../utils/middleware')
 
 usersRouter.post('/', async (request, response) => {
 	const body = request.body
@@ -27,12 +27,8 @@ usersRouter.post('/', async (request, response) => {
 	response.status(201).json(savedUser)
 })
 
-usersRouter.get('/', async (req, res) => {
-	const decodedToken = helper.parseToken(req)
-	if (!decodedToken.id) {
-		return res.status(401).json({ error: 'invalid authorization token' })
-	}
-	const user = await User.findById(decodedToken.id)
+usersRouter.get('/', authenticate, async (req, res) => {
+	const user = User.findById(req.user.id)
 	if (user) {
 		return res.json(user.toJSON())
 	} else {

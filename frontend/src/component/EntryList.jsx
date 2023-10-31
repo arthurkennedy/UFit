@@ -6,10 +6,9 @@ import {fetchEntries} from '../slices/entrySlice.js'
 
 const EntryList = () => {
 	const entries = useSelector((state) => state.entries.entries)
+	const token = useSelector((state) => state.user.token)
 	const dispatch = useDispatch()
 	useEffect(() => {
-		const loggedUserJSON = window.localStorage.getItem('loggedUser')
-		const token = JSON.parse(loggedUserJSON).token
 		dispatch(fetchEntries(token))
 	}, [dispatch])
 

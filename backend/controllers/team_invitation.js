@@ -1,16 +1,10 @@
-const helper = require('./controller_helper')
 const User = require('../models/user')
 const Team = require('../models/team')
 const TeamInvitation = require('../models/team_invitation')
+const { authenticate } = require('../utils/middleware')
 const teamInvitationRouter = require('express').Router()
 
-teamInvitationRouter.post('/', async (request, response) => {
-	const decodedToken = helper.parseToken(request)
-
-	if (!decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
+teamInvitationRouter.post('/', authenticate, async (request, response) => {
 	const admin = await User.findById(request.body.admin)
 	const invitee = await User.findById(request.body.invitee)
 	const team = await Team.findById(request.body.team)
@@ -33,15 +27,9 @@ teamInvitationRouter.post('/', async (request, response) => {
 	response.json(savedTeamInvitation)
 })
 
-teamInvitationRouter.get('/', async (request, response) => {
-	const decodedToken = helper.parseToken(request)
-
-	if (!decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
+teamInvitationRouter.get('/', authenticate,async (request, response) => {
 	// Find all invitations for this user
-	const invitations = await TeamInvitation.find({ invitee: decodedToken.id })
+	const invitations = await TeamInvitation.find({ invitee: request.user._id })
 
 	// Populate the 'team' field to include more information about each team
 	await TeamInvitation.populate(invitations, { path: 'team', select: 'name' })
@@ -50,14 +38,8 @@ teamInvitationRouter.get('/', async (request, response) => {
 })
 
 
-teamInvitationRouter.put('/:invitationId', async (request, response) => {
-	const decodedToken = helper.parseToken(request)
-	console.log(decodedToken)
-	if(!decodedToken || !decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
-	const user = await User.findById(decodedToken.id)
+teamInvitationRouter.put('/:invitationId', authenticate,async (request, response) => {
+	const user = await User.findById(request.user.id)
 	const invitationId = request.params.invitationId
 	const action = request.body.action
 	const invitation = await TeamInvitation.findById(invitationId)

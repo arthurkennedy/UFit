@@ -12,7 +12,6 @@ const NavBar = () => {
 
         const userLogout = () => {
             dispatch(logOutUser()); // This will update the Redux state
-            window.localStorage.removeItem('loggedUser') // Remove the user from local storage
         }
 
         return(

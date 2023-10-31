@@ -9,7 +9,7 @@ import {persistReducer, persistStore} from "redux-persist";
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user']
+    whitelist: ['user', 'token']
 }
 
 const persistUserReducer = persistReducer(persistConfig, userReducer)

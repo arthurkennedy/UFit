@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
+const { authenticate } = require('../utils/middleware')
 
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
@@ -29,7 +30,7 @@ loginRouter.post('/', async (request, response) => {
 	const token = jwt.sign({
 		username: user.username,
 		id: user._id,
-	}, process.env.SECRET)
+	}, process.env.SECRET, { expiresIn: 3600 })
 
 	user.teams.forEach(team => {
 		team.admin = team.admin._id
@@ -39,6 +40,9 @@ loginRouter.post('/', async (request, response) => {
 	response
 		.status(200)
 		.send({ token, user: userJSON })
+})
+
+loginRouter.post('/validate', authenticate, async (_, _r) => {
 })
 
 module.exports = loginRouter

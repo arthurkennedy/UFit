@@ -11,14 +11,13 @@ const SearchUsers = ({teamId}) => {
 
 	const user = useSelector(state => state.user.user)
 	const team = user.teams.find(team => team.id === teamId)
+	const token = useSelector(state => state.user.token)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
 			const performSearch = async () => {
 				try {
-					const loggedUserJSON = window.localStorage.getItem('loggedUser')
-					const token = JSON.parse(loggedUserJSON).token
 					const result = await userService.searchUsers(teamId, searchTerm, token)
 					setUsers(result)
 				} catch (error) {

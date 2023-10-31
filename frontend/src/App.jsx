@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import {Routes, Navigate, Route} from "react-router-dom"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 /*import components*/
 import NavBar from './component/NavBar.jsx'
@@ -14,37 +14,47 @@ import MyTeams from "./component/MyTeams.jsx"
 import RewardStore from "./component/rewardStore.jsx"
 import EditTeam from "./component/EditTeam.jsx";
 import notifCenter from "./component/notif.jsx";
+import {validateUserToken} from "./slices/userSlice.js";
+import {useEffect} from "react";
 
 const App = () => {
 
 	const user = useSelector((state) => state.user.user)
+	const token = useSelector((state) => state.user.token)
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if(token) {
+			dispatch(validateUserToken(token))
+		}
+	}, [token, dispatch])
 
 	return (
 		<>
 			<a className="app-name" href="/">
 				<h1>U-FIT</h1>
 			</a>
-            
+
 			<>
 				<NavBar/>
 			</>
 
 			<Routes>
-                <Route path="/" element={user ? <Profile /> : <Home />} />
+				<Route path="/" element={user ? <Profile/> : <Home/>}/>
 
-                <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} /> 
+				<Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
 
-                <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
+				<Route path="/signup" element={user ? <Navigate to="/"/> : <Signup/>}/>
 
-				<Route path="/feed" element={ !user ? <Navigate to="/" /> : <Feed /> }/>
+				<Route path="/feed" element={!user ? <Navigate to="/"/> : <Feed/>}/>
 
-				<Route path="/store" element={ !user ? <Navigate to="/" /> : <RewardStore /> }/>
-				
-                <Route path="/teams" element={ !user ? <Navigate to="/" /> : <MyTeams /> }/>
+				<Route path="/store" element={!user ? <Navigate to="/"/> : <RewardStore/>}/>
 
-				<Route path="/notif" element={ !user ? <Navigate to="/" /> : notifCenter() }/>
+				<Route path="/teams" element={!user ? <Navigate to="/"/> : <MyTeams/>}/>
 
-				<Route path="/admin/teams/:teamId" element={ !user ? <Navigate to="/" /> : <EditTeam/> } />
+				<Route path="/notif" element={!user ? <Navigate to="/"/> : notifCenter()}/>
+
+				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <EditTeam/>}/>
 
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>
