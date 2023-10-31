@@ -1,15 +1,16 @@
-import axios from 'axios'
+import api from "./apiInterceptor"
+import axios from "axios";
 
-const baseUrl = '/api/login'
+const baseUrl = '/login'
 
 const login = async credentials => {
-	const response = await axios.post(baseUrl, credentials)
+	const response = await axios.post(`/api/${baseUrl}`, credentials)
 	return response.data;
 }
 
 const validateToken = async token => {
 	try {
-		const response = await axios.post(`${baseUrl}/validate`,{}, {
+		const response = await api.post(`${baseUrl}/validate`,{}, {
 			headers: {'Authorization': `Bearer ${token}`}
 		})
 		return {valid: true, data: response.data}

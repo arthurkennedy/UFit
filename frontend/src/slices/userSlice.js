@@ -15,7 +15,8 @@ const userSlice = createSlice({
 	initialState: {user: null, token: null},
 	reducers: {
 		logOutUser: (state) => {
-			state.user = null;
+			state.user = null
+			state.token = null
 		},
 		addNewTeam: (state, action) => {
 			state.user.teams = [...state.user.teams, action.payload]
