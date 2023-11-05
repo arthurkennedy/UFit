@@ -36,7 +36,8 @@ usersRouter.get('/', authenticate, async (req, res) => {
 	}
 })
 
-usersRouter.get('/search', async (request, response) => {
+usersRouter.get('/search', authenticate, async (request, response) => {
+	console.log(request.query)
 	const teamId = request.query.teamId
 	const searchTerm = request.query.searchTerm || ''
 

@@ -24,7 +24,7 @@ const searchUsers = async (teamId, searchTerm, token) => {
             searchTerm
         }
     }
-    const response = await api.get('/api/users/search', config)
+    const response = await api.get('/users/search', config)
     return response.data
 }
 
