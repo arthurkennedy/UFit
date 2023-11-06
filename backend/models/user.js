@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
 	age: { type: Number, min: 1, max: 122 },
 	weight: Number,
 	height: Number,
+	picture: { type:String, default: '' },
 	teams: [{
 		type: Schema.Types.ObjectId,
 		ref:'Team'
