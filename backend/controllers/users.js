@@ -27,12 +27,12 @@ usersRouter.post('/', async (request, response) => {
 	response.status(201).json(savedUser)
 })
 
-usersRouter.get('/', authenticate, async (req, res) => {
-	const user = User.findById(req.user.id)
+usersRouter.get('/', authenticate, async (request, response) => {
+	const user = User.findById(request.user.id)
 	if (user) {
-		return res.json(user.toJSON())
+		return response.json(user.toJSON())
 	} else {
-		return res.status(404).end()
+		return response.status(404).end()
 	}
 })
 
@@ -56,6 +56,18 @@ usersRouter.get('/search', authenticate, async (request, response) => {
 		.limit(20)
 
 	response.status(200).json(users)
+})
+
+usersRouter.put('/profile', authenticate, async (request, response) => {
+	const updatedUser = await User.findByIdAndUpdate(
+		request.user.id,
+		{ $set: response.body },
+		{ new: true, runValidators: true }
+	)
+	if(!updatedUser) {
+		return response.status(404).end()
+	}
+	response.status(200).json(updatedUser)
 })
 
 module.exports = usersRouter

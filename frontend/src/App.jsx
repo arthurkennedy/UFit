@@ -11,13 +11,13 @@ import UnknownEndpoint from './component/UnknownEndpoint.jsx'
 import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
 import MyTeams from "./component/MyTeams.jsx"
-import RewardStore from "./component/rewardStore.jsx"
+import RewardStore from "./component/RewardStore.jsx"
 import EditTeam from "./component/EditTeam.jsx";
-import notifCenter from "./component/notif.jsx";
+import NotificationCenter from "./component/NotificationCenter.jsx"
 import ProfileSettings from "./component/ProfileSettings.jsx"
 
-import {validateUserToken} from "./slices/userSlice.js";
-import {useEffect} from "react";
+import {validateUserToken} from "./slices/userSlice.js"
+import {useEffect} from "react"
 
 const App = () => {
 
@@ -56,7 +56,7 @@ const App = () => {
 
 				<Route path="/teams" element={!user ? <Navigate to="/"/> : <MyTeams/>}/>
 
-				<Route path="/notif" element={!user ? <Navigate to="/"/> : notifCenter()}/>
+				<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/> }/>
 
 				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <EditTeam/>}/>
 

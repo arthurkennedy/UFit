@@ -38,7 +38,7 @@ teamInvitationRouter.get('/', authenticate,async (request, response) => {
 })
 
 
-teamInvitationRouter.put('/:invitationId', authenticate,async (request, response) => {
+teamInvitationRouter.put('/:invitationId', authenticate, async (request, response) => {
 	const user = await User.findById(request.user.id)
 	const invitationId = request.params.invitationId
 	const action = request.body.action

@@ -1,4 +1,4 @@
-const notifCenter =()=>{
+const NotificationCenter =()=>{
     return(
         <div className="page-contents-container">
             <>
@@ -10,4 +10,4 @@ const notifCenter =()=>{
         </div>
     )
 };
-export default notifCenter;
+export default NotificationCenter;

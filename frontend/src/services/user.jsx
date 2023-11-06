@@ -28,6 +28,14 @@ const searchUsers = async (teamId, searchTerm, token) => {
     return response.data
 }
 
+const editProfile = async (user, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+    }
+    const response = await api.put(`${baseUrl}/profile`, {}, config)
+    return response.data
+}
+
 export default {
     signup,
     getUserDetails,
