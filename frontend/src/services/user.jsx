@@ -32,12 +32,13 @@ const editProfile = async (user, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` },
     }
-    const response = await api.put(`${baseUrl}/profile`, {}, config)
+    const response = await api.put(`${baseUrl}/profile`, {user}, config)
     return response.data
 }
 
 export default {
     signup,
     getUserDetails,
-    searchUsers
+    searchUsers,
+    editProfile
 }
