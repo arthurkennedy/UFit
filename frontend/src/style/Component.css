@@ -58,6 +58,15 @@
 
 .page-contents {
     padding: 10px;
+    color:white;
+}
+.page-contents h2{
+    color: white !important;
+}
+.page-contents form input{
+    padding: 4px;
+    font-size: 18px;
+    line-height: 20px;
 }
 
 /* navbar */
@@ -113,3 +122,9 @@
 .navi .logout-button:hover {
     background-color: #104b72; /* Darker blue on hover */
 }
+
+.w50{
+    width: 50%;
+}
+
+
