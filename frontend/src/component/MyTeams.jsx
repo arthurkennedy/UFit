@@ -5,17 +5,26 @@ import CreateTeam from "./CreateTeam.jsx";
 const MyTeams =()=>{
     return(
         <div className="page-contents-container">
-            <div className="page-contents">
-                <h1>Team Quick Actions</h1>
-			    <UserInvitationsList/>
-            </div>
+          <div className="row">
+            <div className="left w50">
+                <div className="page-contents">
+                    <h1>Team Quick Actions</h1>
+                    <UserInvitationsList/>
+                </div>
 
-            <div className="page-contents">
-                <TeamsList></TeamsList>
+                <div className="page-contents">
+                    <TeamsList></TeamsList>
+                </div>
+          
             </div>
-          <div>
-            <CreateTeam />
+            <div className="right w50">
+              <div className="page-contents">
+                <CreateTeam />
+                </div>
+            </div>
           </div>
+          
+         
         </div>
     )
 };

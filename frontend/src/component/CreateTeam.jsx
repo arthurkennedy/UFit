@@ -21,7 +21,7 @@ const CreateTeam = () => {
 
 	return (
 		<div>
-			<h3>Create a New Team</h3>
+			<h2>Create a New Team</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="name">Team Name:</label>
 				<input

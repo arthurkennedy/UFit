@@ -9,6 +9,8 @@ import CreateTeam from "./CreateTeam.jsx";
 export default function Profile() {
 	const user = useSelector((state) => state.user.user)
 
+	console.log("user", user)
+
 	const convertMetersToInches = (meters) => meters * 39.3701
 	const convertMetersToFeetAndInches = (meters) => {
 		const totalInches = convertMetersToInches(meters)
@@ -26,7 +28,6 @@ export default function Profile() {
 
 	const myProfile = {
 		username: user.username,
-		name: user.firstname + " " + user.lastname,
 		height: `${feet}' ${inches}"`,
 		weight: `${user.weight} lbs.`,
 		bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
@@ -36,16 +37,13 @@ export default function Profile() {
 		<div className='page-contents-container'>
 			<div className="profile row">
 				<div className="left">
-					<img src={myImage} width="100"/>
-					<div className="box">
-						{myProfile.username}
-					</div>
+					<img src={myImage} style={{"borderRadius": "50px"}} width="100"/>
+					
 				</div>
 				<div className="right">
 					<div className="box">
 						<div className="row">
-							<div className="label">NAME:</div>
-							<div>{myProfile.name}</div>
+						{myProfile.username}
 						</div>
 						<div className="row">
 							<div className="label">HEIGHT:</div>
