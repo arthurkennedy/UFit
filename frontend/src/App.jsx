@@ -14,6 +14,8 @@ import MyTeams from "./component/MyTeams.jsx"
 import RewardStore from "./component/rewardStore.jsx"
 import EditTeam from "./component/EditTeam.jsx";
 import notifCenter from "./component/notif.jsx";
+import ProfileSettings from "./component/ProfileSettings.jsx"
+
 import {validateUserToken} from "./slices/userSlice.js";
 import {useEffect} from "react";
 
@@ -45,6 +47,8 @@ const App = () => {
 				<Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
 
 				<Route path="/signup" element={user ? <Navigate to="/"/> : <Signup/>}/>
+
+				<Route path="/profile-settings" element={!user ? <Navigate to="/"/> : <ProfileSettings/>}/>
 
 				<Route path="/feed" element={!user ? <Navigate to="/"/> : <Feed/>}/>
 

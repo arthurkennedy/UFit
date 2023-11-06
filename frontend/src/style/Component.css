@@ -32,6 +32,17 @@
     font-size: 20px;
 }
 
+.comp-container .image-button {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid;
+}
+
 .auth-link-button {
     display: block;
     text-align: center;
