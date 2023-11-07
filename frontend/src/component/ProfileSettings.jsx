@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {useState} from "react";
 
+import Cropper from 'react-easy-crop'
 import myImage from "../assets/profile.jpg"
 
 const ProfileSettings = () => {
@@ -22,6 +23,11 @@ const ProfileSettings = () => {
 		heightFt: 5,
 		heightIn: 8
 	}
+
+	//image crop states 
+	const [crop, setCrop] = useState({ x: 0, y: 0 })
+  	const [zoom, setZoom] = useState(1)
+	const [croppedDataURL, setCroppedDataURL] = useState("");
 
 	const [newUserState, setNewUserState] = useState(initialUserState)
 	const [errors, setErrors] = useState({})
@@ -58,18 +64,81 @@ const ProfileSettings = () => {
 		}
 	}
 
-	const handleSubmit = async (event) => {
-		event.preventDefault()
-		
-	}
-
 	//handle image discard
 	const handleDiscard = async () => {
-		//the timeout prevents trigger of "Change Image" button on mouseup
-		setTimeout(() => {
-			setNewUserState({...newUserState, ["picture"]: myImage})
-		}, 0);
+		setNewUserState({...newUserState, ["picture"]: myImage})
 	}
+
+	//handle image onCropComplete
+	const onCropComplete = (croppedArea, croppedAreaPixels) => {
+		if(croppedAreaPixels){
+			const img = new Image();
+
+			img.onload = function (){
+			
+				const croppedX = croppedAreaPixels.x, croppedY = croppedAreaPixels.y;
+				const croppedWidth = croppedAreaPixels.width, croppedHeight = croppedAreaPixels.height;
+				
+				const canvas = document.createElement('canvas');
+				canvas.width = croppedWidth;
+				canvas.height = croppedHeight;
+
+				const ctx = canvas.getContext('2d');
+				ctx.drawImage(img, -(croppedX), -(croppedY));
+
+				//get the data url as a webp, which supports images with transparent background
+				const dataURL =  canvas.toDataURL('image/webp');
+
+				setCroppedDataURL(dataURL);
+			};
+
+			img.src = newUserState.picture;
+
+		}
+	}
+
+
+	//we can choose to trim our image further with this trimImage function
+	//This is important because larger images may cause storage issue.
+	//default size is 100x100
+	const trimImage = (dataURL, size) => {
+		return new Promise((resolve, reject) => {
+			const img = new Image();
+	  
+			img.onload = function () {
+				// image maximum width and height
+				const maxWidth = size? size.width : 100;
+				const maxHeight = size? size.height : 100;
+			
+				let newWidth, newHeight;
+				if (maxWidth > img.height) {
+					newWidth = maxWidth;
+					newHeight = (img.height / img.width) * maxWidth;
+				} else {
+					newWidth = (img.width / img.height) * maxHeight;
+					newHeight = maxHeight;
+				}
+		
+				const canvas = document.createElement('canvas');
+				canvas.width = newWidth;
+				canvas.height = newHeight;
+			
+				const ctx = canvas.getContext('2d');
+				ctx.drawImage(img, 0, 0, newWidth, newHeight);
+			
+				// get the data URL as a webp, which supports images with a transparent background
+				const newDataURL = canvas.toDataURL('image/webp', 0.79);
+			
+				resolve(newDataURL);
+			};
+		
+			img.onerror = (error) => {
+			  	reject(error); // Handle any errors that may occur during image loading
+			};
+		
+			img.src = dataURL;
+		});
+	};
 
 	//read image file
 	const readFile = (e) => {
@@ -81,45 +150,23 @@ const ProfileSettings = () => {
 			reader.onload = function (event) {
 				const dataURI = event.target.result;
 
-				const img = new Image();
-
-				img.onload = function (){
-					//image maximum width and height
-					const maxWidth = 100;
-					const maxHeight = 100;
-
-					let newWidth, newHeight;
-					if (img.width > img.height) {
-					newWidth = maxWidth;
-					newHeight = (img.height / img.width) * maxWidth;
-					} else {
-					newWidth = (img.width / img.height) * maxHeight;
-					newHeight = maxHeight;
-					}
-
-					const canvas = document.createElement('canvas');
-					canvas.width = newWidth;
-					canvas.height = newHeight;
-
-					const ctx = canvas.getContext('2d');
-        			ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-					//get the data url as a webp, which supports images with transparent background
-					const newDataURL =  canvas.toDataURL('image/webp',0.79);
-
-					console.log(newDataURL, newDataURL.length);
-
-					//store data url to Initial User State
-					setNewUserState({...newUserState, ["picture"]: newDataURL})
-
-				};
-
-				img.src = dataURI;
-
-			};  
+				//store data url to Initial User State
+				setNewUserState({...newUserState, ["picture"]: dataURI})
+			}; 
 
 			reader.readAsDataURL(file);
 		}
+
+	}
+
+	//handle image submit
+	const handleImageSubmit = async (event) => {
+		event.preventDefault()
+
+		//do the backend stuff with this data string
+		const trimmedDataURL = await trimImage(croppedDataURL);
+
+		console.log("trim: ", trimmedDataURL);
 
 	}
 
@@ -128,24 +175,54 @@ const ProfileSettings = () => {
 			<div className="comp-container">
 				<div className="inner-container">
 					<h2>Profile Settings</h2>
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleImageSubmit}>
 						<div>
-							<img src={newUserState.picture} width="100"/>
 							
 							{
 
 								newUserState.picture === myImage ? (
-									<div>
+									
+									<>
+										<div className='image-container'>
+											<img src={myImage} />
+										</div>
 										<label className='image-button' htmlFor="picture">
 											Change Image
 											<input onChange={readFile} type="file" id="picture" accept="image/*" hidden/>
 										</label>
-									</div>
+									</>
 								) : (
-									<div>
-										<label onMouseUp={handleDiscard} className='image-button'>Discard</label>
-										<button className='image-button'>Save Image</button>
-									</div>
+									<>
+										<div className='image-container crop-container'>
+											<Cropper
+												image={newUserState.picture}
+												crop={crop}
+												zoom={zoom}
+												aspect={4 / 3}
+												onCropChange={setCrop}
+												onCropComplete={onCropComplete}
+												onZoomChange={setZoom}
+											/>
+										</div>
+										<div className="controls">
+											<input
+											type="range"
+											value={zoom}
+											min={1}
+											max={3}
+											step={0.1}
+											aria-labelledby="Zoom"
+											onChange={(e) => {
+												setZoom(e.target.value)
+											}}
+											className="zoom-range"
+											/>
+										</div>
+										<div>
+											<button onClick={handleDiscard} className='image-button'>Discard</button>
+											<button className='image-button'>Save Image</button>
+										</div>
+									</>
 								)
 							}
 						</div>

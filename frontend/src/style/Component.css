@@ -43,6 +43,13 @@
     border: 1px solid;
 }
 
+.comp-container .image-container {
+    display: flex;
+    position: relative;
+    height: 200px;
+    justify-content: center;
+}
+
 .auth-link-button {
     display: block;
     text-align: center;
