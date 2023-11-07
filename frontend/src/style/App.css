@@ -9,12 +9,17 @@
 
 body {
     background-color: #2067d3;
+    margin: 0.2in 1in;
 }
 
 form {
-    /*
+    padding: 10px;
     background: aqua;
-    */
+    margin-top: 5px;
+}
+
+ul {
+    list-style-type: none;
 }
 
 .app-name {
@@ -23,4 +28,54 @@ form {
     font-size: 40px;
     text-decoration: none;
     color: black;
+}
+
+.app-name:hover {
+    color:blue;
+}
+
+.uButton {
+    background-color:var(--accent);
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
+
+.uButton:hover,.uButton2:hover {
+    background-color: aqua;
+}
+.uButton2 {
+    background-color:darkslateblue;
+    border:none;
+    border-radius: 5px;
+    color:white;
+    padding: 5px;
+}
+.yes {
+    background-color:green;
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
+
+.yes:hover{
+    background-color:#00ff00;
+}
+.no:hover{
+    background-color: #ff9898;
+}
+
+
+.no {
+    background-color:red;
+    border:none;
+    border-radius: 10px;
+    color:white;
+    padding: 10px;
+}
+
+.admin-team{
+    padding: 10px;
 }

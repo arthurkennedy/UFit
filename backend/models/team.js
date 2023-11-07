@@ -10,18 +10,27 @@ const teamSchema = new mongoose.Schema({
 	},
 	members: [{
 		type: Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
+	}],
+	invitations: [{
+		type: Schema.Types.ObjectId,
+		ref: 'TeamInvitation',
 	}],
 	admin: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
-		required: true
+		required: true,
 	}
 })
 
 teamSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
-		returnedObject.id = returnedObject._id.toString()
+
+		//Convert object id to string.
+		if(!returnedObject.id) {
+			returnedObject.id = returnedObject._id.toString()
+		}
+
 		delete returnedObject._id
 		delete returnedObject.__v
 	}

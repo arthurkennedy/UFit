@@ -1,81 +1,42 @@
-import {useState, useEffect} from 'react'
-import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom"
-
-import loginService from './services/login'
+// eslint-disable-next-line no-unused-vars
+import {Routes, Navigate, Route} from "react-router-dom"
+import {useSelector} from "react-redux"
 
 /*import components*/
+import NavBar from './component/NavBar.jsx'
 import Login from './component/Login.jsx'
 import Signup from './component/Signup.jsx'
 import Home from './component/Home'
 import UnknownEndpoint from './component/UnknownEndpoint.jsx'
-import Feed from "./component/Feed.jsx";
-import Profile from "./component/Profile.jsx";
-
+import Feed from "./component/Feed.jsx"
+import Profile from "./component/Profile.jsx"
+import MyTeams from "./component/MyTeams.jsx"
+import RewardStore from "./component/RewardStore.jsx"
+import EditTeam from "./component/EditTeam.jsx";
+import NotificationCenter from "./component/NotificationCenter.jsx";
 
 const App = () => {
-    //username and password states will be used for login and signup
-    const [username, setUsername] = useState([])
-    const [password, setPassword] = useState([])
-    
-    const [user, setUser] = useState(null)
+	const user = useSelector((state) => state.user.user)
 
-    useEffect(() => {
-        const loggedUserJSON = window.localStorage.getItem('loggedUser')
-        if(loggedUserJSON) {
-            const user = JSON.parse(loggedUserJSON)
-            setUser(user)
-        }
-    }, [])
-
-    const navigation = useNavigate()
-    const userLogin = async (event) => {
-        event.preventDefault()
-
-        try {
-            const user = await loginService.login({username, password})
-            setUser(user)
-            setUsername('')
-            setPassword('')
-
-            window.localStorage.setItem('loggedUser', JSON.stringify(user))
-            navigation('/')
-        } catch (exception) {
-            console.log("error with user login. invalid credentials.")
-        }
-    }
-
-
-    return (
-    <>
-        <a className="app-name" href="/">
-            <h1>U-FIT</h1>
-        </a>
-
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home user={user}/>}/>
-                <Route index element={<Home user={user}/>} />
-                <Route path="/login" element={
-                    <Login
-                    handleDisplay={{username: username, password: password}}
-                    handleActions={{userLogin: userLogin, username: setUsername, password: setPassword}} />
-                } />
-                <Route path="/signup" element={
-                    <Signup/>
-                } />
-                <Route path ="/feed" element={
-                    <Feed user={user} />
-                }
-                />
-                <Route path ="/profile" element={
-                    <Profile/>
-                }
-                />
-                <Route path="*" element={<UnknownEndpoint />} />
-            </Routes>
-        </BrowserRouter>
-    </>
-    )
+	return (<>
+			<a className="app-name" href="/">
+				<h1>U-FIT</h1>
+			</a>
+			<>
+				<NavBar/>
+			</>
+			<Routes>
+				<Route path="/" element={user ? <Profile/> : <Home/>}/>
+				<Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
+				<Route path="/signup" element={user ? <Navigate to="/"/> : <Signup/>}/>
+				<Route path="/feed" element={!user ? <Navigate to="/"/> : <Feed/>}/>
+				<Route path="/store" element={!user ? <Navigate to="/"/> : <RewardStore/>}/>
+				<Route path="/teams" element={!user ? <Navigate to="/"/> : <MyTeams/>}/>
+				<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/>}/>
+				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <EditTeam/>}/>
+				<Route path="*" element={<UnknownEndpoint/>}/>
+			</Routes>
+		</>)
 }
 
 export default App

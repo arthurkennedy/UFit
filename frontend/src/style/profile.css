@@ -1,0 +1,21 @@
+
+.profile{
+    max-width: 600px;
+    margin: 0 auto;
+
+}
+.row{
+    display: flex;
+    gap:10px;
+}
+
+.box{
+    background-color: gray;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 20px;
+
+}
+
+/*flex, flex-direction: row or column, gap*/
+/*padding - inside box, margin is outside the box*/
