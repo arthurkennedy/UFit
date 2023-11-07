@@ -57,6 +57,9 @@ export default function Profile() {
 							<div className="label">BMI:</div>
 							<div>{myProfile.bmi}</div>
 						</div>
+						<div className='row'>
+							<a href="/profile-settings">Edit Profile</a>
+						</div>
 					</div>
 				</div>
 			</div>
