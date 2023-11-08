@@ -10,9 +10,40 @@ const ProfileSettings = () => {
 
 	//set myImage to user picture data url if available
 	user.picture? myImage = user.picture: null;
-    
+
+	function drawDefaultImage() {
+		// Draw user initials
+		/**
+		 * Logic to translate:
+		 * <html lang="en">
+		 *   <head>
+		 *     <script src="stack1.js"></script>
+		 *   </head>
+		 *   <body onload="draw();">
+		 *     <canvas id="canvas" width="180" height="180"></canvas>
+		 *   </body>
+		 * </html>
+		 *
+		 * function draw() {
+		 *   const canvas = document.getElementById('canvas');
+		 *   const ctx = canvas.getContext('2d');
+		 *   let img = new Image();
+		 *   img.addEventListener("load", ()=>{
+		 *     ctx.drawImage(img,0,0);
+		 *     ctx.font = '50px serif';
+		 *     ctx.fillText('Hello world', 50, 90);
+		 *   });
+		 *   img.src = "backdrop.png";
+		 * }
+		 * Valtoni Boaventura on StackOverflow
+		 * https://stackoverflow.com/questions/70324406/how-to-add-text-to-an-image-and-users-can-also-saved-the-image-with-the-added-te#:~:text=just%20draw%20the%20image%20when,the%20stuff%20drawn%20on%20canvas.
+		 */
+
+		return(myImage)
+	}
+
     const initialUserState = {
-		picture: myImage,
+		picture: drawDefaultImage(),
 		username: user.username,
 		firstname: user.firstname,
 		lastname: user.lastname,
@@ -26,7 +57,7 @@ const ProfileSettings = () => {
 
 	//image crop states 
 	const [crop, setCrop] = useState({ x: 0, y: 0 })
-  	const [zoom, setZoom] = useState(1)
+	const [zoom, setZoom] = useState(1)
 	const [croppedDataURL, setCroppedDataURL] = useState("");
 
 	const [newUserState, setNewUserState] = useState(initialUserState)
@@ -104,7 +135,7 @@ const ProfileSettings = () => {
 	const trimImage = (dataURL, size) => {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
-	  
+
 			img.onload = function () {
 				// image maximum width and height
 				const maxWidth = size? size.width : 100;
@@ -133,7 +164,7 @@ const ProfileSettings = () => {
 			};
 		
 			img.onerror = (error) => {
-			  	reject(error); // Handle any errors that may occur during image loading
+				reject(error); // Handle any errors that may occur during image loading
 			};
 		
 			img.src = dataURL;
