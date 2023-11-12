@@ -1,15 +1,18 @@
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {useState} from "react";
+import userService from "../services/user.jsx";
 
 import Cropper from 'react-easy-crop'
-import myImage from "../assets/profile.jpg"
+//import myImage from "../assets/profile.jpg"
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
+	const token = useSelector((state) => state.user.token);
 
 	//set myImage to user picture data url if available
-	user.picture? myImage = user.picture: null;
+	//user.picture? myImage = user.picture: null;
+	let myImage = "";
 
 	function drawDefaultImage() {
 		// Draw user initials
@@ -90,7 +93,8 @@ const ProfileSettings = () => {
 	const handleChange = (e, field) => {
 		const val = e.target.value
 		setNewUserState({...newUserState, [field]: val})
-		if (validationRules[field].rule(val)) {
+		console.log("field",field)
+		if (validationRules[field]?.rule(val)) {
 			setErrors({...errors, [field]: null})
 		}
 	}
@@ -201,11 +205,167 @@ const ProfileSettings = () => {
 
 	}
 
+	const handleSubmit = async (event) => {
+		event.preventDefault()
+
+		let isValid = true
+		let newErrors = {}
+
+		for (const [field, {rule, message}] of Object.entries(validationRules)) {
+			const val = newUserState[field]
+			if (!rule(val)) {
+				isValid = false
+				newErrors[field] = message
+			}
+		}
+		setErrors(newErrors)
+
+		if (isValid) {
+			try {
+				const updateUser = {...newUserState}
+				updateUser.height = (updateUser.heightFt * .3048) + (updateUser.heightIn * 0.0252) // convert to meters
+				delete updateUser.heightFt
+				delete updateUser.heightIn
+
+				console.log("did i get token?", updateUser, token)
+				await userService.editProfile(updateUser, token)
+				//await userService.(newUser)
+				//navigate('/')
+			} catch (exception) {
+				setErrors({'username': 'That username is already taken. Please try another.'})
+				console.log("error registering user: ", exception.message)
+			}
+		}
+	}
+
 	return (
 		<>
 			<div className="comp-container">
 				<div className="inner-container">
 					<h2>Profile Settings</h2>
+					<form onSubmit={handleSubmit}>
+					<div>
+						<label>
+							<b>Username: </b>
+							{errors.username ? <div className="error-text" id="username-error">{errors.username}</div> : null}
+							<input
+								type="text"
+								value={newUserState.username}
+								name="Username"
+								onChange={e => handleChange(e, 'username')}
+								placeholder="Username"
+							/>
+						</label>
+					</div>
+					<div>
+						<label>
+							<b>Password: </b>
+							{errors.password ? <div className="error-text" id="password-error">{errors.password}</div> : null}
+							<input
+								type="password"
+								value={newUserState.password}
+								name="Password"
+								onChange={e => handleChange(e, 'password')}
+								placeholder="Password"
+							/>
+						</label>
+					</div>
+					<div>
+						<label>
+							<b>First name: </b>
+							{errors.firstname ? <div className="error-text" id="firstname-error">{errors.firstname}</div> : null}
+							<input
+								type="text"
+								value={newUserState.firstname}
+								name="first-name"
+								onChange={e => handleChange(e, 'firstname')}
+								placeholder="First Name"
+							/>
+						</label>
+					</div>
+
+					<div>
+						<label>
+							<b>Last name: </b>
+							{errors.lastname ? <div className="error-text" id="lastname-error">{errors.lastname}</div> : null}
+							<input
+								type="text"
+								value={newUserState.lastname}
+								name="last-name"
+								onChange={e => handleChange(e, 'lastname')}
+								placeholder="Last Name"
+							/>
+						</label>
+					</div>
+
+					<div>
+						<label>
+							<b>Email: </b>
+							{errors.email ? <div className="error-text" id="email-error">{errors.email}</div> : null}
+							<input
+								type="email"
+								value={newUserState.email}
+								name="Email"
+								onChange={e => handleChange(e, 'email')}
+								placeholder="Email"
+							/>
+						</label>
+					</div>
+					<div className="row">
+						<div>
+							<label>
+								<b>Age: </b>
+								<input
+									type="number"
+									min="1"
+									max="120"
+									value={newUserState.age}
+									name="age"
+									onChange={e => handleChange(e, 'age')}
+								/>
+							</label>
+						</div>
+						<div>
+							<label>
+								<b>Weight (lbs): </b>
+								<input
+									type="number"
+									min="1"
+									max="400"
+									value={newUserState.weight}
+									name="age"
+									onChange={e => {
+										handleChange(e, 'weight')
+									}}
+								/>
+							</label>
+						</div>
+						<div>
+							<b>Height: </b> {newUserState.heightFt}{"'"} {newUserState.heightIn}{'"'}
+							<div className="row">
+								<label>
+									<input
+										type="number"
+										value={newUserState.heightFt}
+										name="heightFt"
+										onChange={e => handleChange(e, 'heightFt')}
+									/>
+								</label>
+								<label>
+									<input
+										type="number"
+										value={newUserState.heightIn}
+										name="heightIn"
+										onChange={e => handleChange(e, 'heightIn')}
+									/>
+								</label>
+							</div>
+						</div>
+					</div>
+					<button type="submit">Update Profile</button>
+				</form>
+
+					<hr/>
 					<form onSubmit={handleImageSubmit}>
 						<div>
 							

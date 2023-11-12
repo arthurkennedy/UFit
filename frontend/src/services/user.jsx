@@ -32,7 +32,9 @@ const editProfile = async (user, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` },
     }
-    const response = await api.put(`${baseUrl}/profile`, {user}, config)
+
+    //const response = await api.put(`${baseUrl}/profile`, {user}, config)
+    const response = await api.put(`https://locahost:3001/api/users/profile`, {user}, config)
     return response.data
 }
 
