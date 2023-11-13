@@ -2,6 +2,8 @@ import {useNavigate} from 'react-router-dom'
 import userService from "../services/user.jsx";
 import {useState} from "react";
 
+// Fire DrawPFP upon signin/
+
 const Signup = () => {
 	const initialUserState = {
 		username: '',
@@ -81,6 +83,8 @@ const Signup = () => {
 
 	return (
 		<div className="comp-container">
+			<a className="auth-link-button" href="/login"><em>Log In Instead</em></a>
+			<br/> {/*Best to fix the spacing*/}
 			<div className="inner-container">
 				<h2>User Signup</h2>
 				<form onSubmit={handleSubmit}>
@@ -204,6 +208,8 @@ const Signup = () => {
 					</div>
 					<button type="submit">SignUp</button>
 				</form>
+				<br/>
+
 			</div>
 		</div>
 	)

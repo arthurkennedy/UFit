@@ -242,7 +242,7 @@ const ProfileSettings = () => {
 		<>
 			<div className="comp-container">
 				<div className="inner-container">
-					<h2>Profile Settings</h2>
+					<h2>Profile Settings (Under Construction)</h2>
 					<form onSubmit={handleSubmit}>
 					<div>
 						<label>
