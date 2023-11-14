@@ -4,14 +4,14 @@ import {useState} from "react";
 import userService from "../services/user.jsx";
 
 import Cropper from 'react-easy-crop'
-//import myImage from "../assets/profile.jpg"
+// import myImage from "../assets/profile.jpg"
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token);
 
 	//set myImage to user picture data url if available
-	//user.picture? myImage = user.picture: null;
+	// user.picture? myImage = user.picture: null;
 	let myImage = "";
 
 	function drawDefaultImage() {
@@ -177,7 +177,7 @@ const ProfileSettings = () => {
 
 	//read image file
 	const readFile = (e) => {
-		const file = e.gtarget.files[0];
+		const file = e.target.files[0];
 
 		if(file){
 			const reader = new FileReader();
@@ -368,11 +368,8 @@ const ProfileSettings = () => {
 					<hr/>
 					<form onSubmit={handleImageSubmit}>
 						<div>
-							
 							{
-
 								newUserState.picture === myImage ? (
-									
 									<>
 										<div className='image-container'>
 											<img src={myImage} />
