@@ -12,7 +12,7 @@ const EntryList = () => {
 		dispatch(fetchEntries(token))
 	}, [dispatch, token])
 
-	return (<div className="feedContainer">
+	return (<div className="main-container">
 		{entries.map((entry) => <div key={entry._id} className="feedBox">
 			<div className="author">
 				<div className="profileImage" style={{
