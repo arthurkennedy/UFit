@@ -9,6 +9,10 @@
     gap:10px;
 }
 
+.row.user-details {
+    align-items: end;
+}
+
 .box{
     background-color: gray;
     padding: 20px;

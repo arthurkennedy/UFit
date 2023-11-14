@@ -232,7 +232,7 @@ const ProfileSettings = () => {
 						</div>
 					</form>
 					<form onSubmit={handleSubmit}>
-						<div className="row">
+						<div className="row user-details">
 							<div>
 								<label>
 									<b>Age: </b>
