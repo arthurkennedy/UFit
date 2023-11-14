@@ -53,6 +53,7 @@ const ProfileSettings = () => {
 	const handleDiscard = () => {
 		const updated = {...newUserState, picture: myImage}
 		setNewUserState(updated)
+		setCroppedDataURL("")
 		setToggleEdit(false)
 	}
 
@@ -128,7 +129,7 @@ const ProfileSettings = () => {
 	//read image file
 	const readFile = (e) => {
 		const file = e.target.files[0]
-
+		console.log(file)
 		if (file) {
 			const reader = new FileReader()
 
@@ -143,6 +144,7 @@ const ProfileSettings = () => {
 	}
 
 	const handleEditPicture = () => {
+		fileInputRef.current.value = ''
 		fileInputRef.current.click()
 	}
 
@@ -165,7 +167,6 @@ const ProfileSettings = () => {
 		delete updateUser.heightIn
 		const updatedUser = await userService.editProfile(updateUser, token)
 		dispatch(updateProfile(updatedUser))
-		console.log(updatedUser)
 	}
 
 	return (
@@ -253,7 +254,7 @@ const ProfileSettings = () => {
 										min="1"
 										max="400"
 										value={newUserState.weight}
-										name="age"
+										name="weight"
 										onChange={e => {
 											handleChange(e, 'weight')
 										}}
