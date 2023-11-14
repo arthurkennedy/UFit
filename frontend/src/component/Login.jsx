@@ -32,7 +32,6 @@ const Login = () => {
   return (
       <div className="comp-container">
         <div className="inner-container">
-          <h2>User Login</h2>
           <form onSubmit={handleLogin}>
             {isError ? <div className="error-text">Incorrect username or password</div> : null }
             <div>
