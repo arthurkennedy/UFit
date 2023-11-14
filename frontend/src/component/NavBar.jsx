@@ -22,11 +22,11 @@ const NavBar = () => {
                 <div>
                     <ul>
 
-                        <li className={location.pathname === "/"? 'active left': 'left'}> <Link to={"/"} >Homepage</Link> </li>
-                        <li className={location.pathname === "/Feed"? 'active left': 'left'}><Link to={"/Feed"}>Feed</Link></li>
-                        <li className={location.pathname === "/teams"? 'active left': 'left'}><Link to={"/teams"}>My Teams</Link></li>
-                        <li className={location.pathname === "/store"? 'active left': 'left'}><Link to={"/store"}>u-fit rewards</Link></li>
-                        <li className={location.pathname === "/notif"? 'active left': 'left'}><Link to={"/notif"}>My Notifications</Link></li>
+                        <li className={location.pathname === "/"? 'active': 'left'}> <Link to={"/"} >Homepage</Link> </li>
+                        <li className={location.pathname === "/Feed"? 'active': 'left'}><Link to={"/Feed"}>Feed</Link></li>
+                        <li className={location.pathname === "/teams"? 'active': 'left'}><Link to={"/teams"}>My Teams</Link></li>
+                        <li className={location.pathname === "/store"? 'active': 'left'}><Link to={"/store"}>u-fit rewards</Link></li>
+                        <li className={location.pathname === "/notif"? 'active': 'left'}><Link to={"/notif"}>My Notifications</Link></li>
 
                     </ul>
                 </div>
