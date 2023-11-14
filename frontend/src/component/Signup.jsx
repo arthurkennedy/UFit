@@ -47,7 +47,7 @@ const Signup = () => {
 	const handleChange = (e, field) => {
 		const val = e.target.value
 		setNewUserState({...newUserState, [field]: val})
-		if (validationRules[field].rule(val)) {
+		if (validationRules[field] && validationRules[field].rule(val)) {
 			setErrors({...errors, [field]: null})
 		}
 	}
@@ -73,6 +73,7 @@ const Signup = () => {
 				newUser.height = convertFeetAndInchesToMeters(newUser.heightFt, newUser.heightIn) // convert to meters
 				delete newUser.heightFt
 				delete newUser.heightIn
+				newUser.age = Number(newUser.age)
 				await userService.signup(newUser)
 				navigate('/login')
 			} catch (exception) {
@@ -177,7 +178,7 @@ const Signup = () => {
 									min="1"
 									max="400"
 									value={newUserState.weight}
-									name="age"
+									name="weight"
 									onChange={e => {
 										handleChange(e, 'weight')
 									}}

@@ -35,7 +35,7 @@ entryRouter.get('/', authenticate, async (request, response) => {
 			$or: [{ 'user': { $in: teamMemberIds } }]
 		})
 		.sort({ createdAt: -1 })
-		.populate('user', 'username')
+		.populate('user', 'username picture')
 
 	return response.status(200).json(entries)
 })

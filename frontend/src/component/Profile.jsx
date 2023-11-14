@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux'
-import myImage from "../assets/profile.jpg"
+import defaultProfilePicture from "../assets/profile.jpg"
 import "../style/profile.css"
 import {convertMetersToInches, calculateBMI, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
 
@@ -9,6 +9,7 @@ export default function Profile() {
 	const {feet, inches} = convertMetersToFeetAndInches(user.height)
 
 	const myProfile = {
+		picture: user.picture ? user.picture : defaultProfilePicture,
 		username: user.username,
 		height: `${feet}' ${inches}"`,
 		weight: `${user.weight} lbs.`,
@@ -20,7 +21,7 @@ export default function Profile() {
 			<h1>My Page</h1>
 			<div className="profile row">
 				<div className="left">
-					<img src={myImage} style={{"borderRadius": "50px"}} width="100"/>
+					<img src={myProfile.picture} style={{"borderRadius": "50px"}} width="100"/>
 					
 				</div>
 				<div className="right">

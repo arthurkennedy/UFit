@@ -61,13 +61,19 @@ usersRouter.get('/search', authenticate, async (request, response) => {
 usersRouter.put('/profile', authenticate, async (request, response) => {
 	const updatedUser = await User.findByIdAndUpdate(
 		request.user.id,
-		{ $set: request.body },
+		{ $set: { ...request.body.user, updated_at: new Date() } },
 		{ new: true, runValidators: true }
 	)
 	if(!updatedUser) {
 		return response.status(404).end()
 	}
-	response.status(200).json(updatedUser)
+	const res = {
+		age: updatedUser.age,
+		weight: updatedUser.weight,
+		height: updatedUser.height,
+		picture: updatedUser.picture
+	}
+	response.status(200).json(res)
 })
 
 module.exports = usersRouter

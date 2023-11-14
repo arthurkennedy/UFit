@@ -1,16 +1,17 @@
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {useRef, useState} from "react";
 import userService from "../services/user.jsx";
-
 import Cropper from 'react-easy-crop'
-
 import defaultPicture from "../assets/profile.jpg"
 import {convertFeetAndInchesToMeters, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
+import {updateProfile} from "../slices/userSlice.js";
 
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token)
+
+	const dispatch = useDispatch()
 
 	const [toggleEdit, setToggleEdit] = useState(false)
 	const fileInputRef = useRef(null)
@@ -41,7 +42,10 @@ const ProfileSettings = () => {
 
 
 	const handleChange = (e, field) => {
-		const val = e.target.value
+		let val = e.target.value
+		if (field === 'age' || field === 'weight') {
+			val = Number(val)
+		}
 		setNewUserState({...newUserState, [field]: val})
 	}
 
@@ -131,7 +135,7 @@ const ProfileSettings = () => {
 			reader.onload = function (event) {
 				const dataURI = event.target.result
 				//store data url to Initial User State
-				setNewUserState({...newUserState, ["picture"]: dataURI})
+				setNewUserState({...newUserState, picture: dataURI})
 			}
 			reader.readAsDataURL(file)
 			setToggleEdit(true)
@@ -159,8 +163,9 @@ const ProfileSettings = () => {
 		updateUser.height = convertFeetAndInchesToMeters(updateUser.heightFt, updateUser.heightIn)
 		delete updateUser.heightFt
 		delete updateUser.heightIn
-
-		await userService.editProfile(updateUser, token)
+		const updatedUser = await userService.editProfile(updateUser, token)
+		dispatch(updateProfile(updatedUser))
+		console.log(updatedUser)
 	}
 
 	return (

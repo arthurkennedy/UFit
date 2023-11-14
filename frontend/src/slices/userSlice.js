@@ -25,6 +25,9 @@ const userSlice = createSlice({
 			const invite = action.payload
 			const team = state.user.teams.find(team => team.id === invite.team)
 			team.invitations = [...team.invitations, invite]
+		},
+		updateProfile: (state, action) => {
+			Object.keys(action.payload).forEach(key => state.user[key] = action.payload[key])
 		}
 	},
 	extraReducers: (builder) => {
@@ -43,5 +46,6 @@ const userSlice = createSlice({
 	}
 })
 
-export const {logOutUser, initializeUser, addNewInvite, addNewTeam} = userSlice.actions
+export const {logOutUser, initializeUser, addNewInvite,
+	addNewTeam, updateProfile} = userSlice.actions
 export default userSlice.reducer

@@ -10,13 +10,13 @@ const EntryList = () => {
 	const dispatch = useDispatch()
 	useEffect(() => {
 		dispatch(fetchEntries(token))
-	}, [dispatch])
+	}, [dispatch, token])
 
 	return (<div className="feedContainer">
 		{entries.map((entry) => <div key={entry._id} className="feedBox">
 			<div className="author">
 				<div className="profileImage" style={{
-					backgroundImage: `url(${profile})`
+					backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
 				}}>
 				</div>
 				{entry.user.username}
