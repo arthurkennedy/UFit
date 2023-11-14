@@ -111,21 +111,35 @@
 }
 
 .navi ul a {
+    position: relative;
     display: block;
     color: rgb(219, 219, 219);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    margin-right: 10px;
 }
 
-.navi ul a:hover {
-    color: rgb(255, 255, 255);
-    font-weight: bolder;
-    font-size: large;
+.navi .left a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(219, 219, 219); /* Change the color as needed */
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0); /* Initially, set the line width to zero */
+    transform-origin: center bottom; /* Set the transform origin to center */
+    transition: transform 0.3s ease; /* Smooth transition for line width change */
+}
+
+.navi .left a:hover::before {
+    transform: scaleX(1); /* Expand the line width on hover */
+    transform-origin: center bottom;
 }
 
 .navi .active a {
-    border-bottom: 3px solid rgb(219, 219, 219);
+    border-bottom: 2px solid rgb(219, 219, 219);
 }
 
 .navi .active a:hover {
