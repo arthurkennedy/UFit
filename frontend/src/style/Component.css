@@ -1,5 +1,6 @@
 .comp-container {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     height: auto;
     margin: auto auto 10px;
     padding: 10px;
@@ -76,11 +77,31 @@
 
 .page-contents {
     padding: 10px;
-    color:white;
+}
+.page-contents h1, .page-contents h2, .page-contents h3 {
+    color: rgb(236, 236, 236);
 }
 .page-contents h2{
     color: white !important;
 }
+.page-contents .goback-button {
+    padding: 5px 25px;
+    background-color: #007bff;
+    color: rgb(236, 236, 236);
+    border: 1px solid #0056b3;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    outline: none;
+}
+
+.page-contents .goback-button:hover {
+    background-color: #0056b3;
+}
+
 .page-contents form input{
     padding: 4px;
     font-size: 18px;

@@ -9,7 +9,10 @@ const MyTeams =()=>{
             <div className="left w50">
                 <div className="page-contents">
                     <h1>Team Quick Actions</h1>
-                    <UserInvitationsList/>
+                </div>
+
+                <div className="page-contents">
+                  <UserInvitationsList/>
                 </div>
 
                 <div className="page-contents">
