@@ -24,6 +24,7 @@ ul {
 }
 
 .app-name {
+    display: flex;
     text-align: center;
     margin: 20px;
     font-size: 40px;
@@ -31,8 +32,13 @@ ul {
     color: black;
 }
 
+.app-name img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
 .app-name:hover {
-    color:blue;
+    
 }
 
 .uButton {

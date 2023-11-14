@@ -94,6 +94,7 @@
     justify-content: space-between;
     background-color: #00209b;
     align-items: center;
+    padding: 10px;
 }
 
 .navi ul {
@@ -121,6 +122,16 @@
     color: rgb(255, 255, 255);
     font-weight: bolder;
     font-size: large;
+}
+
+.navi .active a {
+    border-bottom: 3px solid rgb(219, 219, 219);
+}
+
+.navi .active a:hover {
+    color: rgb(219, 219, 219);
+    font-size: inherit;
+    font-weight: inherit;
 }
 
 .navi .right {

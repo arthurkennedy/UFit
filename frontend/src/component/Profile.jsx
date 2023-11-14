@@ -35,6 +35,7 @@ export default function Profile() {
 
 	return (
 		<div className='page-contents-container'>
+			<h1>My Page</h1>
 			<div className="profile row">
 				<div className="left">
 					<img src={myImage} style={{"borderRadius": "50px"}} width="100"/>
@@ -44,6 +45,14 @@ export default function Profile() {
 					<div className="box">
 						<div className="row">
 						{myProfile.username}
+						</div>
+						<div className="row">
+							<div className="label">POINTS:</div>
+							<div>UB{/*myProfile.point*/}256</div>
+						</div>
+						<div className="row">
+							<div className="label">SCORE:</div>
+							<div>Ufit Score{/*myProfile.score*/}</div>
 						</div>
 						<div className="row">
 							<div className="label">HEIGHT:</div>

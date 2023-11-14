@@ -25,6 +25,7 @@ const CreateEntry = () => {
 		dispatch(addEntry(entry))
     setEditor(() => EditorState.createEmpty())
 	}
+	
 	return (
 		<>
 			<div className="comp-container">

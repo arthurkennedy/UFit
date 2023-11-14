@@ -4,15 +4,24 @@ import {useState} from "react";
 import userService from "../services/user.jsx";
 
 import Cropper from 'react-easy-crop'
+<<<<<<< HEAD
 // import myImage from "../assets/profile.jpg"
+=======
+import myImage from "../assets/profile.jpg"
+>>>>>>> 771a710d2c7b0ead60504601a1c84fc3d376b89f
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token);
 
 	//set myImage to user picture data url if available
+<<<<<<< HEAD
 	// user.picture? myImage = user.picture: null;
 	let myImage = "";
+=======
+	user.picture? myImage = user.picture: null;
+	//let myImage = user.picture;
+>>>>>>> 771a710d2c7b0ead60504601a1c84fc3d376b89f
 
 	function drawDefaultImage() {
 		// Draw user initials
@@ -46,7 +55,7 @@ const ProfileSettings = () => {
 	}
 
     const initialUserState = {
-		picture: drawDefaultImage(),
+		picture: myImage,
 		username: user.username,
 		firstname: user.firstname,
 		lastname: user.lastname,
@@ -185,6 +194,8 @@ const ProfileSettings = () => {
 			reader.onload = function (event) {
 				const dataURI = event.target.result;
 
+				console.log(dataURI);
+
 				//store data url to Initial User State
 				setNewUserState({...newUserState, ["picture"]: dataURI})
 			}; 
@@ -242,7 +253,7 @@ const ProfileSettings = () => {
 		<>
 			<div className="comp-container">
 				<div className="inner-container">
-					<h2>Profile Settings</h2>
+					<h2>Profile Settings (Under Construction)</h2>
 					<form onSubmit={handleSubmit}>
 					<div>
 						<label>

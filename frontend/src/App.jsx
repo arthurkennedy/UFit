@@ -2,6 +2,9 @@
 import {Routes, Navigate, Route} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 
+//import logo 
+import logoImg from "./assets/uFitLogo3.ico"
+
 /*import components*/
 import NavBar from './component/NavBar.jsx'
 import Login from './component/Login.jsx'
@@ -34,6 +37,7 @@ const App = () => {
 	return (
 		<>
 			<a className="app-name" href="/">
+				<img src={logoImg} alt="U-Fit logo image" />
 				<h1>U-FIT</h1>
 			</a>
 
