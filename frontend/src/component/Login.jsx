@@ -59,11 +59,9 @@ const Login = () => {
                   placeholder="Password"
               />
             </div>
-            <button type="submit">LOGIN</button>
+            <button className="submit-button" type="submit">LOGIN</button>
           </form>
-            <br/>
-            <p>Alternatively..</p>
-            <a className="auth-link-button" href="/signup">Sign Up Instead</a>
+          <button onClick={()=>navigate("/signup")}>SIGN UP</button>
 
         </div>
       </div>

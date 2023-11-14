@@ -1,28 +1,10 @@
-import {useSelector, useDispatch} from 'react-redux'
-
-
+import {useSelector} from 'react-redux'
 import myImage from "../assets/profile.jpg"
 import "../style/profile.css"
-import CreateTeam from "./CreateTeam.jsx";
-//import TeamsList from "./TeamsList.jsx"; moved to EditTeam.JSX
+import {convertMetersToInches, calculateBMI, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
 
 export default function Profile() {
 	const user = useSelector((state) => state.user.user)
-
-	console.log("user", user)
-
-	const convertMetersToInches = (meters) => meters * 39.3701
-	const convertMetersToFeetAndInches = (meters) => {
-		const totalInches = convertMetersToInches(meters)
-		const feet = Math.floor(totalInches / 12)
-		const inches = Math.round(totalInches % 12)
-
-		return {
-			feet,
-			inches
-		}
-	}
-	const calculateBMI = (weightInPounds, heightInInches) => (weightInPounds / (heightInInches * heightInInches)) * 703
 
 	const {feet, inches} = convertMetersToFeetAndInches(user.height)
 
@@ -72,8 +54,6 @@ export default function Profile() {
 					</div>
 				</div>
 			</div>
-			{/*<CreateTeam/>*/}
-			{/*/<TeamsList/>*/}
 		</div>
 	)
 }
