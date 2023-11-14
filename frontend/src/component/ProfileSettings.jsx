@@ -150,6 +150,7 @@ const ProfileSettings = () => {
 
 	//handle image submit
 	const handleImageSubmit = async (event) => {
+		console.log("here")
 		event.preventDefault()
 
 		//do the backend stuff with this data string
@@ -207,7 +208,7 @@ const ProfileSettings = () => {
 												/>
 											</div>
 											<div>
-												<button onClick={handleDiscard} className='image-button'>Discard</button>
+												<button type='button' onClick={handleDiscard} className='image-button'>Discard</button>
 												<button type='submit' className='image-button'>Crop</button>
 											</div>
 										</>
@@ -217,7 +218,7 @@ const ProfileSettings = () => {
 											<div className='image-container'>
 												<img src={newUserState.picture}/>
 											</div>
-											<button className='image-button' onClick={handleEditPicture}>Edit Profile Picture</button>
+											<button className='image-button' type='button' onClick={handleEditPicture}>Edit Profile Picture</button>
 											<input
 												ref={fileInputRef}
 												onChange={readFile}
