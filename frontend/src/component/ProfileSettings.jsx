@@ -4,13 +4,16 @@ import {useState} from "react";
 import userService from "../services/user.jsx";
 
 import Cropper from 'react-easy-crop'
+
 import myImage from "../assets/profile.jpg"
+
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token);
 
 	//set myImage to user picture data url if available
+
 	user.picture? myImage = user.picture: null;
 	//let myImage = user.picture;
 
@@ -370,11 +373,8 @@ const ProfileSettings = () => {
 					<hr/>
 					<form onSubmit={handleImageSubmit}>
 						<div>
-							
 							{
-
 								newUserState.picture === myImage ? (
-									
 									<>
 										<div className='image-container'>
 											<img src={myImage} />

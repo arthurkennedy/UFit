@@ -61,7 +61,7 @@ usersRouter.get('/search', authenticate, async (request, response) => {
 usersRouter.put('/profile', authenticate, async (request, response) => {
 	const updatedUser = await User.findByIdAndUpdate(
 		request.user.id,
-		{ $set: response.body },
+		{ $set: request.body },
 		{ new: true, runValidators: true }
 	)
 	if(!updatedUser) {
