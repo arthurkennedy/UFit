@@ -6,6 +6,7 @@ const DisplayEntry = ({content}) => {
 	return (
 		<div className="entry">
 			<Editor editorState={editorState} readOnly />
+			<button>👍Like</button><button>💬Comment</button>
 		</div>
 	)
 }
