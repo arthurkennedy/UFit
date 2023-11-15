@@ -15,12 +15,15 @@ import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
 import MyTeams from "./component/MyTeams.jsx"
 import RewardStore from "./component/RewardStore.jsx"
-import EditTeam from "./component/EditTeam.jsx";
+import TeamPage from "./component/TeamPage.jsx";
 import NotificationCenter from "./component/NotificationCenter.jsx"
 import ProfileSettings from "./component/ProfileSettings.jsx"
 
 import {validateUserToken} from "./slices/userSlice.js"
 import {useEffect} from "react"
+import WorkOut from "./component/WorkOut.jsx";
+
+
 
 const App = () => {
 
@@ -62,7 +65,10 @@ const App = () => {
 
 				<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/> }/>
 
-				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <EditTeam/>}/>
+				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <TeamPage/>}/>
+
+				<Route path="/workout" element={!user ? <Navigate to="/"/> : <WorkOut/>}/>
+
 
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>

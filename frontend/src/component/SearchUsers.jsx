@@ -34,6 +34,7 @@ const SearchUsers = ({teamId}) => {
 		const token = JSON.parse(loggedUserJSON).token
 		const response = await inviteService.inviteUser(token, {invitee: invitee, admin: user.id, team: teamId})
 		dispatch(addNewInvite(response))
+
 	}
 
 	const invite = (invitee) => {
@@ -48,7 +49,7 @@ const SearchUsers = ({teamId}) => {
 
 	return (
 		<div>
-			<h1>Search Users</h1>
+			<h1>Search and add..</h1>
 			<input
 				type="text"
 				placeholder="Search for users..."

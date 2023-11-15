@@ -5,6 +5,11 @@ import {Editor} from "react-draft-wysiwyg"
 import {useDispatch, useSelector} from "react-redux";
 import {addEntry} from '../slices/entrySlice.js'
 
+const Test = () => {
+	return(
+		<>Link to WorkOut</>
+	)
+}
 const CreateEntry = () => {
 	/**
 	 * Form info data can transfer as CSV or JSON
@@ -43,6 +48,8 @@ const CreateEntry = () => {
 						onEditorStateChange={setEditor}
 					/>
 					<br/>
+					<Test></Test>
+
 					<button type="submit">Post!</button>
 				</form>
 			</div>

@@ -1,35 +1,60 @@
+import { useSelector} from 'react-redux'
+
 import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
-import SearchUsers from "./SearchUsers.jsx";
 
+
+
+const onSubmit = (e) => {
+    e.preventDefault()
+}
 const EditTeam = () => {
-	const {teamId} = useParams()
-	const user = useSelector(state => state.user.user)
-	const team = user.teams.find(team => team.id === teamId)
+    const {teamId} = useParams()
+    const user = useSelector(state => state.user.user)
+    const team = user.teams.find(team => team.id === teamId)
+    function handleChange(e, age) {
+        team.name=age
+    }
 
-	return (
+    return(
+        <>
+            <form onSubmit={onSubmit}>
+                <div className="row user-details">
+                    <div>
+                        <label>
+                            <b>Team Name: </b>
+                            <input
+                                type="text"
+                                min="1"
+                                max="120"
+                             //   value={newUserState.age}
+                                name="age"
+                                onChange={e => {
+                                           handleChange(e, 'weight')
+                                }}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <b>Edit Members</b>
+                            <input
+                                type="checkbox"
+                                min="1"
+                                max="400"
+                              //  value={newUserState.weight}
+                                name="weight"
+                                onChange={e => {
+                                    handleChange(e, 'weight')
+                                }}
+                            />
+                        </label>
+                    </div>
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </>
 
-		<div className="page-contents-container">
-			<div className="page-contents">
-				<a className="goback-button" href="/teams">&lt;&lt; Back To Teams</a>
-			</div>
-			<div className="page-contents">
-				<h1>Edit Team</h1>
-
-			</div>
-
-			<div className="page-contents">
-				<div>
-					<b>Name: </b>{team.name}
-				</div>
-			</div>
-
-			<div className="page-contents">
-				<SearchUsers teamId={teamId}/>
-			</div>
-	
-		</div>
-	)
+    )
 }
 
 export default EditTeam
