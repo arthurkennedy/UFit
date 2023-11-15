@@ -19,40 +19,68 @@ export default function Profile() {
 	return (
 		<div className='page-contents-container'>
 			<div className='page-contents'>
-				<h1>My Page</h1>
+				<h3>HomePage</h3>
 			</div>
-			<div className="profile row">
-				<div className="left">
-					<img src={myProfile.picture} style={{"borderRadius": "50px"}} width="100"/>
-					
+			<div className={"row"}>
+				<div className="left w50">
+					<h1>My Info</h1>
+					<div className="profile">
+						<div className="left">
+							<img alt={"My Picture"} src={myProfile.picture} style={{"borderRadius": "50px"}} width="100"/>
+
+						</div>
+						<div className="right">
+							<div className="box">
+								<div className="row">
+									{myProfile.username}
+								</div>
+								<div className="row">
+									<div className="label">POINTS:</div>
+									<div>UB{/*myProfile.point*/}256</div>
+								</div>
+								<div className="row">
+									<div className="label">HEIGHT:</div>
+									<div>{myProfile.height}</div>
+								</div>
+								<div className="row">
+									<div className="label">WEIGHT:</div>
+									<div>{myProfile.weight}</div>
+								</div>
+								<div className="row">
+									<div className="label">BMI:</div>
+									<div>{myProfile.bmi}</div>
+								</div>
+								<div className='row'>
+									<a href="/profile-settings">Edit Profile</a>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div className="right">
-					<div className="box">
-						<div className="row">
-						{myProfile.username}
+				<div className={"right w50"}>
+					<h1>Widget Bar</h1>
+					<div className={"row"}>
+						<div className={"left w50"}>
+							<button>➖</button>
+							Feed Recap</div>
+						<div className={"right w50"}>
+							<button>➖</button>
+							Team News</div>
+					</div>
+					<div className={"row"}>
+						<div className={"left w50"}>
+							<button>➖</button>
+							Store Widget</div>
+						<div className={"right w50"}>Add Widget
+							<button>➕</button>
 						</div>
-						<div className="row">
-							<div className="label">POINTS:</div>
-							<div>UB{/*myProfile.point*/}256</div>
+					</div>
+					<div className={"row"}>
+						<div className={"left w50"}>Add Widget
+							<button>➕</button>
 						</div>
-						<div className="row">
-							<div className="label">SCORE:</div>
-							<div>Ufit Score{/*myProfile.score*/}</div>
-						</div>
-						<div className="row">
-							<div className="label">HEIGHT:</div>
-							<div>{myProfile.height}</div>
-						</div>
-						<div className="row">
-							<div className="label">WEIGHT:</div>
-							<div>{myProfile.weight}</div>
-						</div>
-						<div className="row">
-							<div className="label">BMI:</div>
-							<div>{myProfile.bmi}</div>
-						</div>
-						<div className='row'>
-							<a href="/profile-settings">Edit Profile</a>
+						<div className={"right w50"}>Add Widget
+							<button>➕</button>
 						</div>
 					</div>
 				</div>
