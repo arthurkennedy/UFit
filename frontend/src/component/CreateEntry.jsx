@@ -48,7 +48,6 @@ const CreateEntry = () => {
 						onEditorStateChange={setEditor}
 					/>
 					<br/>
-					<Test></Test>
 
 					<button type="submit">Post!</button>
 				</form>

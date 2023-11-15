@@ -93,17 +93,19 @@ const ProfileSettings = () => {
 
 			img.onload = function () {
 				// image maximum width and height
-				const maxWidth = size ? size.width : 500
-				const maxHeight = size ? size.height : 500
+				const maxWidth = size ? size.width : 150
+				const maxHeight = size ? size.height : 150
 
 				let newWidth, newHeight
-				if (maxWidth > img.height) {
+				if (img.width > img.height) {
 					newWidth = maxWidth
 					newHeight = (img.height / img.width) * maxWidth
 				} else {
 					newWidth = (img.width / img.height) * maxHeight
 					newHeight = maxHeight
 				}
+
+				console.log("size: ", newWidth, newHeight)
 
 				const canvas = document.createElement('canvas')
 				canvas.width = newWidth
@@ -113,7 +115,9 @@ const ProfileSettings = () => {
 				ctx.drawImage(img, 0, 0, newWidth, newHeight)
 
 				// get the data URL as a webp, which supports images with a transparent background
-				const newDataURL = canvas.toDataURL('image/webp', 1)
+				const newDataURL = canvas.toDataURL('image/webp', 0.8)
+
+				console.log("url: ", newDataURL)
 
 				resolve(newDataURL)
 			}
