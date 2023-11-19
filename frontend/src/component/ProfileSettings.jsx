@@ -5,11 +5,13 @@ import Cropper from 'react-easy-crop'
 import defaultPicture from "../assets/profile.jpg"
 import {convertFeetAndInchesToMeters, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
 import {updateProfile} from "../slices/userSlice.js";
+import {useNavigate} from "react-router-dom"
 
 
 const ProfileSettings = () => {
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token)
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch()
 
@@ -172,6 +174,8 @@ const ProfileSettings = () => {
 		delete updateUser.heightIn
 		const updatedUser = await userService.editProfile(updateUser, token)
 		dispatch(updateProfile(updatedUser))
+		navigate("/");
+
 	}
 
 	return (
