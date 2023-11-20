@@ -5,11 +5,12 @@ import {Editor} from "react-draft-wysiwyg"
 import {useDispatch, useSelector} from "react-redux";
 import {addEntry} from '../slices/entrySlice.js'
 
-const Test = () => {
-	return(
-		<>Link to WorkOut</>
-	)
-}
+// Commented out as code does not appear to be currently used
+// const Test = () => {
+// 	return(
+// 		<>Link to WorkOut</>
+// 	)
+// }
 const CreateEntry = () => {
 	/**
 	 * Form info data can transfer as CSV or JSON
