@@ -31,7 +31,7 @@ export default function Profile() {
 						</div>
 						<div className="right">
 							<div className="box">
-								<div className="row">
+								<div className="row header">
 									{myProfile.username}
 								</div>
 								<div className="row">
@@ -50,7 +50,7 @@ export default function Profile() {
 									<div className="label">BMI:</div>
 									<div>{myProfile.bmi}</div>
 								</div>
-								<div className='row'>
+								<div className='row btn-row'>
 									<a href="/profile-settings">Edit Profile</a>
 								</div>
 							</div>
