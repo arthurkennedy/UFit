@@ -23,7 +23,10 @@ const entrySchema = new Schema({
 		type: Date,
 		default: Date.now()
 	},
-	replies: [this],
+	replies: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Entry'
+	}],
 	isTopLevel: {
 		type: Boolean,
 		default: true

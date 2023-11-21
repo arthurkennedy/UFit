@@ -22,7 +22,6 @@ entryRouter.post('/', authenticate, async (request, response) => {
 })
 
 entryRouter.get('/', authenticate, async (request, response) => {
-	console.log(request.user)
 	const user = await User.findById(request.user.id).populate('teams')
 
 	const teamMemberIds = user.teams.reduce((acc, team) => {
