@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
 	picture: { type: String, default: '' },
 	participation_points: { type: Number, default: 0 },
 	ufit_points: { type: Number, default: 0 },
-	lastActivityDate: Date,
+	lastReplyDate: Date,
+	lastPostDate: Date,
 	currentStreak: {
 		type: Number,
 		default: 0

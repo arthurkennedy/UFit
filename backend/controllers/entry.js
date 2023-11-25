@@ -3,6 +3,8 @@ const Entry = require('../models/entry')
 const User = require('../models/user')
 const Team = require('../models/team')
 const { authenticate } = require('../utils/middleware')
+const { updateUserParticipation } = require('../utils/participationUtils')
+
 
 entryRouter.post('/', authenticate, async (request, response) => {
 	const user = await User.findById(request.user.id)
@@ -12,11 +14,13 @@ entryRouter.post('/', authenticate, async (request, response) => {
 		user: user._id
 	})
 
+	await updateUserParticipation(user, false)
 	const savedEntry = await entry.save()
 	const responseObject = {
 		...savedEntry._doc,
-		user: { username: user.username, id: user.id }
+		user: { username: user.username, id: user.id, participation_points: user.participation_points }
 	}
+
 
 	response.status(200).json(responseObject)
 })
