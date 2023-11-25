@@ -20,7 +20,8 @@ describe('when a user is logged in', () => {
 			'email': 'mctest@gmail.com',
 			'age': 1,
 			'gender': 'Male',
-			'weight': 175.3
+			'weight': 175.3,
+			'height': 1.7256
 		}
 
 		await User.deleteMany({})
