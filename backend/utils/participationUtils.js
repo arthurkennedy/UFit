@@ -20,18 +20,15 @@ const updateUserParticipation = async (user, isReply=false) => {
 		user.longestStreak = user.currentStreak
 	}
 
-	// Update Participation points
 	if(isReply) {
-		const isFirstReplyToday = !user.lastReplyDate || user.lastReplyDate < currentDate
-		if(isFirstReplyToday) {
+		if(user.lastReplyDate === null || user.lastReplyDate < currentDate) {
 			user.lastReplyDate = currentDate
 			user.participation_points += 1
-		} else {
-			const isFirstPostToday = !user.lastPostDate || user.lastPostDate < currentDate
-			if(isFirstPostToday) {
-				user.lastPostDate = currentDate
-				user.participation_points += 1
-			}
+		}
+	} else {
+		if(user.lastPostDate === null || user.lastPostDate < currentDate) {
+			user.lastPostDate = currentDate
+			user.participation_points += 1
 		}
 	}
 
