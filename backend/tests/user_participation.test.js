@@ -7,6 +7,8 @@ const api = supertest(app)
 const bcrypt = require('bcrypt')
 const mockdate = require('mockdate')
 const User = require('../models/user')
+const Entry = require('../models/entry')
+const { resetUserStreaks } = require('../utils/cronJobs')
 
 let token
 let userId
@@ -14,6 +16,7 @@ let userId
 describe('when a logged in user has not yet made any posts', () => {
 	beforeEach(async () => {
 		await User.deleteMany({})
+		await Entry.deleteMany({})
 
 		const passwordHash = await bcrypt.hash('test', 10)
 		const initialUserData = {
@@ -86,6 +89,27 @@ describe('when a logged in user has not yet made any posts', () => {
 		expect(updatedUser.lastPostDate.getTime()).toBe(new Date().setHours(0,0,0,0))
 	})
 
+	test('consecutive posts followed by a missed day causes cron job to correctly reset streak', async () => {
+		// Post for day 1
+		mockdate.set('2021-01-01')
+		await api.post('/api/entry').set('Authorization', `Bearer ${token}`).send({ content: 'Test post 1' })
+		await resetUserStreaks()
+		let updatedUser = await User.findById(userId)
+		expect(updatedUser.currentStreak).toBe(1)
+
+		// Post for day 2
+		mockdate.set('2021-01-02')
+		await api.post('/api/entry').set('Authorization', `Bearer ${token}`).send({ content: 'Test post 2' })
+		updatedUser = await User.findById(userId)
+		await resetUserStreaks()
+		expect(updatedUser.currentStreak).toBe(2)
+		// Post for day 4
+		mockdate.set('2021-01-04')
+		await resetUserStreaks()
+		updatedUser = await User.findById(userId)
+		expect(updatedUser.currentStreak).toBe(0)
+	})
+
 	afterEach(async () => {
 		mockdate.reset()
 	})
@@ -93,4 +117,5 @@ describe('when a logged in user has not yet made any posts', () => {
 	afterAll(async () => {
 		await mongoose.connection.close()
 	})
+
 })

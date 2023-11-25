@@ -12,13 +12,16 @@ function isConsecutiveDay(date1, date2) {
 }
 
 
+function getLastActivityDate(user) {
+	const postDate = user.lastPostDate || new Date(0) // Fallback to a very old date if null
+	const replyDate = user.lastReplyDate || new Date(0) // Fallback to a very old date if null
+	return postDate > replyDate ? postDate : replyDate // Correct comparison
+}
+
 const updateUserParticipation = async (user, isReply = false) => {
 	const currentDate = new Date()
 	currentDate.setHours(0, 0, 0, 0)
-
-	const postDate = user.lastPostDate || new Date(0) // Fallback to a very old date if null
-	const replyDate = user.lastReplyDate || new Date(0) // Fallback to a very old date if null
-	const lastActivityDate = postDate > replyDate ? postDate : replyDate // Correct comparison
+	const lastActivityDate = getLastActivityDate(user)
 
 	if (!lastActivityDate || !isConsecutiveDay(lastActivityDate, currentDate)) {
 		user.currentStreak = 1
@@ -46,4 +49,4 @@ const updateUserParticipation = async (user, isReply = false) => {
 }
 
 
-module.exports = { updateUserParticipation }
+module.exports = { updateUserParticipation, getLastActivityDate }
