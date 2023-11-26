@@ -24,7 +24,7 @@ teamInvitationRouter.post('/', authenticate, async (request, response) => {
 	invitee.invitations = invitee.invitations.concat(savedTeamInvitation._id)
 	await invitee.save()
 	await team.save()
-	response.json(savedTeamInvitation)
+	response.status(200).json(savedTeamInvitation)
 })
 
 teamInvitationRouter.get('/', authenticate,async (request, response) => {

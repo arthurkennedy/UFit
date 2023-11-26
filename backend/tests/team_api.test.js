@@ -9,7 +9,7 @@ const Team = require('../models/team')
 const User = require('../models/user')
 
 let token
-
+let user
 describe('when a user is logged in', () => {
 	beforeEach(async () => {
 		const passHash = await bcrypt.hash('test', 10)
@@ -26,7 +26,7 @@ describe('when a user is logged in', () => {
 
 		await Team.deleteMany({})
 		await User.deleteMany({})
-		const user = new User(initialUserData)
+		user = new User(initialUserData)
 		await user.save()
 		const response = await api
 			.post('/api/login')
@@ -35,9 +35,10 @@ describe('when a user is logged in', () => {
 		token = response.body.token
 	}, 10000)
 
-	test('team can be created by user', async () => {
+	test('team can be created by an authorized user', async () => {
 		const team = {
-			'name': 'Team A'
+			'name': 'Team A',
+			admin: user._id
 		}
 		const response = await api
 			.post('/api/team')
@@ -46,6 +47,35 @@ describe('when a user is logged in', () => {
 			.expect(200)
 
 		expect(response.body.name).toEqual('Team A')
+	})
+
+	test('team cannot be created by an unauthorized user', async () => {
+		const team = {
+			name: 'Team A',
+			admin: user._id
+		}
+		await api
+			.post('/api/team')
+			.set('Authorization', 'Bearer ' + 'invalid')
+			.send(team)
+			.expect(401)
+
+	})
+
+	test('upon creation, team is added to user\'s team list', async () => {
+		const team = {
+			name: 'Team A',
+			admin: user._id
+		}
+		await api
+			.post('/api/team')
+			.set('Authorization', 'Bearer ' + token)
+			.send(team)
+			.expect(200)
+
+		user = await User.findById(user._id)
+
+		expect(user.teams).toHaveLength(1)
 	})
 })
 
