@@ -7,6 +7,7 @@ const { updateUserParticipation } = require('../utils/participationUtils')
 
 
 entryRouter.post('/', authenticate, async (request, response) => {
+	console.log.og(1);
 	const user = await User.findById(request.user.id)
 
 	const entry = new Entry({
@@ -40,6 +41,9 @@ entryRouter.get('/', authenticate, async (request, response) => {
 		.sort({ createdAt: -1 })
 		.populate('user', 'username picture')
 
+		console.log(entries);
+
+		
 	return response.status(200).json(entries)
 })
 
@@ -70,5 +74,22 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 
 	return response.status(200).json(entries)
 })
+
+
+entryRouter.post('/reply', async (request, response) => {
+	//id of entry
+	//content, user, isTopLevel =false
+	const {id, content, user } = request.body;
+	console.log(2,request.body);
+
+	const newReply = new Entry({ content: content, user: user });
+
+	const result = await Entry.findByIdAndUpdate(id,{
+		$push: {replies: newReply}
+	})
+
+	response.json(result);
+});
+
 
 module.exports = entryRouter
