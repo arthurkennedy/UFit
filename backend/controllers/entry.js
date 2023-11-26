@@ -54,9 +54,10 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 		return response.status(404).json({ error: 'team not found' })
 	}
 
-	const teamMemberIds = [...team.members, team.admin]
+	const teamMembers = [...team.members, team.admin]
+	const teamMemberIds = teamMembers.map(member => member._id.toString())
 
-	if(!teamMemberIds.includes(user._id)) {
+	if(!teamMemberIds.includes(user._id.toString())) {
 		return response.status(405).json({ error: 'user not authorized' })
 	}
 
@@ -65,10 +66,9 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 			$or: [{ 'user': { $in: teamMemberIds } }]
 		})
 		.sort({ createdAt: -1 })
-		.populate('user', 'username')
+		.populate('user', 'username picture')
 
 	return response.status(200).json(entries)
-
 })
 
 module.exports = entryRouter
