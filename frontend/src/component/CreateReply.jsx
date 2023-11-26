@@ -14,11 +14,30 @@ const CreateReply = () => {
 	 * so no info is lost
 	 */
 
-	const [editor, setEditor] = useState(() => EditorState.createEmpty())
+	const [editor, setEditor] = useState(() => EditorState.createEmpty());
+	const user = useSelector((state) => state.user)
 //	const token = useSelector(state => state.user.token)
 //	const dispatch = useDispatch()
+
+
 	const handleSubmit = async (event) => {
 		event.preventDefault()
+
+		console.log("??", convertToRaw(editor.getCurrentContent()).blocks[0].text)
+
+		const response = await  fetch("http://localhost:3001/api/entry/reply",  {
+			method: "POST", // *GET, POST, PUT, DELETE, etc.
+			headers: {
+			  "Content-Type": "application/json",
+			  // 'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: JSON.stringify({
+				id: "655aa5f8b47082c19e4b5585",
+				content: convertToRaw(editor.getCurrentContent()).blocks[0].text,
+				user: user.user.id
+
+			})// body data type must match "Content-Type" header
+		  }); 
 		/*
 		TODO Reply logic here..
 
@@ -48,8 +67,8 @@ const CreateReply = () => {
 					/>
 					<br/>
 
-					{/*<button type="submit">Post!</button>*/}
-					<p>Submit button in development</p>
+					<button type="submit">Post!</button>
+					{/*<p>Submit button in development</p>*/}
 				</form>
 			</div>
 		</>
