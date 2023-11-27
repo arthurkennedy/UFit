@@ -93,8 +93,8 @@ describe('when a user is logged in', () => {
 			}
 
 			// Create teams and add members
-			team1 = new Team({ name: 'Team1', members: [user._id, teamMember1._id], admin: user._id })
-			const team2 = new Team({ name: 'Team2', members: [user._id, teamMember2._id], admin: user._id })
+			team1 = new Team({ name: 'Team1', members: [{ user: user._id }, { user: teamMember1._id }], admin: user._id })
+			const team2 = new Team({ name: 'Team2', members: [{ user: user._id }, { user:teamMember2._id }], admin: user._id })
 			await team1.save()
 			await team2.save()
 

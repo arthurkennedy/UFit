@@ -119,9 +119,50 @@ describe('when a logged in user has not yet made any posts', () => {
 		expect(updatedUser.currentStreak).toBe(0)
 	})
 
-	test('creating a reply updates partpicipation points and streak', async () => {
+	test('creating a reply updates participation points and streak', async () => {
 		mockdate.set('2021-01-01')
+		await api.post('/api/entry/reply')
+			.set('Authorization', `Bearer ${token}`)
+			.send({ content: 'Reply', id: originalPostId })
+			.expect(200)
 
+		const updatedUser = await User.findById(userId)
+		expect(updatedUser.participation_points).toBe(1)
+		expect(updatedUser.currentStreak).toBe(1)
+	})
+
+	test('post and reply on the same day increments participation points once each', async () => {
+		mockdate.set('2021-01-02')
+		await api
+			.post('/api/entry')
+			.set('Authorization', `Bearer ${token}`)
+			.send({ content: 'Test post 3' } )
+		await api
+			.post('/api/entry/reply')
+			.set('Authorization', `Bearer ${token}`)
+			.send({ content: 'Reply', id: originalPostId })
+
+		const updatedUser = await User.findById(userId)
+		expect(updatedUser.participation_points).toBe(2)
+		expect(updatedUser.currentStreak).toBe(1)
+	})
+
+	test('replying on consecutive days updates streak correctly', async () => {
+		// Reply on day 1
+		mockdate.set('2021-01-01')
+		await api.post('/api/entry/reply')
+			.set('Authorization', `Bearer ${token}`)
+			.send({ content: 'Reply on day 1', entryId: originalPostId })
+
+		// Reply on day 2
+		mockdate.set('2021-01-02')
+		await api.post('/api/entry/reply')
+			.set('Authorization', `Bearer ${token}`)
+			.send({ content: 'Reply on day 2', entryId: originalPostId })
+
+		const updatedUser = await User.findById(userId)
+		expect(updatedUser.currentStreak).toBe(2)
+		expect(updatedUser.participation_points).toBe(2)
 	})
 
 	afterEach(async () => {
@@ -131,5 +172,4 @@ describe('when a logged in user has not yet made any posts', () => {
 	afterAll(async () => {
 		await mongoose.connection.close()
 	})
-
 })

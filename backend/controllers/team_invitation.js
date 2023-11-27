@@ -50,9 +50,8 @@ teamInvitationRouter.put('/:invitationId', authenticate, async (request, respons
 	}
 	const team = await Team.findById(invitation.team)
 	if(action === 'ACCEPT') {
-
-		if(!team.members.includes(user._id.toString()) && !user.teams.includes(team._id)) {
-			team.members = team.members.concat(user._id)
+		if(!team.members.map(member => member.user).includes(user._id) && !user.teams.includes(team._id)) {
+			team.members = team.members.concat({ user: user._id })
 			user.teams = user.teams.concat(team._id)
 			await team.save()
 			await user.save()

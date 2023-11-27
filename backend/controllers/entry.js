@@ -29,7 +29,8 @@ entryRouter.get('/', authenticate, async (request, response) => {
 	const user = await User.findById(request.user.id).populate('teams')
 
 	const teamMemberIds = user.teams.reduce((acc, team) => {
-		const allMembers = [...team.members, team.admin]
+		const memberIds = team.members.map(member => member.user)
+		const allMembers = [...memberIds, team.admin]
 		return acc.concat(allMembers)
 	}, [])
 
@@ -55,10 +56,10 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 		return response.status(404).json({ error: 'team not found' })
 	}
 
-	const teamMembers = [...team.members, team.admin]
-	const teamMemberIds = teamMembers.map(member => member._id.toString())
+	const teamMemberIds = team.members.map(member => member.user.toString())
+	const teamIds = [...teamMemberIds, team.admin._id.toString()]
 
-	if(!teamMemberIds.includes(user._id.toString())) {
+	if(!teamIds.includes(user._id.toString())) {
 		return response.status(405).json({ error: 'user not authorized' })
 	}
 
