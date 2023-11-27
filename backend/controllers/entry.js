@@ -76,7 +76,7 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 })
 
 
-entryRouter.post('/reply', async (request, response) => {
+entryRouter.post('/reply',authenticate, async (request, response) => {
 	//id of entry
 	//content, user, isTopLevel =false
 	const {id, content, user } = request.body;
