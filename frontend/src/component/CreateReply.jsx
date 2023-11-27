@@ -33,7 +33,6 @@ const CreateReply = () => {
 
 
 		setEditor(() => EditorState.createEmpty());
-		console.log("add reply",response);
 		/*
 		TODO Reply logic here..
 

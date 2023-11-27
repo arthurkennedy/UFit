@@ -11,7 +11,6 @@ const post = async (entry, token) => {
 }
 
 const getFeed = async (token) => {
-    console.log(token)
     const config = {
         headers: { Authorization: `Bearer ${token}`}
     }

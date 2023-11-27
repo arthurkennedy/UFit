@@ -107,8 +107,6 @@ const ProfileSettings = () => {
 					newHeight = maxHeight
 				}
 
-				console.log("size: ", newWidth, newHeight)
-
 				const canvas = document.createElement('canvas')
 				canvas.width = newWidth
 				canvas.height = newHeight
@@ -118,8 +116,6 @@ const ProfileSettings = () => {
 
 				// get the data URL as a webp, which supports images with a transparent background
 				const newDataURL = canvas.toDataURL('image/webp', 0.8)
-
-				console.log("url: ", newDataURL)
 
 				resolve(newDataURL)
 			}
@@ -135,7 +131,6 @@ const ProfileSettings = () => {
 	//read image file
 	const readFile = (e) => {
 		const file = e.target.files[0]
-		console.log(file)
 		if (file) {
 			const reader = new FileReader()
 
@@ -156,7 +151,6 @@ const ProfileSettings = () => {
 
 	//handle image submit
 	const handleImageSubmit = async (event) => {
-		console.log("here")
 		event.preventDefault()
 
 		//do the backend stuff with this data string

@@ -37,7 +37,6 @@ const userSlice = createSlice({
 				state.user = action.payload.user
 			})
 			.addCase(validateUserToken.fulfilled, (state, action) => {
-				console.log(action.payload)
 				if (!action.payload.valid) {
 					state.user = null
 					state.token = null

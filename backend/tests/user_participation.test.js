@@ -12,6 +12,7 @@ const { resetUserStreaks } = require('../utils/cronJobs')
 
 let token
 let userId
+let originalPostId
 
 describe('when a logged in user has not yet made any posts', () => {
 	beforeEach(async () => {
@@ -35,6 +36,14 @@ describe('when a logged in user has not yet made any posts', () => {
 		userId = user._id
 		const response = await api.post('/api/login').send({ username: 'test_user', password: 'test' })
 		token = response.body.token
+
+		const originalPost = new Entry({
+			content: 'Original Post',
+			user: userId,
+			isTopLevel: true
+		})
+		await originalPost.save()
+		originalPostId = originalPost._id
 	}, 10000)
 
 
@@ -108,6 +117,11 @@ describe('when a logged in user has not yet made any posts', () => {
 		await resetUserStreaks()
 		updatedUser = await User.findById(userId)
 		expect(updatedUser.currentStreak).toBe(0)
+	})
+
+	test('creating a reply updates partpicipation points and streak', async () => {
+		mockdate.set('2021-01-01')
+
 	})
 
 	afterEach(async () => {

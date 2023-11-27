@@ -100,4 +100,97 @@ describe('with team, admin, and nonAdmin information populated', () => {
 			.send(teamInvitationData)
 			.expect(401)
 	})
+
+	test('invitations are properly retrieved for a given user', async () => {
+		const teamInvitationData = {
+			admin: adminUser._id,
+			invitee: nonAdminUser._id,
+			team: team._id
+		}
+		await api
+			.post('/api/teamInvitation')
+			.set('Authorization', `Bearer ${adminToken}`)
+			.send(teamInvitationData)
+			.expect(200)
+
+		const response = await api
+			.get('/api/teamInvitation')
+			.set('Authorization', `Bearer ${nonAdminToken}`)
+			.expect(200)
+
+		expect(response.body).toHaveLength(1)
+
+		const user = await User.findById(nonAdminUser._id)
+		expect(user.invitations).toHaveLength(1)
+	})
+
+	test('user can accept a team invitation', async () => {
+		const invitation = new TeamInvitation({
+			admin: adminUser._id,
+			invitee: nonAdminUser._id,
+			team: team._id
+		})
+		await invitation.save()
+
+		const inviteAcceptedResponse = await api
+			.put(`/api/teamInvitation/${invitation._id}`)
+			.set('Authorization', `Bearer ${nonAdminToken}`)
+			.send({ action: 'ACCEPT' })
+			.expect(200)
+
+		expect(inviteAcceptedResponse.body.invitation.state).toEqual('ACCEPTED')
+	})
+
+	test('user can reject a team invitation', async () => {
+		const invitation = new TeamInvitation({
+			admin: adminUser._id,
+			invitee: nonAdminUser._id,
+			team: team._id
+		})
+		await invitation.save()
+
+		const inviteAcceptedResponse = await api
+			.put(`/api/teamInvitation/${invitation._id}`)
+			.set('Authorization', `Bearer ${nonAdminToken}`)
+			.send({ action: 'REJECTED' })
+			.expect(200)
+
+		expect(inviteAcceptedResponse.body.invitation.state).toEqual('REJECTED')
+	})
+
+	test('handle invalid action on a team invitation', async () => {
+		// Create an invitation first
+		const invitation = new TeamInvitation({
+			admin: adminUser._id,
+			invitee: nonAdminUser._id,
+			team: team._id
+		})
+		await invitation.save()
+
+		// Send an invalid action
+		await api
+			.put(`/api/teamInvitation/${invitation._id}`)
+			.set('Authorization', `Bearer ${nonAdminToken}`)
+			.send({ action: 'INVALID_ACTION' })
+			.expect(400) // Bad Request or appropriate error code
+	})
+
+	test('action on already responded team invitation', async () => {
+		// Create and accept/reject an invitation first
+		const invitation = new TeamInvitation({
+			admin: adminUser._id,
+			invitee: nonAdminUser._id,
+			team: team._id,
+			state: 'ACCEPTED' // or 'REJECTED'
+		})
+		await invitation.save()
+
+		// Try to accept/reject again
+		await api
+			.put(`/api/teamInvitation/${invitation._id}`)
+			.set('Authorization', `Bearer ${nonAdminToken}`)
+			.send({ action: 'ACCEPT' }) // or 'REJECT'
+			.expect(404) // Not Found or appropriate error code
+	})
+
 })
