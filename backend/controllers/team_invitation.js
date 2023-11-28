@@ -28,9 +28,11 @@ teamInvitationRouter.post('/', authenticate, async (request, response) => {
 })
 
 teamInvitationRouter.get('/', authenticate, async (request, response) => {
+	// Find all invitations for this user
+	const invitations = await TeamInvitation.find({ invitee: request.user.id })
 
-	const user = await User.findById(request.user.id)
-	const invitations = user.invitations
+	// Populate the 'team' field to include more information about each team
+	await TeamInvitation.populate(invitations, { path: 'team', select: 'name' })
 
 	response.status(200).json(invitations)
 })

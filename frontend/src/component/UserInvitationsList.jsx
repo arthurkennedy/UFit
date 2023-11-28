@@ -15,6 +15,8 @@ const UserInvitationsList = () => {
 		}
 		getInvitations().then(res => setInvitations(res))
 	}, [])
+
+	console.log(invitations)
 	const handleInvitation = async (invitationId, action) => {
 		const result = await teamInvitationService.respondToInvitation(invitationId, action, token)
 		const team = result.team
