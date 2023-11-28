@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const { Schema } = mongoose
 
 const ScheduleEnum = ['DAILY', 'WEEKLY', 'MONTHLY']
-const SubscriptionTypeEnum = ['BENEFACTOR', 'MEMBER', 'FREE', 'HYBRID']
+const SubscriptionTypeEnum = ['BENEFACTOR', 'MEMBERSHIP', 'FREE', 'HYBRID']
 
 const subscriptionSchema = new Schema({
 	schedule: {
@@ -30,7 +30,12 @@ const subscriptionSchema = new Schema({
 		default: 0
 	},
 	nextDistributionDate: Date,
-	fee: {
+	nextSubscriptionDate: Date,
+	adminFee: {
+		type: Number,
+		default: 0
+	},
+	memberFee: {
 		type: Number,
 		default: 0
 	},
@@ -53,6 +58,10 @@ const teamMemberSchema = new Schema({
 	totalPointsEarned: {
 		type: Number,
 		default: 0
+	},
+	subscribed: {
+		type: Boolean,
+		default: false
 	}
 })
 

@@ -52,19 +52,25 @@ const updateUserParticipation = async (user, isReply = false) => {
 
 const calculateNumberOfDistributionPeriods = (subscriptionSchedule, distributionSchedule) => {
 	const currentDate = new Date()
+	currentDate.setHours(0,0,0,0)
 	const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
 
-	switch(subscriptionSchedule) {
+	switch (subscriptionSchedule) {
 	case 'MONTHLY':
-		return distributionSchedule === 'DAILY' ? daysInMonth : (distributionSchedule === 'WEEKLY' ? Math.ceil(daysInMonth / 7) : 1)
+		return distributionSchedule === 'DAILY' ? daysInMonth :
+			(distributionSchedule === 'WEEKLY' ? Math.floor(daysInMonth / 7) : 1)
+
 	case 'WEEKLY':
-		return distributionSchedule === 'DAILY' ? 7 : (distributionSchedule === 'WEEKLY' ? 1 : 1/4) // Assuming 4 weeks in a month
+		return distributionSchedule === 'DAILY' ? 7 : 1
+
 	case 'DAILY':
 		return 1
+
 	default:
 		return 1
 	}
 }
+
 
 const calculateProRatedSubscriptionFee = (userJoinDate, subscriptionSchedule, subscriptionFee) => {
 	const currentDate = new Date()
@@ -109,37 +115,82 @@ const calculateProRatedSubscriptionFee = (userJoinDate, subscriptionSchedule, su
 const distributePoints = async (team) => {
 
 	let totalParticipationPoints = team.members.reduce((sum, member) => sum + member.user.participation_points, 0)
-		+ team.admin.participation_points
 
 	if(totalParticipationPoints === 0) {
-		totalParticipationPoints = team.members.length() + 1 // Account for admin
+		totalParticipationPoints = team.members.length // Account for admin
+		for (const member of team.members) {
+			member.user.participation_points = 1
+		}
 	}
 
-	await processUserPoints(team.admin, totalParticipationPoints, team.subscription.pointsPerDistribution )
 	for (const member of team.members) {
-		await processUserPoints(member.user, totalParticipationPoints, team.subscription.pointsPerDistribution)
+		await processUserPoints(member, totalParticipationPoints, team.subscription.pointsPerDistribution)
 	}
 	team.subscription.pointPool -= team.subscription.pointsPerDistribution
 }
 
-const processUserPoints = async (user, totalParticipationPoints, pointPool) => {
+const processUserPoints = async (member, totalParticipationPoints, pointPool) => {
+	const user = member.user
 	const userShare = user.participation_points / totalParticipationPoints
 	const pointsEarned = userShare * pointPool
 
 	user.ufit_points += pointsEarned
 	user.participation_points = 0
+	member.pointsEarnedLastDistribution = pointsEarned
+	member.totalPointsEarned += pointsEarned
 
 	await user.save()
 }
 
+const calculateDaysTillNextScheduledDate = (schedule) => {
+	const currentDate = new Date()
+	currentDate.setHours(0, 0, 0, 0)
+
+	switch (schedule) {
+	case 'DAILY':
+		return 1 // Next day
+	case 'WEEKLY':
+		return 7 // Days until the end of the week
+	case 'MONTHLY':
+		return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
+	default:
+		return 1 // Default to next day if invalid
+	}
+}
+
 const setNextDistributionDate = (team) => {
-	const periodDays = calculateNumberOfDistributionPeriods(team.subscription.schedule, team.subscription.distributionSchedule)
+	const daysTillNextDistribution = calculateDaysTillNextScheduledDate(team.subscription.distributionSchedule)
 	const nextDate = new Date()
-	nextDate.setHours(0,0,0,0)
-	nextDate.setDate(nextDate.getDate() + periodDays)
-	team.nextDistributionDate = nextDate
+	nextDate.setHours(0, 0, 0, 0)
+	nextDate.setDate(nextDate.getDate() + daysTillNextDistribution)
+	team.subscription.nextDistributionDate = nextDate
+}
+
+const setNextSubscriptionDate = (team) => {
+	const daysTillNextSubscription = calculateDaysTillNextScheduledDate(team.subscription.schedule)
+	const nextSubscriptionDate = new Date()
+	nextSubscriptionDate.setHours(0, 0, 0, 0)
+	nextSubscriptionDate.setDate(nextSubscriptionDate.getDate() + daysTillNextSubscription)
+	team.subscription.nextSubscriptionDate = nextSubscriptionDate
+}
+
+const setNextDates = (team) => {
+	setNextDistributionDate(team)
+	setNextSubscriptionDate(team)
+}
+
+const convertMoneyToUfitPoints = (money) => {
+	return money * 122
 }
 
 
-
-module.exports = { updateUserParticipation, getLastActivityDate, distributePoints, setNextDistributionDate, calculateProRatedSubscriptionFee }
+module.exports = {
+	calculateNumberOfDistributionPeriods,
+	convertMoneyToUfitPoints,
+	updateUserParticipation,
+	getLastActivityDate, distributePoints,
+	setNextDates,
+	setNextDistributionDate,
+	setNextSubscriptionDate,
+	calculateProRatedSubscriptionFee
+}
