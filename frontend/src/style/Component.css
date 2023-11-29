@@ -191,4 +191,18 @@
     width: 50%;
 }
 
+.widget{
+    height: 100px;
+    width: 100px;
+    background: #104b72;
+    overflow: scroll;
+    scrollbar-track-color: #11007f;
+    scrollbar-width:thin;
+    transition: width 1s, height 1s;
+
+}
+.widget:hover{
+    height: 200px;
+    width: 200px;
+}
 
