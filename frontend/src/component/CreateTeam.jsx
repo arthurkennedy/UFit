@@ -18,7 +18,7 @@ const CreateTeam = () => {
 		dispatch(addNewTeam(createdTeam))
 		setName('')
 	}
-
+	let Price;
 	return (
 		<div>
 			<h2>Create a New Team</h2>
@@ -30,6 +30,30 @@ const CreateTeam = () => {
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 				/>
+				<label htmlFor="type">Plan:</label>
+				<select name="type" id="type">
+					<option value="BENEFACTOR">Benefactor Plan 💸</option>
+					<option value="MEMBERSHIP">Paid Plan 💳</option>
+					<option value="FREE">Free Plan ⭐</option>
+					<option value="HYBRID">Hybrid Plan 🔗</option>
+
+				</select>
+				<label htmlFor="schedule">Schedule:</label>
+				<select name="schedule" id="schedule">
+					<option value="DAILY">Every Day</option>
+					<option value="WEEKLY">Each Week</option>
+					<option value="MONTHLY">Per Month</option>
+				</select>
+				<label htmlFor="distribSchedule">Give Points:</label>
+				<select name="distribSchedule" id="distribSchedule">
+					<option value="DAILY">Every Day</option>
+					<option value="WEEKLY">Each Week</option>
+					<option value="MONTHLY">Per Month</option>
+				</select>
+				<label htmlFor="ptPool">Initial Point Pool</label>
+				<input name={"ptPool"} id={"ptPool"} type="number"/>
+				<label htmlFor="price">You will pay Points/100</label>
+				<label htmlFor="price2">For example, 250 points cost $2.50</label>
 				<button className="uButton2" type="submit">Create Team</button>
 			</form>
 		</div>
