@@ -18,7 +18,6 @@ const CreateTeam = () => {
 		dispatch(addNewTeam(createdTeam))
 		setName('')
 	}
-	let Price;
 	return (
 		<div>
 			<h2>Create a New Team</h2>
