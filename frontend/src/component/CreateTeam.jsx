@@ -7,9 +7,15 @@ const CreateTeam = () => {
 	const [name, setName] = useState('')
 	const token = useSelector(state => state.user.token)
 	const dispatch = useDispatch()
+	const [schedule, setSchedule] = useState('DAILY')
+	const [distrib, setDistrib] = useState('MONTHLY')
+	const [plan,setPlan]=useState('FREE')
+	const [paid,setPaid]=useState(<input type="number"/>)
+
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
+		dispatchNewSchedule()
 
 		const newTeam = {
 			name: name
@@ -18,6 +24,27 @@ const CreateTeam = () => {
 		dispatch(addNewTeam(createdTeam))
 		setName('')
 	}
+
+
+	function dispatchNewSchedule(){
+		alert(distrib+", "+schedule)
+	}
+	function UpdateSchedule(e){
+		setSchedule(e.target.value)
+	}
+
+	function UpdateDistrib(e){
+		setDistrib(e.target.value)
+	}
+
+	function onPaidChange(e){
+		if(e.target.value==='FREE'){
+			setPaid(<input disabled type="number"/>);
+		}else{
+			setPaid(<input type="number"/>)
+		}
+	}
+
 	return (
 		<div>
 			<h2>Create a New Team</h2>
@@ -30,7 +57,7 @@ const CreateTeam = () => {
 					onChange={(e) => setName(e.target.value)}
 				/>
 				<label htmlFor="type">Plan:</label>
-				<select name="type" id="type">
+				<select onChange={onPaidChange} name="type" id="type">
 					<option value="BENEFACTOR">Benefactor Plan 💸</option>
 					<option value="MEMBERSHIP">Paid Plan 💳</option>
 					<option value="FREE">Free Plan ⭐</option>
@@ -38,17 +65,25 @@ const CreateTeam = () => {
 
 				</select>
 				<label htmlFor="schedule">Schedule:</label>
-				<select name="schedule" id="schedule">
+				<select onChange={UpdateSchedule} name="schedule" id="schedule">
 					<option value="DAILY">Every Day</option>
 					<option value="WEEKLY">Each Week</option>
 					<option value="MONTHLY">Per Month</option>
 				</select>
 				<label htmlFor="distribSchedule">Give Points:</label>
-				<select name="distribSchedule" id="distribSchedule">
+				<select onChange={UpdateDistrib} name="distribSchedule" id="distribSchedule">
 					<option value="DAILY">Every Day</option>
 					<option value="WEEKLY">Each Week</option>
 					<option value="MONTHLY">Per Month</option>
 				</select>
+				<label htmlFor="payment">
+					<em>Disabled when free plan</em><p></p>
+					<label htmlFor="memberPay">Member Fee $
+						{paid}
+					</label><br/><label htmlFor="admminPay">Admin Fee $
+					{paid}
+				</label>
+				</label>
 				<label htmlFor="ptPool">Initial Point Pool</label>
 				<input name={"ptPool"} id={"ptPool"} type="number"/>
 				<label htmlFor="price">You will pay Points/100</label>
