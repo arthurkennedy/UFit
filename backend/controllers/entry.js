@@ -36,7 +36,7 @@ entryRouter.get('/', authenticate, async (request, response) => {
 
 	const entries = await Entry
 		.find({
-			$or: [{ 'user': { $in: teamMemberIds } }]
+			$or: [{ 'user': { $in: teamMemberIds } }],
 		})
 		.sort({ createdAt: -1 })
 		.populate('user', 'username picture')
@@ -75,11 +75,11 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 
 
 entryRouter.post('/reply', authenticate, async (request, response) => {
-
+	
 	const user = await User.findById(request.user.id)
 	const { id, content } = request.body
 
-	const newReply = new Entry({ content: content, user: user._id })
+	const newReply = new Entry({ content: content, user: user._id, isTopLevel: false })
 
 	await newReply.save()
 
@@ -87,6 +87,8 @@ entryRouter.post('/reply', authenticate, async (request, response) => {
 		$push: { replies: newReply._id }
 	}, { new: true }).populate('replies')
 
+
+	console.log(4,result)
 	await updateUserParticipation(user, true)
 
 	response.status(200).json(result)

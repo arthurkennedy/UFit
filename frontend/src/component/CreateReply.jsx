@@ -23,16 +23,19 @@ const CreateReply = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
+		console.log("check this",);
 
 		const response = await entryService.addReply({
 			id: "655aa5f8b47082c19e4b5585",
-			content: convertToRaw(editor.getCurrentContent()).blocks[0].text,
+			content: JSON.stringify(convertToRaw(editor.getCurrentContent()) ),
 			user: user.user.id
 
 		}, token)
 
 
 		setEditor(() => EditorState.createEmpty());
+
+	
 		/*
 		TODO Reply logic here..
 

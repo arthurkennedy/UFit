@@ -8,7 +8,7 @@
     align-items: center;
     flex-direction: column;
     gap: 20px;
-    background-color: aliceblue;
+    /*background-color: aliceblue;*/
     border-radius: 10px;
 }
 .profileImage{
@@ -27,9 +27,10 @@
 .feedBox{
     display: flex;
     gap: 10px;
-    background-color: #d2dbe3;
+    /*background-color: #d2dbe3;*/
     border-radius: 10px;
     padding: 10px;
+    flex-direction: column;
 }
 .feedBox .author{
     width: 25%;
@@ -37,6 +38,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-weight: bold;
 }
 
 .feedBox .post{
@@ -45,4 +47,22 @@
     border-radius: 10px;
     width: 75%;
     min-height: 100px;
+}
+.messageBox{
+    display: flex;
+    flex-direction: row;
+    /* border: solid 1px black; */
+    padding: 14px;
+    border-radius: 20px;
+    background: white;
+    position: relative;
+    gap:20px;
+}
+
+.likeBtn{
+    background-color: transparent;
+    border:none;
+    position: absolute;
+    bottom: 20px;
+    right:20px;
 }
