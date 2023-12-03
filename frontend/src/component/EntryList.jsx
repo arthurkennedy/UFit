@@ -71,34 +71,43 @@ const EntryList = () => {
 	const entries = useSelector((state) => state.entries.entries);
 	const token = useSelector((state) => state.user.token)
 	const dispatch = useDispatch()
+	
 	useEffect(() => {
 		dispatch(fetchEntries(token))
 	}, [dispatch, token])
 	
-console.log(3,entries);
+	console.log(3,entries);
+	
 	return (<div className="main-container">
-		{entries.map((entry) => <div key={entry._id} className="feedBox">
+		{entries.map((entry) =>
 
-			<div className={"messageBox"}>
-				<div className="author">
-					<div className="profileImage" style={{
-						backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
-					}}>
+			(entry.isTopLevel?
+				<div key={entry._id} className="feedBox">
+
+					<div className={"messageBox"}>
+						<div className="author">
+							<div className="profileImage" style={{
+								backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
+							}}>
+							</div>
+							{entry.user.username}
+						</div>
+						{
+							(entry.content != "Test" && entry.content != "great job") && <DisplayEntry content={entry.content}/>
+						}
+						<LikeButton/>
 					</div>
-					{entry.user.username}
-				</div>
-				{
-					(entry.content != "Test" && entry.content != "great job") && <DisplayEntry content={entry.content}/>
-				}
-				<LikeButton/>
-			</div>
-			<div style={{display:"flex", justifyContent: "end", color: "white", fontWeight: "bold"}}>
-			<CommentWizard />
-			</div>
-			
 
-			
-		</div>)}
+					<div style={{display:"flex", justifyContent: "end", color: "white", fontWeight: "bold"}}>
+						<CommentWizard />
+					</div>
+					
+
+					
+				</div>
+				: null
+			)
+		)}
 	</div>)
 }
 
