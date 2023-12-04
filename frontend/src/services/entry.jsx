@@ -29,8 +29,17 @@ const addReply = async(entry,token) => {
     return response.data
 }
 
+const getReplies = async(entryId, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}`}
+    }
+    const response = await api.get(`${baseUrl}/replies/${entryId}`, config)
+    return response.data
+}
+
 export default {
     post,
     getFeed,
-    addReply
+    addReply,
+    getReplies
 }

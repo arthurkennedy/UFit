@@ -4,9 +4,17 @@ const User = require('../models/user')
 const Team = require('../models/team')
 const { authenticate } = require('../utils/middleware')
 const { updateUserParticipation } = require('../utils/participationUtils')
+const { isValidDraftJsContent } = require('../utils/draftJsContentStateValidation')
+const { request, response } = require('express')
 
 
 entryRouter.post('/', authenticate, async (request, response) => {
+	if(!isValidDraftJsContent(request.body.content)) {
+		return response.status(400).json({
+			error: 'invalid content type'
+		})
+	}
+
 	const user = await User.findById(request.user.id)
 
 	const entry = new Entry({
@@ -36,7 +44,8 @@ entryRouter.get('/', authenticate, async (request, response) => {
 
 	const entries = await Entry
 		.find({
-			$or: [{ 'user': { $in: teamMemberIds } }],
+			'user': { $in: teamMemberIds },
+			'isTopLevel': true
 		})
 		.sort({ createdAt: -1 })
 		.populate('user', 'username picture')
@@ -65,7 +74,8 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 
 	const entries = await Entry
 		.find({
-			$or: [{ 'user': { $in: teamMemberIds } }]
+			'user': { $in: teamMemberIds },
+			'isTopLevel': true
 		})
 		.sort({ createdAt: -1 })
 		.populate('user', 'username picture')
@@ -75,7 +85,12 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 
 
 entryRouter.post('/reply', authenticate, async (request, response) => {
-	
+	if(!isValidDraftJsContent(request.body.content)) {
+		return response.status(400).json({
+			error: 'invalid content type'
+		})
+	}
+
 	const user = await User.findById(request.user.id)
 	const { id, content } = request.body
 
@@ -85,13 +100,17 @@ entryRouter.post('/reply', authenticate, async (request, response) => {
 
 	const result = await Entry.findByIdAndUpdate(id, {
 		$push: { replies: newReply._id }
-	}, { new: true }).populate('replies')
+	}, { new: true })
 
-
-	console.log(4,result)
 	await updateUserParticipation(user, true)
 
 	response.status(200).json(result)
+})
+
+entryRouter.get('/replies/:postId', authenticate, async (request, response) => {
+	const postId = request.params.postId
+	const result = await Entry.findById(postId).populate('replies')
+	response.status(200).json(result.replies)
 })
 
 

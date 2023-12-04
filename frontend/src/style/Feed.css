@@ -1,6 +1,6 @@
 .feed-container{
     width: auto;
-    max-width: 450px;
+    max-width: 750px;
     margin: 0 auto;
     padding: 20px;
     display: flex;
@@ -11,9 +11,28 @@
     /*background-color: aliceblue;*/
     border-radius: 10px;
 }
+
+.create-entry-box {
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+    margin: auto auto 10px;
+    padding: 10px;
+}
+.create-entry-box button {
+    width: 75%;
+    margin: auto;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.entry {
+    min-width: 0
+}
+
 .profileImage{
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     background-size:cover;
     border-radius: 25px;
 }
@@ -33,7 +52,8 @@
     flex-direction: column;
 }
 .feedBox .author{
-    width: 25%;
+    margin-left: 5px;
+    width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,6 +77,7 @@
     background: white;
     position: relative;
     gap:20px;
+    align-items: flex-start;
 }
 
 .likeBtn{

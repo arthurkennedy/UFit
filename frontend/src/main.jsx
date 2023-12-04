@@ -7,7 +7,9 @@ import './App.jsx'
 import './style/Component.css' //import styles for components eg.(LoginPage, SignupPage)
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './style/App.css'
-import './style/utils.css'
+import './style/Utils.css'
+import './style/Feed.css'
+import './style/Profile.css'
 import {BrowserRouter} from "react-router-dom";
 import {PersistGate} from "redux-persist/integration/react";
 

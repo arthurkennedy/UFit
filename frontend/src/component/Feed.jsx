@@ -1,4 +1,3 @@
-import "../style/feed.css"
 import CreateEntry from "./CreateEntry.jsx";
 import EntryList from "./EntryList.jsx";
 

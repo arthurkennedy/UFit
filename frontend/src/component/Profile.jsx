@@ -1,6 +1,5 @@
 import {useSelector} from 'react-redux'
 import defaultProfilePicture from "../assets/profile.jpg"
-import "../style/profile.css"
 import {convertMetersToInches, calculateBMI, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
 import Widget from "./Widget.jsx";
 

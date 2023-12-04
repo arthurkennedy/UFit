@@ -30,11 +30,13 @@ const CreateEntry = () => {
 		const entry = await entryService.post({"content": rawContent}, token)
 		dispatch(addEntry(entry))
     setEditor(() => EditorState.createEmpty())
+
+
 	}
 	
 	return (
 		<>
-			<div className="comp-container">
+			<div className="create-entry-box">
 				<form onSubmit={handleSubmit}>
 					<Editor
 						toolbar={{

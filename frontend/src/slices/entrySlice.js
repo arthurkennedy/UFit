@@ -11,6 +11,13 @@ const entrySlice = createSlice({
 	reducers: {
 		addEntry: (state, action) => {
 			state.entries = [action.payload, ...state.entries]
+		},
+		addReply: (state, action) => {
+			const entryId = action.payload.id;
+			const entryIndex = state.entries.findIndex(entry => entry.id === entryId);
+			if (entryIndex !== -1) {
+				state.entries[entryIndex].replies = [...action.payload.replies];
+			}
 		}
 	},
 	extraReducers: (builder) => {
@@ -20,6 +27,6 @@ const entrySlice = createSlice({
 	}
 })
 
-export const {addEntry} = entrySlice.actions
+export const {addEntry, addReply} = entrySlice.actions
 
 export default entrySlice.reducer
