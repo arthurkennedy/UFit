@@ -28,7 +28,7 @@ const TeamPage = () => {
 				<div className="right w50">
 					<div className="page-contents">
 						<>
-							<h1>Modify Team</h1>
+							<h1>Modify Team (to clean up)</h1>
 							<button className={"goback-button"}>Let's Go</button><button className={"goback-button"}>Cancel</button>
 
 

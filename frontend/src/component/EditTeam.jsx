@@ -21,6 +21,7 @@ const EditTeam = () => {
                 <div className="row user-details">
                     <div>
                         <label>
+                            <p>CLEAN THIS</p>
                             <b>Team Name: </b>
                             <input
                                 type="text"

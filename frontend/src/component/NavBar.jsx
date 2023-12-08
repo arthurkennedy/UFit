@@ -26,7 +26,7 @@ const NavBar = () => {
                         <li className={location.pathname === "/Feed"? 'active': 'left'}><Link to={"/Feed"}>Feed</Link></li>
                         <li className={location.pathname.includes("/teams")? 'active': 'left'}><Link to={"/teams"}>My Teams</Link></li>
                         <li className={location.pathname === "/store"? 'active': 'left'}><Link to={"/store"}>Rewards</Link></li>
-                        <li className={location.pathname === "/notif"? 'active': 'left'}><Link to={"/notif"}>My Notifications</Link></li>
+                        {/*<li className={location.pathname === "/notif"? 'active': 'left'}><Link to={"/notif"}>My Notifications</Link></li>*/}
 
                     </ul>
                 </div>

@@ -12,7 +12,7 @@ const CreateTeam = () => {
     const [plan, setPlan] = useState('FREE')
     const [paid, setPaid] = useState(<input type="number"/>)
     const [fee, setFee] = useState(0);
-    const [pool, setPool] = useState(0);
+    //const [pool, setPool] = useState(0);
 
 
     const handleSubmit = async (event) => {
@@ -44,9 +44,6 @@ const CreateTeam = () => {
         setFee(e.target.value)
     }
 
-    function updatePool(e) {
-        setPool(e.target.value)
-    }
 
     function onPaidChange(e) {
         if (e.target.value === 'FREE') {
@@ -96,10 +93,6 @@ const CreateTeam = () => {
                     {paid}
                 </label>
                 </label>
-                <label htmlFor="ptPool">Initial Point Pool</label>
-                <input onChange={updatePool} name={"ptPool"} id={"ptPool"} type="number"/>
-                <label htmlFor="price">You will pay ${(pool/100)}</label>
-                <label htmlFor="price2">For example, 250 points cost $2.50</label>
                 <button className="uButton2" type="submit">Create Team</button>
                 <label htmlFor="disclaimer">By pressing Submit you agree to pay the above.</label>
             </form>

@@ -63,7 +63,7 @@ const App = () => {
 
 				<Route path="/teams" element={!user ? <Navigate to="/"/> : <MyTeams/>}/>
 
-				<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/> }/>
+				{/*<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/> }/>*/}
 
 				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <TeamPage/>}/>
 
