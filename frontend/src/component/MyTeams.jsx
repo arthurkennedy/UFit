@@ -16,7 +16,7 @@ const MyTeams =()=>{
                 </div>
 
                 <div className="page-contents">
-                    <TeamsList></TeamsList>
+                    <TeamsList/>
                 </div>
           
             </div>

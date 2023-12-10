@@ -9,22 +9,29 @@ const TeamsList = () => {
 
     return (
         <div>
+            <div className="whiteBox" style={{marginBottom: "20px"}}>
+            <h3>Teams I admin</h3>
             <ul>
-                <h3>Teams I admin</h3>
+               
                 {adminTeams.length > 0 ?
                     adminTeams.map((team) => (
-                        <li key={team.id} className="admin-team">{team.name}
+                        <li key={team.id} >{team.name}
                             <br/>
                             <Link to={`/admin/teams/${team.id}`}>
                                 <button className={"uButton2"}>View</button>
                             </Link>
                         </li>
                     )) : "None"}
+                    </ul>
+            </div>
+            <div className="whiteBox">
                 <h3>Teams I am in</h3>
-                {nonAdminTeams.length > 0 ? nonAdminTeams.map((team) => (
-                    <li key={team.id}>{team.name}</li>
-                )) : "None"}
-            </ul>
+                <ul>
+                    {nonAdminTeams.length > 0 ? nonAdminTeams.map((team) => (
+                        <li key={team.id}>{team.name}</li>
+                    )) : "None"}
+                </ul>
+            </div>
         </div>
     )
 }

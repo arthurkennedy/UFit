@@ -41,15 +41,15 @@ const SearchUsers = ({teamId}) => {
 		const previousInvite = team.invitations.find(invitation => invitation.invitee === invitee)
 		if (previousInvite) {
 			const state = previousInvite.state
-			return (<>{state}</>)
+			return (<span className={state}>{state}</span>)
 		} else {
 			return <button onClick={() => handleInvite(invitee)}>invite</button>
 		}
 	}
 
 	return (
-		<div>
-			<h1>Search and add..</h1>
+		<div className='whiteBox'>
+			<h3>Search and add..</h3>
 			<input
 				type="text"
 				placeholder="Search for users..."

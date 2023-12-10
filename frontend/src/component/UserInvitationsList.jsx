@@ -29,6 +29,7 @@ const UserInvitationsList = () => {
 	}
 
 	return (<div>
+			<div className='whiteBox'>
 			<h3>Team Invitations</h3>
 			<ul>
 				{invitations.map((invitation) => (<li key={invitation.id}>
@@ -36,9 +37,10 @@ const UserInvitationsList = () => {
 						{invitation.state === 'PENDING' ? <div>
 							<button className={"yes"} onClick={() => handleInvitation(invitation.id, 'ACCEPT')}>Accept</button>{' '}
 							<button className={"no"} onClick={() => handleInvitation(invitation.id, 'REJECT')}>Reject</button>
-						</div> : invitation.state}
+						</div> : <span className={invitation.state}>{invitation.state}</span>}
 					</li>))}
 			</ul>
+			</div>
 		</div>)
 }
 

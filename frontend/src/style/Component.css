@@ -261,4 +261,53 @@
     background-color: #218838;
   }
   
+/*Teams Page */
+.whiteBox {
 
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.whiteBox h3 {
+    color: #00209b;
+}
+
+.whiteBox span.ACCEPTED, .whiteBox button {
+    background-color: rgb(69, 126, 12);
+    color:white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: none;
+}
+
+.whiteBox span.PENDING {
+    background-color: red;
+    color:white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: none;
+}
+
+.whiteBox button{
+    cursor: pointer;
+}
+.whiteBox input{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;;
+}
+.whiteBox ul {
+    margin-top: 15px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;;
+
+}
+.whiteBox ul li {
+    display: flex;
+    justify-content: space-between;
+}
