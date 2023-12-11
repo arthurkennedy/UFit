@@ -44,6 +44,7 @@ const Signup = () => {
 			message: "Password must be 3 characters or more."
 		}
 	}
+	
 	const handleChange = (e, field) => {
 		const val = e.target.value
 		setNewUserState({...newUserState, [field]: val})
