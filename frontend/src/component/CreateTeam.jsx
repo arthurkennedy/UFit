@@ -13,25 +13,27 @@ const CreateTeam = () => {
         schedule: "DAILY",
         distrib: "MONTHLY",
         plan: "FREE",
-        paid: 0,
+        membership: 0,
         fee: 0,
     }
 
     const [newTeamState, setNewTeamState] = useState(initialTeamState)
     const [errors, setErrors] = useState({})
 
+    const [disablePayment, setDisablePayment] = useState({membership: true, fee: true});
+
     const validationRules = {
 		name: {
 			rule: name => name.length >= 3,
 			message: "Team name must be 3 characters or more."
 		},
-		paid: {
-			rule: paid => newTeamState.plan === "FREE" || paid.toString().length > 0,
-			message: "Please include an admin fee"
+		membership: {
+			rule: (membership) => disablePayment.membership? true: newTeamState.plan === "FREE" || (membership.toString().length > 0 && parseInt(membership) !== 0),
+			message: "Please include a membership fee"
 		},
         fee: {
-			rule: (fee) => newTeamState.plan === "FREE" || fee.toString().length > 0,
-			message: "Please include member fee"
+			rule: (fee) => disablePayment.fee? true: newTeamState.plan === "FREE" || (fee.toString().length > 0 && parseInt(fee) !== 0),
+			message: "Please include admin fee"
 		}
 	}
 
@@ -62,11 +64,39 @@ const CreateTeam = () => {
 
     const handleChange = (e, field) => {
 		const val = e.target.value
-		setNewTeamState({...newTeamState, [field]: val})
+
+        setNewTeamState({...newTeamState, [field]: val})
+
         if (validationRules[field] && validationRules[field].rule(val)) {
 			setErrors({...errors, [field]: null})
 		}
+
+        if(field === "plan"){
+            let notMembership = true, notFee = true;
+
+            if(val === "HYBRID"){
+                notMembership = false;
+                notFee = false;
+            }else if(val === "MEMBERSHIP"){
+                notMembership = false;
+                notFee = true;
+            }else if(val === "BENEFACTOR"){
+                notMembership = true;
+                notFee = false;
+            }
+
+            setErrors({...errors, ["membership"]: null, ["fee"]: null}); // disable errors for membership and fees
+
+            setDisablePayment({membership: notMembership, fee: notFee});
+        }
+
 	}
+
+    const schedulePoints = {
+        "DAILY": 1,
+        "WEEKLY": 2,
+        "MONTHLY": 3
+    };
 
     return (
         <div>
@@ -84,7 +114,7 @@ const CreateTeam = () => {
                 <select onChange={(e) => handleChange(e, "plan")} name="type" id="type">
                     <option value="FREE">Free Plan ⭐</option>
                     <option value="BENEFACTOR">Benefactor Plan 💸</option>
-                    <option value="MEMBERSHIP">Paid Plan 💳</option>
+                    <option value="MEMBERSHIP">Membership Plan 💳</option>
                     <option value="HYBRID">Hybrid Plan 🔗</option>
 
                 </select>
@@ -95,21 +125,21 @@ const CreateTeam = () => {
                     <option value="MONTHLY">Per Month</option>
                 </select>
                 <label htmlFor="distribSchedule">Give Points:</label>
-                <select onChange={(e) => handleChange(e, "distribSchedule")} name="distribSchedule" id="distribSchedule">
+                <select value={schedulePoints[newTeamState.distribSchedule] > schedulePoints[newTeamState.schedule]? "DAILY": newTeamState.distribSchedule} onChange={(e) => handleChange(e, "distribSchedule")} name="distribSchedule" id="distribSchedule">
                     <option value="DAILY">Every Day</option>
-                    <option value="WEEKLY">Each Week</option>
-                    <option value="MONTHLY">Per Month</option>
+                    <option disabled={schedulePoints[newTeamState.schedule] < 2? true: false } value="WEEKLY">Each Week</option>
+                    <option disabled={schedulePoints[newTeamState.schedule] < 3? true: false } value="MONTHLY">Per Month</option>
                 </select>
                 <label htmlFor="payment">
                     <em>Disabled when free plan</em><p></p>
                     <label>
                         Member Fee $
-                        {errors.paid ? <div className="error-text">{errors.paid}</div> : null}
+                        {errors.membership ? <div className="error-text">{errors.membership}</div> : null}
                         <input 
-                        value={newTeamState.paid}
-                        onChange={(e) => handleChange(e, "paid")}
-                        disabled={newTeamState.plan === "FREE"? true: false } 
-                        name="paid" 
+                        value={newTeamState.membership}
+                        onChange={(e) => handleChange(e, "membership")}
+                        disabled={disablePayment.membership? true: false }
+                        name="membership"
                         type="number"
                         />
                     </label>
@@ -120,7 +150,7 @@ const CreateTeam = () => {
                         <input 
                         value={newTeamState.fee}
                         onChange={(e) => handleChange(e, "fee")}
-                        disabled={newTeamState.plan === "FREE"? true: false } 
+                        disabled={disablePayment.fee? true: false } 
                         name="fee" 
                         type="number"
                         />
