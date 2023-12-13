@@ -13,8 +13,6 @@ teamRouter.post('/', authenticate, async (request, response) => {
 
 	const isValidSchedule = scheduleHierarchy[subscriptionDetails.schedule] >= scheduleHierarchy[subscriptionDetails.distributionSchedule]
 
-	console.log(isValidSchedule)
-	console.log(subscriptionDetails)
 	if(!isValidSchedule) {
 		return response.status(400).json({ error: 'Subscription schedule must be less frequent than or equal to distribution schedule' })
 	}
@@ -24,7 +22,6 @@ teamRouter.post('/', authenticate, async (request, response) => {
 		invitations: [],
 		admin: admin._id
 	})
-	console.log(team)
 	if (subscriptionDetails.type !== 'FREE') {
 		const pointPool = convertMoneyToUfitPoints(subscriptionDetails.memberFee + subscriptionDetails.adminFee)
 		team.subscription = {
