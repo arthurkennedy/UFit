@@ -1,7 +1,6 @@
 import {useSelector} from 'react-redux'
 import defaultProfilePicture from "../assets/profile.jpg"
 import {convertMetersToInches, calculateBMI, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
-import Widget from "./Widget.jsx";
 
 export default function Profile() {
 	const user = useSelector((state) => state.user.user)
@@ -54,49 +53,6 @@ export default function Profile() {
 									<a href="/profile-settings">Edit Profile</a>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div className={"right w50"}>
-					<h1>Widget Bar</h1>
-					<div className={"row"}>
-						<div className={"left w50"}>
-							<button>➖</button>
-							Feed Recap
-							<Widget data={
-								//Pull HTML for each widget
-								<>
-									<h1>Feed:</h1>
-									<h1>Feed:</h1>
-								</>
-							}></Widget>
-						</div>
-						<div className={"right w50"}>
-							<button>➖</button>
-							Team News
-							<Widget data={"??"}></Widget>
-						</div>
-					</div>
-					<div className={"row"}>
-						<div className={"left w50"}>
-							<button>➖</button>
-							Store Widget
-							<Widget data={"??"}></Widget>
-						</div>
-						<div className={"right w50"}>Add Widget
-							<button>➕</button>
-							<Widget data={"??"}></Widget>
-						</div>
-					</div>
-					<div className={"row"}>
-						<div className={"left w50"}>Add Widget
-							<button>➕</button>
-							<Widget data={"??"}></Widget>
-
-						</div>
-						<div className={"right w50"}>Add Widget
-							<button>➕</button>
-							<Widget data={"??"}></Widget>
 						</div>
 					</div>
 				</div>

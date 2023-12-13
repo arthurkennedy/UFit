@@ -52,7 +52,6 @@ const RewardStore =()=>{
 
             <div className="page-contents">
                 <div className="product-container">
-
                     <ProductCard img={organicBar} name='Organic bar' points='200'></ProductCard>
                     <ProductCard img={organicChip} name='Organic chips' points='150'></ProductCard>
                 </div>

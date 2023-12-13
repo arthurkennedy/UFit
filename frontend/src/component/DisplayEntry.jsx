@@ -5,7 +5,7 @@ import profile from "../assets/profile.jpg";
 import entryService from "../services/entry.jsx"
 import {useSelector} from "react-redux";
 
-const LikeButton = () =>{
+const LikeButton = () => {
 
 	/*
 	* This function is to add "likes" to the entry displayed.
@@ -47,17 +47,12 @@ const DisplayEntry = ({entry, indentLevel}) => {
 	const [localEntry, setLocalEntry] = useState(entry)
 
 
-
-	useEffect(() => {
-		setLocalEntry(entry);
-	}, [entry])
-
 	const replyCount = replies.length === 0 ? localEntry.replies.length : replies.length;
 
 	const contentState = convertFromRaw(JSON.parse(localEntry.content))
 	const editorState = EditorState.createWithContent(contentState)
 	const toggleShowReplies = async () => {
-		if (!isShowReplies) {
+		if (!isShowReplies && replies.length === 0) {
 			await fetchReplies(localEntry.id);
 		}
 		setIsShowReplies(!isShowReplies);
@@ -71,7 +66,6 @@ const DisplayEntry = ({entry, indentLevel}) => {
 		try {
 			// Assuming 'entryService' has a method 'getReplies'
 			const replies = await entryService.getReplies(entryId, token)
-			console.log(replies)
 			setReplies(replies)
 		} catch (error) {
 			console.log("error fetching replies")

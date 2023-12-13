@@ -1,4 +1,3 @@
-import profile from "../assets/profile.jpg"
 import {useEffect} from "react"
 import DisplayEntry from "./DisplayEntry.jsx"
 import {useDispatch, useSelector} from "react-redux";
