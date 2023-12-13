@@ -11,7 +11,7 @@ const CreateTeam = () => {
     const initialTeamState = {
         name: "",
         schedule: "DAILY",
-        distrib: "MONTHLY",
+        distrib: "DAILY",
         plan: "FREE",
         membership: 0,
         fee: 0,
@@ -57,8 +57,19 @@ const CreateTeam = () => {
 
 
         if(isValid){
-            //const createdTeam = await teamService.createTeam(newTeamState, token)
-            //dispatch(addNewTeam(createdTeam))
+            const team = {
+                name: newTeamState.name,
+                subscriptionDetails: {
+                    schedule: newTeamState.schedule,
+                    distributionSchedule: newTeamState.distrib,
+                    type: newTeamState.plan,
+                    memberFee: newTeamState.membership,
+                    adminFee: newTeamState.fee
+                }
+            }
+            const createdTeam = await teamService.createTeam(team, token)
+            console.log(createdTeam);
+            dispatch(addNewTeam(createdTeam))
         }
     }
 
