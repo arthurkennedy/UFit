@@ -24,10 +24,10 @@ const LikeButton = () =>{
 	const addLike = () => {
 		// this will add another like to the entry object.
 		//Basic like toggle button
-		if(liked===false){
+		if(liked===false) {
 			setLikes(likes+1)
 			setLiked(true)
-		}else if(liked===true){
+		} else if(liked===true) {
 			setLikes(likes-1)
 			setLiked(false)
 		}
@@ -39,16 +39,20 @@ const LikeButton = () =>{
 	)
 }
 
-const DisplayEntry = ({entry}) => {
+const DisplayEntry = ({entry, indentLevel}) => {
 	const [replies, setReplies] = useState([])
 	const [isShowReplies, setIsShowReplies] = useState(false)
 	const token = useSelector(state => state.user.token)
 
 	const [localEntry, setLocalEntry] = useState(entry)
 
+
+
 	useEffect(() => {
 		setLocalEntry(entry);
 	}, [entry])
+
+	const replyCount = replies.length === 0 ? localEntry.replies.length : replies.length;
 
 	const contentState = convertFromRaw(JSON.parse(localEntry.content))
 	const editorState = EditorState.createWithContent(contentState)
@@ -59,19 +63,31 @@ const DisplayEntry = ({entry}) => {
 		setIsShowReplies(!isShowReplies);
 	}
 
+	const updateReplies = (reply) => {
+		setReplies([reply, ...replies])
+	}
+
 	const fetchReplies = async (entryId) => {
 		try {
 			// Assuming 'entryService' has a method 'getReplies'
 			const replies = await entryService.getReplies(entryId, token)
+			console.log(replies)
 			setReplies(replies)
 		} catch (error) {
 			console.log("error fetching replies")
 		}
-	};
+	}
+	const calculatePaddingStyle = (indentLevel) => {
+		return {
+			marginLeft: `${indentLevel * 30}px`,
+			borderLeft: `10px solid black`
+		}
+	}
+
 
 	return (
 		<>
-			<div className={"messageBox"}>
+			<div className={"messageBox"} style={calculatePaddingStyle(indentLevel)}>
 				<div className="author">
 					<div className="profileImage" style={{
 						backgroundImage: `url(${localEntry.user.picture ? localEntry.user.picture : profile})`
@@ -80,18 +96,19 @@ const DisplayEntry = ({entry}) => {
 					{localEntry.user.username}
 				</div>
 				<div className="entry">
-
 					<Editor editorState={editorState} readOnly />
 				</div>
 				<LikeButton/>
-				{localEntry.replies.length > 0 && <button onClick={() => toggleShowReplies()}>
-					{isShowReplies ? "Hide Replies" : `Show Replies (${localEntry.replies.length})`}
+				{replyCount > 0 && <button onClick={() => toggleShowReplies()}>
+					{isShowReplies ? "Hide Replies" : `Show Replies (${replyCount})`}
 				</button>}
 			</div>
-			<CreateReply entryId={localEntry.id} />
+			<div style={calculatePaddingStyle(indentLevel)}>
+				{<CreateReply entryId={localEntry.id} updateReplies={updateReplies} />}
+			</div>
 			{isShowReplies && replies.map(reply => (
-				<div key={reply.id}>this is a reply. Do something to indicate that.
-				<DisplayEntry key={reply.id} entry={reply} />
+				<div key={reply.id}>
+					<DisplayEntry key={reply.id} entry={reply} indentLevel={indentLevel + 1} />
 				</div>
 			))}
 		</>

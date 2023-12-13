@@ -19,14 +19,14 @@ const EntryList = () => {
 	
 	return (<div className="main-container">
 		{entries.map((entry) =>
-
 			(
 				<div key={entry.id} className="feedBox">
-					<DisplayEntry entry={entry} />
+					<DisplayEntry entry={entry} indentLevel={0} />
 				</div>
 			)
 		)}
 	</div>)
 }
+
 
 export default EntryList

@@ -78,6 +78,7 @@
     position: relative;
     gap:20px;
     align-items: flex-start;
+    border-left: black solid 5px;
 }
 
 .likeBtn{

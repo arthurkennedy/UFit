@@ -5,7 +5,7 @@ import {Editor} from "react-draft-wysiwyg"
 import {useDispatch, useSelector} from "react-redux";
 import {addReply} from '../slices/entrySlice.js'
 
-const CreateReply = ({entryId}) => {
+const CreateReply = ({entryId, updateReplies}) => {
 
 	const [editor, setEditor] = useState(() => EditorState.createEmpty());
 	const user = useSelector((state) => state.user)
@@ -23,7 +23,8 @@ const CreateReply = ({entryId}) => {
 
 		}, token)
 		setEditor(() => EditorState.createEmpty());
-		dispatch(addReply(response))
+		console.log("res", response);
+		updateReplies(response);
 	}
 	
 	return (

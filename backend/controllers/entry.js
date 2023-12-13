@@ -104,12 +104,15 @@ entryRouter.post('/reply', authenticate, async (request, response) => {
 
 	await updateUserParticipation(user, true)
 
-	response.status(200).json(result)
+	response.status(200).json(newReply)
 })
 
 entryRouter.get('/replies/:postId', authenticate, async (request, response) => {
 	const postId = request.params.postId
-	const result = await Entry.findById(postId).populate('replies')
+	const result = await Entry.findById(postId).populate({
+		path: 'replies',
+		options: { sort: { 'createdAt': -1 } }
+	})
 	response.status(200).json(result.replies)
 })
 
