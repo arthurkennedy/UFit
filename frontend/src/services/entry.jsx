@@ -19,7 +19,7 @@ const getFeed = async (token) => {
     return response.data
 }
 
-const addReply = async(entry,token) => {
+const addReply = async(entry, token) => {
 
     const config = {
         headers: { Authorization: `Bearer ${token}`}
@@ -37,9 +37,26 @@ const getReplies = async(entryId, token) => {
     return response.data
 }
 
+const toggleLike = async (entryId, token) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}`}
+    };
+
+    try {
+        const response = await api.put(`${baseUrl}/${entryId}/like`, {}, config);
+        return response.data
+    } catch (error) {
+        // Handle errors appropriately
+        console.error('Error liking post:', error)
+        throw error
+    }
+};
+
+
 export default {
     post,
     getFeed,
     addReply,
-    getReplies
+    getReplies,
+    toggleLike
 }

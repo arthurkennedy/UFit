@@ -117,4 +117,25 @@ entryRouter.get('/replies/:postId', authenticate, async (request, response) => {
 })
 
 
+entryRouter.put('/:id/like', authenticate, async (request, response) => {
+	const entryId = request.params.id
+	const userId = request.user.id
+
+	const entry = await Entry.findById(entryId)
+
+	if (!entry) {
+		return response.status(404).json({ error: 'Entry not found' })
+	}
+
+	if (entry.likes.includes(userId)) {
+		return response.status(400).json({ error: 'User already liked this post' })
+	}
+
+	entry.likes.push(userId)
+	const updatedEntry = await entry.save()
+
+	response.status(200).json(updatedEntry)
+})
+
+
 module.exports = entryRouter
