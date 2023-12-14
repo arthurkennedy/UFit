@@ -5,57 +5,36 @@ import profile from "../assets/profile.jpg";
 import entryService from "../services/entry.jsx"
 import {useSelector} from "react-redux";
 
-const LikeButton = () => {
-
-	/*
-	* This function is to add "likes" to the entry displayed.
-	* We will pull this from a persistent value later.
-	* */
-	const [likes, setLikes] = useState(0) //How many likes does the post have?
-	const [liked, setLiked] = useState(false) //Did the user like this before (LikedPost attribute)?
-
-	const updateEntryStatus = () =>{
-		//This code will assign the current values
-		/*
-		* TODO Add like attribute to entry object for LikeButton to pull from
-		*  TODO Add likedPosts to User, prevent duplicate likes on a given post
-		* */
-	}
-	const addLike = () => {
-		// this will add another like to the entry object.
-		//Basic like toggle button
-		if(liked===false) {
-			setLikes(likes+1)
-			setLiked(true)
-		} else if(liked===true) {
-			setLikes(likes-1)
-			setLiked(false)
-		}
-	}
-	return(
-		<>
-			<button className="likeBtn" onClick={addLike}>👍{likes}</button>
-		</>
-	)
-}
 
 const DisplayEntry = ({entry, indentLevel}) => {
 	const [replies, setReplies] = useState([])
 	const [isShowReplies, setIsShowReplies] = useState(false)
 	const token = useSelector(state => state.user.token)
+	const user = useSelector(state => state.user.user)
 
-	const [localEntry, setLocalEntry] = useState(entry)
+	const [liked, setLiked] = useState(entry.likes.includes(user.id))
+	const [likes, setLikes] = useState(entry.likes.length)
 
 
-	const replyCount = replies.length === 0 ? localEntry.replies.length : replies.length;
+	const replyCount = replies.length === 0 ? entry.replies.length : replies.length;
 
-	const contentState = convertFromRaw(JSON.parse(localEntry.content))
+	const contentState = convertFromRaw(JSON.parse(entry.content))
 	const editorState = EditorState.createWithContent(contentState)
 	const toggleShowReplies = async () => {
 		if (!isShowReplies && replies.length === 0) {
-			await fetchReplies(localEntry.id);
+			await fetchReplies(entry.id);
 		}
 		setIsShowReplies(!isShowReplies);
+	}
+
+	const toggleLike = async () => {
+		try {
+			entry = await entryService.toggleLike(entry.id, token)
+			setLiked(!liked)
+			setLikes(entry.likes.length)
+		} catch (e) {
+			console.log("error toggling like")
+		}
 	}
 
 	const updateReplies = (reply) => {
@@ -84,21 +63,21 @@ const DisplayEntry = ({entry, indentLevel}) => {
 			<div className={"messageBox"} style={calculatePaddingStyle(indentLevel)}>
 				<div className="author">
 					<div className="profileImage" style={{
-						backgroundImage: `url(${localEntry.user.picture ? localEntry.user.picture : profile})`
+						backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
 					}}>
 					</div>
-					{localEntry.user.username}
+					{entry.user.username}
 				</div>
 				<div className="entry">
 					<Editor editorState={editorState} readOnly />
 				</div>
-				<LikeButton/>
+				<button className="likeBtn" onClick={toggleLike}>👍{likes}</button>
 				{replyCount > 0 && <button onClick={() => toggleShowReplies()}>
 					{isShowReplies ? "Hide Replies" : `Show Replies (${replyCount})`}
 				</button>}
 			</div>
 			<div style={calculatePaddingStyle(indentLevel)}>
-				{<CreateReply entryId={localEntry.id} updateReplies={updateReplies} />}
+				{<CreateReply entryId={entry.id} updateReplies={updateReplies} />}
 			</div>
 			{isShowReplies && replies.map(reply => (
 				<div key={reply.id}>

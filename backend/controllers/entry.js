@@ -128,10 +128,11 @@ entryRouter.put('/:id/like', authenticate, async (request, response) => {
 	}
 
 	if (entry.likes.includes(userId)) {
-		return response.status(400).json({ error: 'User already liked this post' })
+		entry.likes.remove(userId)
+	} else {
+		entry.likes.push(userId)
 	}
 
-	entry.likes.push(userId)
 	const updatedEntry = await entry.save()
 
 	response.status(200).json(updatedEntry)
