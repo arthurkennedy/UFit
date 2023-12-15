@@ -10,6 +10,7 @@ export default function Profile() {
 	const myProfile = {
 		picture: user.picture ? user.picture : defaultProfilePicture,
 		username: user.username,
+		uPoints : user.ufit_points,
 		height: `${feet}' ${inches}"`,
 		weight: `${user.weight} lbs.`,
 		bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
@@ -35,7 +36,7 @@ export default function Profile() {
 								</div>
 								<div className="row">
 									<div className="label">POINTS:</div>
-									<div>UB{/*myProfile.point*/}256</div>
+									<div>{myProfile.uPoints}</div>
 								</div>
 								<div className="row">
 									<div className="label">HEIGHT:</div>

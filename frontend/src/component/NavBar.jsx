@@ -31,7 +31,7 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="right">
-                    <button className="logout-button" onClick={userLogout}>Logout</button>
+                    <button style={{color:"red",fontWeight:"bolder"}} className="logout-button" onClick={userLogout}>Logout</button>
                 </div>
             </div>
 

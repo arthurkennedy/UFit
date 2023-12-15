@@ -50,17 +50,24 @@ const DisplayEntry = ({entry, indentLevel}) => {
 			console.log("error fetching replies")
 		}
 	}
-	const calculatePaddingStyle = (indentLevel) => {
+	const calculateParentPaddingStyle = (indentLevel) => {
 		return {
+			//Applies to main post and replies, hence the weird black bar
 			marginLeft: `${indentLevel * 30}px`,
 			borderLeft: `10px solid black`
+		}
+	}
+	const calculateChildPaddingStyle = (indentLevel) => {
+		return {
+			marginLeft: `${indentLevel * 30}px`,
+			//borderLeft: `10px solid black`
 		}
 	}
 
 
 	return (
 		<>
-			<div className={"messageBox"} style={calculatePaddingStyle(indentLevel)}>
+			<div className={"messageBox"} style={calculateParentPaddingStyle(indentLevel)}>
 				<div className="author">
 					<div className="profileImage" style={{
 						backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
@@ -76,7 +83,7 @@ const DisplayEntry = ({entry, indentLevel}) => {
 					{isShowReplies ? "Hide Replies" : `Show Replies (${replyCount})`}
 				</button>}
 			</div>
-			<div style={calculatePaddingStyle(indentLevel)}>
+			<div style={calculateChildPaddingStyle(indentLevel)}>
 				{<CreateReply entryId={entry.id} updateReplies={updateReplies} />}
 			</div>
 			{isShowReplies && replies.map(reply => (
