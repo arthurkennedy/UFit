@@ -48,7 +48,6 @@ const CreateReply = ({entryId, updateReplies}) => {
 						<br/>
 
 						<button type="submit">Post!</button>
-						{/*<p>Submit button in development</p>*/}
 					</form>
 				</div>
 			</details>
