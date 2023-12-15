@@ -20,7 +20,6 @@ const getFeed = async (token) => {
 }
 
 const addReply = async(entry, token) => {
-
     const config = {
         headers: { Authorization: `Bearer ${token}`}
     }

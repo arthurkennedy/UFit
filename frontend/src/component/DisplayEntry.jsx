@@ -1,5 +1,5 @@
 import {convertFromRaw, EditorState, Editor } from 'draft-js'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import CreateReply from "./CreateReply.jsx";
 import profile from "../assets/profile.jpg";
 import entryService from "../services/entry.jsx"
