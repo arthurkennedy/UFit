@@ -60,7 +60,7 @@ const DisplayEntry = ({entry, indentLevel}) => {
 	const calculateChildPaddingStyle = (indentLevel) => {
 		return {
 			marginLeft: `${indentLevel * 30}px`,
-			//borderLeft: `10px solid black`
+			borderLeft: `10px solid black`
 		}
 	}
 
