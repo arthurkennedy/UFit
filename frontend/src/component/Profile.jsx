@@ -19,11 +19,11 @@ export default function Profile() {
 	return (
 		<div className='page-contents-container'>
 			<div className='page-contents'>
-				<h3>HomePage</h3>
+				<h1>Home</h1>
+				<h3>My Info</h3>
 			</div>
 			<div className={"row"}>
 				<div className="left w50">
-					<h1>My Info</h1>
 					<div className="profile">
 						<div className="left">
 							<img alt={"My Picture"} src={myProfile.picture} style={{"borderRadius": "50px"}} width="100"/>
