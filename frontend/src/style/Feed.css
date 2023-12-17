@@ -69,9 +69,7 @@
     min-height: 100px;
 }
 .messageBox{
-    display: flex;
-    flex-direction: row;
-    /* border: solid 1px black; */
+    display: block;
     padding: 14px;
     border-radius: 20px;
     background: white;
@@ -81,10 +79,33 @@
     border-left: black solid 5px;
 }
 
+.messageBox .top {
+    display: flex;
+}
+
+.messageBox .entry {
+    padding: 5px 20px;
+}
+
+.messageBox .bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+}
+
+.messageBox .bottom button {
+    padding: 5px 20px;
+    background-color: inherit;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.messageBox .bottom button:hover {
+    background-color: #eeeeee;
+}
+
 .likeBtn{
     background-color: transparent;
     border:none;
-    position: absolute;
-    bottom: 20px;
-    right:20px;
 }
