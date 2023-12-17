@@ -68,21 +68,30 @@ const DisplayEntry = ({entry, indentLevel}) => {
 	return (
 		<>
 			<div className={"messageBox"} style={calculateParentPaddingStyle(indentLevel)}>
-				<div className="author">
-					<div className="profileImage" style={{
-						backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
-					}}>
+				<div class="top">
+					<div className="author">
+						<div className="profileImage" style={{
+							backgroundImage: `url(${entry.user.picture ? entry.user.picture : profile})`
+						}}>
+						</div>
+						{entry.user.username}
 					</div>
-					{entry.user.username}
+
+					<div className="entry">
+						<Editor editorState={editorState} readOnly />
+					</div>
 				</div>
-				<div className="entry">
-					<Editor editorState={editorState} readOnly />
+				
+				<div class="bottom">
+					<div>
+						{replyCount > 0 && <button onClick={() => toggleShowReplies()}>
+							{isShowReplies ? "Hide Replies" : `Show Replies (${replyCount})`}
+						</button>}
+					</div>
+					<button className="likeBtn" onClick={toggleLike}>👍{likes}</button>
 				</div>
-				<button className="likeBtn" onClick={toggleLike}>👍{likes}</button>
-				{replyCount > 0 && <button onClick={() => toggleShowReplies()}>
-					{isShowReplies ? "Hide Replies" : `Show Replies (${replyCount})`}
-				</button>}
 			</div>
+
 			<div style={calculateChildPaddingStyle(indentLevel)}>
 				{<CreateReply entryId={entry.id} updateReplies={updateReplies} />}
 			</div>
