@@ -1,46 +1,54 @@
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import SearchUsers from "./SearchUsers.jsx";
-import EditTeam from "./EditTeam.jsx";
+//import EditTeam from "./EditTeam.jsx";
+
+
 
 const TeamPage = () => {
-	const {teamId} = useParams()
-	const user = useSelector(state => state.user.user)
-	const team = user.teams.find(team => team.id === teamId)
+    const {teamId} = useParams()
+    const user = useSelector(state => state.user.user)
+    const team = user.teams.find(team => team.id === teamId)
+	function Teamview() {
 
-	return (
-		<div className="page-contents-container">
-			<div className="row">
-				<div className="left w50">
-					<div className="page-contents">
-						<h1>Welcome to {team.name}</h1>
-						<a className="goback-button" href="/teams">&lt;&lt; Back To Teams</a>
-					</div>
-
-					<div className="page-contents">
-						<SearchUsers teamId={teamId}/>
-					</div>
-
-					<div className="page-contents">
-					</div>
-
-				</div>
-				<div className="right w50">
-					<div className="page-contents">
-						<>
-							<h1>Modify Team (to clean up)</h1>
-							<button className={"goback-button"}>Let's Go</button><button className={"goback-button"}>Cancel</button>
-
-
-							<EditTeam></EditTeam>
-						</>
-					</div>
-				</div>
+		return (
+			<div className="whiteBox">
+				<h3>Members</h3>
+				<ul>
+					<li>Try adding some..</li>
+				</ul>
 			</div>
+		);
+	}
+
+    return (
+        <div className="page-contents-container">
+            <div className="row">
+                <div className="left w50">
+                    <div className="page-contents">
+                        <h1>Welcome to {team.name}</h1>
+                        <a className="goback-button" href="/teams">&lt;&lt; Back To Teams</a>
+                    </div>
+
+                    <div className="whiteBox">
+                        <SearchUsers teamId={teamId}/>
+                    </div>
+
+                </div>
+                <div className="right w50">
+                    <div className="page-contents">
+                        <>
+                            <h1>Team Info</h1>
+                            {/*<button className={"goback-button"}>Let's Go</button><button className={"goback-button"}>Cancel</button>*/}
+							<Teamview></Teamview>
+                        </>
+                    </div>
+                </div>
+            </div>
 
 
-		</div>
-	)
+        </div>
+    )
 }
 
 export default TeamPage

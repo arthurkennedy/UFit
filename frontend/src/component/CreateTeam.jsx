@@ -115,6 +115,7 @@ const CreateTeam = () => {
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Team Name:</label>
                 {errors.name ? <div className="error-text">{errors.name}</div> : null}
+                <p>Team name cannot be changed.</p>
                 <input
                     type="text"
                     id="name"
