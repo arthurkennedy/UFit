@@ -5,15 +5,14 @@ const Team = require('../models/team')
 const { authenticate } = require('../utils/middleware')
 const { updateUserParticipation } = require('../utils/participationUtils')
 const { isValidDraftJsContent } = require('../utils/draftJsContentStateValidation')
-const { request, response } = require('express')
 
 
 entryRouter.post('/', authenticate, async (request, response) => {
-	if(!isValidDraftJsContent(request.body.content)) {
-		return response.status(400).json({
-			error: 'invalid content type'
-		})
-	}
+	// if(!isValidDraftJsContent(request.body.content)) {
+	// 	return response.status(400).json({
+	// 		error: 'invalid content type'
+	// 	})
+	// }
 
 	const user = await User.findById(request.user.id)
 
@@ -85,11 +84,11 @@ entryRouter.get('/team', authenticate, async (request, response) => {
 
 
 entryRouter.post('/reply', authenticate, async (request, response) => {
-	if(!isValidDraftJsContent(request.body.content)) {
-		return response.status(400).json({
-			error: 'invalid content type'
-		})
-	}
+	// if(!isValidDraftJsContent(request.body.content)) {
+	// 	return response.status(400).json({
+	// 		error: 'invalid content type'
+	// 	})
+	// }
 
 	const user = await User.findById(request.user.id)
 	const { id, content } = request.body

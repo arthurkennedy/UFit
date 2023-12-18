@@ -40,7 +40,7 @@ const TeamPage = () => {
                         <>
                             <h1>Team Info</h1>
                             {/*<button className={"goback-button"}>Let's Go</button><button className={"goback-button"}>Cancel</button>*/}
-							<Teamview></Teamview>
+													<Teamview></Teamview>
                         </>
                     </div>
                 </div>

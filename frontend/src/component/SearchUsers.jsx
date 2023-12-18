@@ -5,6 +5,7 @@ import { addNewInvite } from '../slices/userSlice.js'
 import {useDispatch, useSelector} from "react-redux"
 
 const SearchUsers = ({teamId}) => {
+	console.log(teamId)
 	const [searchTerm, setSearchTerm] = useState('')
 
 	const [users, setUsers] = useState([])
