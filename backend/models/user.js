@@ -10,8 +10,7 @@ const userSchema = new mongoose.Schema({
 	},
 	passwordHash: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
 	},
 	firstname: String,
 	lastname: String,
@@ -23,9 +22,22 @@ const userSchema = new mongoose.Schema({
 	age: { type: Number, min: 1, max: 122 },
 	weight: Number,
 	height: Number,
+	picture: { type: String, default: '' },
+	participation_points: { type: Number, default: 0 },
+	ufit_points: { type: Number, default: 0 },
+	lastReplyDate: Date,
+	lastPostDate: Date,
+	currentStreak: {
+		type: Number,
+		default: 0
+	},
+	longestStreak: {
+		type:Number,
+		default: 0
+	},
 	teams: [{
 		type: Schema.Types.ObjectId,
-		ref:'Team'
+		ref: 'Team'
 	}],
 	invitations: [{
 		type: Schema.Types.ObjectId,
@@ -38,7 +50,7 @@ const userSchema = new mongoose.Schema({
 userSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		//Convert object id to string.
-		if(!returnedObject.id) {
+		if (!returnedObject.id) {
 			returnedObject.id = returnedObject._id.toString()
 		}
 		delete returnedObject._id

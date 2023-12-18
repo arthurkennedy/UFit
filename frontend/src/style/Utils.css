@@ -15,10 +15,13 @@ form{
     gap: 15px;
 }
 
-button[type="submit"]{
+.submit-button {
     background-color:var(--accent);
     border:none;
     border-radius: 10px;
     color:white;
-    padding: 10px;
+
+    padding: 10px 40px;
+    max-width: 300px;
+    margin: 0 auto;
 }

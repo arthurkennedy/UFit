@@ -1,0 +1,56 @@
+
+.profile{
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+
+}
+.header{
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.label{
+    font-weight: bold;;
+}
+.row{
+    display: flex;
+    gap:10px;
+}
+
+.row.user-details {
+    align-items: end;
+}
+.btn-row{
+    display: flex;
+    justify-content: end;
+}
+
+.box{
+    background-color: whitesmoke;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 20px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    min-width: 280px;
+
+}
+.box a{
+
+        background-color:var(--accent);
+        border:none;
+        border-radius: 10px;
+        color:white;
+        padding: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 12px;
+
+}
+
+/*flex, flex-direction: row or column, gap*/
+/*padding - inside box, margin is outside the box*/

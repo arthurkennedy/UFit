@@ -1,4 +1,3 @@
-import "../style/feed.css"
 import CreateEntry from "./CreateEntry.jsx";
 import EntryList from "./EntryList.jsx";
 
@@ -8,16 +7,20 @@ import EntryList from "./EntryList.jsx";
 const Feed = () => {
     return (
         <div className="page-contents-container">
-            <h1> Feed</h1>
-            <h3>Create New Post</h3>
+            <div className="page-contents">
+                <h1>Feed</h1>
+                <h3>Create New Post</h3>
+            </div>
             <br/>
             <CreateEntry/>
             <br/>
-            <div className="container">
+            <div className="feed-container">
                 <h3>Users you followed will post here..</h3>
                 <EntryList/>
             </div>
+            
         </div>
+        
     );
 };
 

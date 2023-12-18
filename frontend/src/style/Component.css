@@ -1,5 +1,6 @@
 .comp-container {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     height: auto;
     margin: auto auto 10px;
     padding: 10px;
@@ -32,6 +33,24 @@
     font-size: 20px;
 }
 
+.comp-container .image-button {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid;
+}
+
+.comp-container .image-container {
+    display: flex;
+    position: relative;
+    height: 200px;
+    justify-content: center;
+}
+
 .auth-link-button {
     display: block;
     text-align: center;
@@ -59,6 +78,35 @@
 .page-contents {
     padding: 10px;
 }
+.page-contents h1, .page-contents h2, .page-contents h3 {
+    color: rgb(236, 236, 236);
+}
+.page-contents h2{
+    color: white !important;
+}
+.page-contents .goback-button {
+    padding: 5px 25px;
+    background-color: #007bff;
+    color: rgb(236, 236, 236);
+    border: 1px solid #0056b3;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    outline: none;
+}
+
+.page-contents .goback-button:hover {
+    background-color: #0056b3;
+}
+
+.page-contents form input{
+    padding: 4px;
+    font-size: 18px;
+    line-height: 20px;
+}
 
 /* navbar */
 
@@ -67,6 +115,7 @@
     justify-content: space-between;
     background-color: #00209b;
     align-items: center;
+    padding: 10px;
 }
 
 .navi ul {
@@ -83,17 +132,41 @@
 }
 
 .navi ul a {
+    position: relative;
     display: block;
     color: rgb(219, 219, 219);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    margin-right: 10px;
 }
 
-.navi ul a:hover {
-    color: rgb(255, 255, 255);
-    font-weight: bolder;
-    font-size: large;
+.navi .left a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(219, 219, 219); /* Change the color as needed */
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0); /* Initially, set the line width to zero */
+    transform-origin: center bottom; /* Set the transform origin to center */
+    transition: transform 0.3s ease; /* Smooth transition for line width change */
+}
+
+.navi .left a:hover::before {
+    transform: scaleX(1); /* Expand the line width on hover */
+    transform-origin: center bottom;
+}
+
+.navi .active a {
+    border-bottom: 2px solid rgb(219, 219, 219);
+}
+
+.navi .active a:hover {
+    color: rgb(219, 219, 219);
+    font-size: inherit;
+    font-weight: inherit;
 }
 
 .navi .right {
@@ -112,4 +185,129 @@
 
 .navi .logout-button:hover {
     background-color: #104b72; /* Darker blue on hover */
+}
+
+.w50{
+    width: 50%;
+}
+
+.widget{
+    height: 100px;
+    width: 100px;
+    background: #104b72;
+    overflow: scroll;
+    scrollbar-track-color: #11007f;
+    scrollbar-width:thin;
+    transition: width 1s, height 1s;
+
+}
+.widget:hover{
+    height: 200px;
+    width: 200px;
+}
+
+
+/* reword store */
+
+.product-container {
+    display: flex;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    width: 250px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .product-points {
+    color: #00209b;
+    font-weight: bold;
+  }
+
+  .buy-now-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+  }
+  
+  .buy-now-button:hover {
+    background-color: #218838;
+  }
+  
+/*Teams Page */
+.whiteBox {
+
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.whiteBox h3 {
+    color: #00209b;
+}
+
+.whiteBox span.ACCEPTED, .whiteBox button {
+    background-color: rgb(69, 126, 12);
+    color:white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: none;
+}
+
+.whiteBox span.PENDING {
+    background-color: red;
+    color:white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: none;
+}
+
+.whiteBox button{
+    cursor: pointer;
+}
+.whiteBox input{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;;
+}
+.whiteBox ul {
+    margin-top: 15px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;;
+
+}
+.whiteBox ul li {
+    display: flex;
+    justify-content: space-between;
 }

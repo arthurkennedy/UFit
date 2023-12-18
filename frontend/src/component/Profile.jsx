@@ -1,32 +1,16 @@
-import {useSelector, useDispatch} from 'react-redux'
-
-
-import myImage from "../assets/profile.jpg"
-import "../style/profile.css"
-import CreateTeam from "./CreateTeam.jsx";
-//import TeamsList from "./TeamsList.jsx"; moved to EditTeam.JSX
+import {useSelector} from 'react-redux'
+import defaultProfilePicture from "../assets/profile.jpg"
+import {convertMetersToInches, calculateBMI, convertMetersToFeetAndInches} from "../utils/conversionFunctions.js";
 
 export default function Profile() {
 	const user = useSelector((state) => state.user.user)
 
-	const convertMetersToInches = (meters) => meters * 39.3701
-	const convertMetersToFeetAndInches = (meters) => {
-		const totalInches = convertMetersToInches(meters)
-		const feet = Math.floor(totalInches / 12)
-		const inches = Math.round(totalInches % 12)
-
-		return {
-			feet,
-			inches
-		}
-	}
-	const calculateBMI = (weightInPounds, heightInInches) => (weightInPounds / (heightInInches * heightInInches)) * 703
-
 	const {feet, inches} = convertMetersToFeetAndInches(user.height)
 
 	const myProfile = {
+		picture: user.picture ? user.picture : defaultProfilePicture,
 		username: user.username,
-		name: user.firstname + " " + user.lastname,
+		uPoints : user.ufit_points,
 		height: `${feet}' ${inches}"`,
 		weight: `${user.weight} lbs.`,
 		bmi: `${calculateBMI(user.weight, convertMetersToInches(user.height)).toFixed(2)}%`
@@ -34,36 +18,46 @@ export default function Profile() {
 
 	return (
 		<div className='page-contents-container'>
-			<div className="profile row">
-				<div className="left">
-					<img src={myImage} width="100"/>
-					<div className="box">
-						{myProfile.username}
-					</div>
-				</div>
-				<div className="right">
-					<div className="box">
-						<div className="row">
-							<div className="label">NAME:</div>
-							<div>{myProfile.name}</div>
+			<div className='page-contents'>
+				<h1>Home</h1>
+				<h3>My Info</h3>
+			</div>
+			<div className={"row"}>
+				<div className="left w50">
+					<div className="profile">
+						<div className="left">
+							<img alt={"My Picture"} src={myProfile.picture} style={{"borderRadius": "50px"}} width="100"/>
+
 						</div>
-						<div className="row">
-							<div className="label">HEIGHT:</div>
-							<div>{myProfile.height}</div>
-						</div>
-						<div className="row">
-							<div className="label">WEIGHT:</div>
-							<div>{myProfile.weight}</div>
-						</div>
-						<div className="row">
-							<div className="label">BMI:</div>
-							<div>{myProfile.bmi}</div>
+						<div className="right">
+							<div className="box">
+								<div className="row header">
+									{myProfile.username}
+								</div>
+								<div className="row">
+									<div className="label">POINTS:</div>
+									<div>{myProfile.uPoints}</div>
+								</div>
+								<div className="row">
+									<div className="label">HEIGHT:</div>
+									<div>{myProfile.height}</div>
+								</div>
+								<div className="row">
+									<div className="label">WEIGHT:</div>
+									<div>{myProfile.weight}</div>
+								</div>
+								<div className="row">
+									<div className="label">BMI:</div>
+									<div>{myProfile.bmi}</div>
+								</div>
+								<div className='row btn-row'>
+									<a href="/profile-settings">Edit Profile</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			{/*<CreateTeam/>*/}
-			{/*/<TeamsList/>*/}
 		</div>
 	)
 }

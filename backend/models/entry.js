@@ -17,16 +17,32 @@ const entrySchema = new Schema({
 	}],
 	createdAt: {
 		type: Date,
-		default: Date.now()
+		default: Date.now
 	},
 	updatedAt: {
 		type: Date,
-		default: Date.now()
+		default: Date.now
 	},
-	replies: [this],
+	replies: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Entry'
+	}],
 	isTopLevel: {
 		type: Boolean,
 		default: true
+	}
+})
+
+entrySchema.set('toJSON', {
+	transform: (document, returnedObject) => {
+
+		//Convert object id to string.
+		if(!returnedObject.id) {
+			returnedObject.id = returnedObject._id.toString()
+		}
+
+		delete returnedObject._id
+		delete returnedObject.__v
 	}
 })
 

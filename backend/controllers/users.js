@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const Team = require('../models/team')
-const helper = require('./controller_helper')
+const { authenticate } = require('../utils/middleware')
 
 usersRouter.post('/', async (request, response) => {
 	const body = request.body
@@ -27,20 +27,16 @@ usersRouter.post('/', async (request, response) => {
 	response.status(201).json(savedUser)
 })
 
-usersRouter.get('/', async (req, res) => {
-	const decodedToken = helper.parseToken(req)
-	if (!decodedToken.id) {
-		return res.status(401).json({ error: 'invalid authorization token' })
-	}
-	const user = await User.findById(decodedToken.id)
+usersRouter.get('/', authenticate, async (request, response) => {
+	const user = User.findById(request.user.id)
 	if (user) {
-		return res.json(user.toJSON())
+		return response.json(user.toJSON())
 	} else {
-		return res.status(404).end()
+		return response.status(404).end()
 	}
 })
 
-usersRouter.get('/search', async (request, response) => {
+usersRouter.get('/search', authenticate, async (request, response) => {
 	const teamId = request.query.teamId
 	const searchTerm = request.query.searchTerm || ''
 
@@ -59,6 +55,24 @@ usersRouter.get('/search', async (request, response) => {
 		.limit(20)
 
 	response.status(200).json(users)
+})
+
+usersRouter.put('/profile', authenticate, async (request, response) => {
+	const updatedUser = await User.findByIdAndUpdate(
+		request.user.id,
+		{ $set: { ...request.body.user, updated_at: new Date() } },
+		{ new: true, runValidators: true }
+	)
+	if(!updatedUser) {
+		return response.status(404).end()
+	}
+	const res = {
+		age: updatedUser.age,
+		weight: updatedUser.weight,
+		height: updatedUser.height,
+		picture: updatedUser.picture
+	}
+	response.status(200).json(res)
 })
 
 module.exports = usersRouter

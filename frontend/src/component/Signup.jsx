@@ -1,6 +1,9 @@
 import {useNavigate} from 'react-router-dom'
 import userService from "../services/user.jsx";
 import {useState} from "react";
+import {convertFeetAndInchesToMeters} from "../utils/conversionFunctions.js";
+
+// Fire DrawPFP upon signin/
 
 const Signup = () => {
 	const initialUserState = {
@@ -41,10 +44,11 @@ const Signup = () => {
 			message: "Password must be 3 characters or more."
 		}
 	}
+	
 	const handleChange = (e, field) => {
 		const val = e.target.value
 		setNewUserState({...newUserState, [field]: val})
-		if (validationRules[field].rule(val)) {
+		if (validationRules[field] && validationRules[field].rule(val)) {
 			setErrors({...errors, [field]: null})
 		}
 	}
@@ -67,10 +71,10 @@ const Signup = () => {
 		if (isValid) {
 			try {
 				const newUser = {...newUserState}
-				newUser.height = (newUser.heightFt * .3048) + (newUser.heightIn * 0.0252) // convert to meters
+				newUser.height = convertFeetAndInchesToMeters(newUser.heightFt, newUser.heightIn) // convert to meters
 				delete newUser.heightFt
 				delete newUser.heightIn
-				console.log(newUser)
+				newUser.age = Number(newUser.age)
 				await userService.signup(newUser)
 				navigate('/login')
 			} catch (exception) {
@@ -82,6 +86,7 @@ const Signup = () => {
 
 	return (
 		<div className="comp-container">
+			<br/> {/*Best to fix the spacing*/}
 			<div className="inner-container">
 				<h2>User Signup</h2>
 				<form onSubmit={handleSubmit}>
@@ -174,7 +179,7 @@ const Signup = () => {
 									min="1"
 									max="400"
 									value={newUserState.weight}
-									name="age"
+									name="weight"
 									onChange={e => {
 										handleChange(e, 'weight')
 									}}
@@ -188,6 +193,8 @@ const Signup = () => {
 									<input
 										type="number"
 										value={newUserState.heightFt}
+										max="8"
+										min="2"
 										name="heightFt"
 										onChange={e => handleChange(e, 'heightFt')}
 									/>
@@ -197,14 +204,19 @@ const Signup = () => {
 										type="number"
 										value={newUserState.heightIn}
 										name="heightIn"
+										max="12"
+										min="0"
 										onChange={e => handleChange(e, 'heightIn')}
 									/>
 								</label>
 							</div>
 						</div>
 					</div>
-					<button type="submit">SignUp</button>
+					<button className="submit-button" type="submit">SignUp</button>
 				</form>
+				<button onClick={()=>navigate('/login')}>Log In</button>
+				<br/>
+
 			</div>
 		</div>
 	)

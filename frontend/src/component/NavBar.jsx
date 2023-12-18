@@ -1,18 +1,19 @@
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux";
 import {logOutUser} from '../slices/userSlice' // Adjust this import to your folder structure
 
 
 const NavBar = () => {
-
+    
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.user)
+
+    const location = useLocation();
 
     if(user){
 
         const userLogout = () => {
             dispatch(logOutUser()); // This will update the Redux state
-            window.localStorage.removeItem('loggedUser') // Remove the user from local storage
         }
 
         return(
@@ -21,49 +22,19 @@ const NavBar = () => {
                 <div>
                     <ul>
 
-                        <li className="left"> <Link to={"/"} >Homepage</Link> </li>
-                        <li className="left"><Link to={"/Feed"}>Feed</Link></li>
-                        <li className="left"><Link to={"/teams"}>My Teams</Link></li>
-                        <li className="left"><Link to={"/store"}>u-fit rewards</Link></li>
-                        <li className="left"><Link to={"/notif"}>My Notifications</Link></li>
+                        <li className={location.pathname === "/"? 'active': 'left'}> <Link to={"/"} >Home</Link> </li>
+                        <li className={location.pathname === "/Feed"? 'active': 'left'}><Link to={"/Feed"}>Feed</Link></li>
+                        <li className={location.pathname.includes("/teams")? 'active': 'left'}><Link to={"/teams"}>Teams</Link></li>
+                        <li className={location.pathname === "/store"? 'active': 'left'}><Link to={"/store"}>Rewards</Link></li>
+                        {/*<li className={location.pathname === "/notif"? 'active': 'left'}><Link to={"/notif"}>My Notifications</Link></li>*/}
 
                     </ul>
                 </div>
                 <div className="right">
-                    <button className="logout-button" onClick={userLogout}>Logout</button>
+                    <button style={{color:"red",fontWeight:"bolder"}} className="logout-button" onClick={userLogout}>Logout</button>
                 </div>
             </div>
 
-            /*
-            <div className={"Navi"}>
-
-
-                <div>
-
-                </div>
-                <div className={"Home"}>
-                    <Link to={"/"} className="uButton" >Homepage</Link>
-                    <Link className="uButton" to={"/Feed"}>Feed</Link>
-                    <Link className="uButton" to={"/teams"}>My Teams</Link>
-                    <Link className="uButton" to={"/store"}>u-fit rewards</Link>
-                    <Link className="uButton" to={"/notif"}>My Notifications</Link>
-
-                </div>
-                <div className={"Feed" }>
-                    {
-                        //Insure user is logged in before pulling in feed.
-                        //If user not logged in, let's make it that this links them to LOGIN like /home
-                    }
-                </div>
-                <div>
-                    <br/>
-                    {
-                        //Spacer
-                    }
-                    <br/>
-                </div>
-            </div>
-            */
         )
     } else {
         return null;

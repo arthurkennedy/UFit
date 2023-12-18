@@ -13,6 +13,8 @@ const teamRouter = require('./controllers/team')
 const teamInvitationRouter = require('./controllers/team_invitation')
 const middleware = require('./utils/middleware')
 
+const { setupCronJobs } = require('./utils/cronJobs')
+
 mongoose.set('strictQuery', false)
 logger.info('connecting to MongoDB')
 
@@ -24,9 +26,12 @@ mongoose.connect(config.MONGODB_URI)
 		logger.error('error connecting to MongoDB:', error.message)
 	})
 
+setupCronJobs()
+
 app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(middleware.requestLogger)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)

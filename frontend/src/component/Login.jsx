@@ -32,7 +32,6 @@ const Login = () => {
   return (
       <div className="comp-container">
         <div className="inner-container">
-          <h2>User Login</h2>
           <form onSubmit={handleLogin}>
             {isError ? <div className="error-text">Incorrect username or password</div> : null }
             <div>
@@ -59,8 +58,10 @@ const Login = () => {
                   placeholder="Password"
               />
             </div>
-            <button type="submit">LOGIN</button>
+            <button className="submit-button" type="submit">LOGIN</button>
           </form>
+          <button onClick={()=>navigate("/signup")}>SIGN UP</button>
+
         </div>
       </div>
   )

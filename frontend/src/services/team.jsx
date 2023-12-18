@@ -1,13 +1,13 @@
-import axios from 'axios'
+import api from "./apiInterceptor"
 
-const baseUrl = "/api/team"
+const baseUrl = "/team"
 
 const createTeam = async (team, token) => {
 	const config = {
 		headers: { Authorization: `Bearer ${token}`}
 	}
 
-	const response = await axios.post(baseUrl, team, config)
+	const response = await api.post(baseUrl, team, config)
 	return response.data
 }
 

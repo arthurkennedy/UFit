@@ -4,7 +4,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI",Arial,sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
@@ -16,6 +16,7 @@ form {
     padding: 10px;
     background: aqua;
     margin-top: 5px;
+    color: black;
 }
 
 ul {
@@ -23,6 +24,7 @@ ul {
 }
 
 .app-name {
+    display: flex;
     text-align: center;
     margin: 20px;
     font-size: 40px;
@@ -30,52 +32,70 @@ ul {
     color: black;
 }
 
+.app-name img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
 .app-name:hover {
-    color:blue;
+
 }
 
 .uButton {
-    background-color:var(--accent);
-    border:none;
+    background-color: var(--accent);
+    border: none;
     border-radius: 10px;
-    color:white;
+    color: white;
     padding: 10px;
 }
 
-.uButton:hover,.uButton2:hover {
+.uButton:hover, .uButton2:hover {
     background-color: aqua;
 }
+
 .uButton2 {
-    background-color:darkslateblue;
-    border:none;
+    background-color: darkslateblue;
+    border: none;
     border-radius: 5px;
-    color:white;
+    color: white;
     padding: 5px;
 }
+
 .yes {
-    background-color:green;
-    border:none;
+    background-color: green;
+    border: none;
     border-radius: 10px;
-    color:white;
+    color: white;
     padding: 10px;
 }
 
-.yes:hover{
-    background-color:#00ff00;
+.yes:hover {
+    background-color: #00ff00;
 }
-.no:hover{
+
+.no:hover {
     background-color: #ff9898;
 }
 
 
 .no {
-    background-color:red;
-    border:none;
+    background-color: red;
+    border: none;
     border-radius: 10px;
-    color:white;
+    color: white;
     padding: 10px;
 }
 
-.admin-team{
+.admin-team {
     padding: 10px;
+}
+
+details[open] {
+    transform: translateX(40px);
+    transition: all 2s;
+}
+
+details {
+    transform: revert;
+    transition: all 2s;
 }
