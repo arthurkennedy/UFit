@@ -32,19 +32,8 @@ entryRouter.post('/', authenticate, async (request, response) => {
 	response.status(200).json(responseObject)
 })
 
-<<<<<<< HEAD
 entryRouter.get('/', authenticate, async (request, response) => {
 	const user = await User.findById(request.user.id).populate('teams')
-=======
-entryRouter.get('/', async (request, response) => {
-	const decodedToken = helper.parseToken(request)
-
-	if (!decodedToken.id) {
-		return response.status(401).json({ error: 'invalid authorization token' })
-	}
-
-	const user = await User.findById(decodedToken.id).populate('teams')
->>>>>>> 85a578814035020e708799eb27c8bdca498c8392
 
 	const teamMemberIds = user.teams.reduce((acc, team) => {
 		const memberIds = team.members.map(member => member.user)

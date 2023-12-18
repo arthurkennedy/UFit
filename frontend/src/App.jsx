@@ -15,7 +15,6 @@ import Feed from "./component/Feed.jsx"
 import Profile from "./component/Profile.jsx"
 import MyTeams from "./component/MyTeams.jsx"
 import RewardStore from "./component/RewardStore.jsx"
-<<<<<<< HEAD
 import TeamPage from "./component/TeamPage.jsx";
 import NotificationCenter from "./component/NotificationCenter.jsx"
 import ProfileSettings from "./component/ProfileSettings.jsx"
@@ -25,12 +24,9 @@ import {useEffect} from "react"
 import WorkOut from "./component/WorkOut.jsx";
 
 
-=======
-import EditTeam from "./component/EditTeam.jsx";
-import NotificationCenter from "./component/NotificationCenter.jsx";
->>>>>>> 85a578814035020e708799eb27c8bdca498c8392
 
 const App = () => {
+
 	const user = useSelector((state) => state.user.user)
 	const token = useSelector((state) => state.user.token)
 	const dispatch = useDispatch()
@@ -41,21 +37,19 @@ const App = () => {
 		}
 	}, [token, dispatch])
 
-	return (<>
+	return (
+		<>
 			<a className="app-name" href="/">
 				<img src={logoImg} alt="U-Fit logo image" />
 				<h1>U-FIT</h1>
 			</a>
-<<<<<<< HEAD
 
-=======
->>>>>>> 85a578814035020e708799eb27c8bdca498c8392
 			<>
 				<NavBar/>
 			</>
+
 			<Routes>
 				<Route path="/" element={user ? <Profile/> : <Home/>}/>
-<<<<<<< HEAD
 
 				<Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
 
@@ -76,18 +70,10 @@ const App = () => {
 				<Route path="/workout" element={!user ? <Navigate to="/"/> : <WorkOut/>}/>
 
 
-=======
-				<Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
-				<Route path="/signup" element={user ? <Navigate to="/"/> : <Signup/>}/>
-				<Route path="/feed" element={!user ? <Navigate to="/"/> : <Feed/>}/>
-				<Route path="/store" element={!user ? <Navigate to="/"/> : <RewardStore/>}/>
-				<Route path="/teams" element={!user ? <Navigate to="/"/> : <MyTeams/>}/>
-				<Route path="/notif" element={!user ? <Navigate to="/"/> : <NotificationCenter/>}/>
-				<Route path="/admin/teams/:teamId" element={!user ? <Navigate to="/"/> : <EditTeam/>}/>
->>>>>>> 85a578814035020e708799eb27c8bdca498c8392
 				<Route path="*" element={<UnknownEndpoint/>}/>
 			</Routes>
-		</>)
+		</>
+	)
 }
 
 export default App

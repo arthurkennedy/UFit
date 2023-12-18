@@ -1,3 +1,4 @@
+
 const NotificationCenter =()=>{
     return(
         <div className="page-contents-container">
@@ -17,4 +18,3 @@ const NotificationCenter =()=>{
     )
 };
 export default NotificationCenter;
-
