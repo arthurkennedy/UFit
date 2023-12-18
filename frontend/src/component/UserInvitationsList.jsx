@@ -10,8 +10,7 @@ const UserInvitationsList = () => {
 
 	useEffect(() => {
 		const getInvitations = async () => {
-			const loggedUserJSON = JSON.parse(window.localStorage.getItem('loggedUser'))
-			return await teamInvitationService.getTeamInvitations(loggedUserJSON.token)
+			return await teamInvitationService.getTeamInvitations(token)
 		}
 		getInvitations().then(res => setInvitations(res))
 	}, [])
